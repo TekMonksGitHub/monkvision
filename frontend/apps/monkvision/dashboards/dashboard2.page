@@ -1,0 +1,43 @@
+SCHEMA
+======
+{
+    "pass": {"html":"chart-box", "id":"pass", "title":"{{i18n.PasswordAttacks}}", "api":"loggraph", "type":"linegraph", "refresh":5000, "maxticks":5, "ystep":1, "ylabels":"1:{{i18n.OK}},0:{{i18n.Issue}}", "fillColor":"#40D59D4C", "borderColor":"#0e8f7e", "params":"id=ssh_mon_139_59_219_134c__users_rohit_kapoor_source_cyberwarrior_scripts_checkbadlogins_sh"},
+    "ddos2": {"html":"chart-box", "id":"ddos2", "title":"{{i18n.DDOSAttacks}}", "api":"statusaggregator", "type":"donutgraph", "refresh":5000, "labels":"1:{{i18n.OK}},0:{{i18n.Issue}}", "colors":"1:#D43F3F4C:#af3234,0:#40D59D4C:#0e8f7e", "params":"id=ssh_mon_139_59_219_134c__users_rohit_kapoor_source_cyberwarrior_scripts_checkhttpddos_sh"}
+}
+======
+
+
+LAYOUT
+=================
+---------
+| pass  |
+|-------|
+| ddos2 |
+---------
+=================
+Row Heights = 50%,50%
+Col Widths = 100%
+=================
+
+
+CSS CLASSES
+===========
+CONTAINER CLASSES = grid-container-extension
+ITEM CLASSES = grid-item-extension
+PER ITEM CLASS = class
+===========
+
+
+CSS
+=======
+body {margin: 0; height: calc(100vh - 65px);}
+.grid-container-extension {
+    height: 100%;
+}
+.grid-item-extension {
+    box-shadow:  0 0 1px rgba(34, 25, 25, 0.4);
+    border-radius: 10px;
+    margin: 5px 15px 10px 15px;
+    background-color: white;
+}
+=======

@@ -1,0 +1,3 @@
+[
+    {"module": "js/main.mjs", "function":"interceptPageLoad"}
+]

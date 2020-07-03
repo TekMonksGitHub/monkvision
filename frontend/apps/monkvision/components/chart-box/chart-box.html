@@ -1,0 +1,91 @@
+<!--
+/* 
+ * (C) 2020 TekMonks. All rights reserved.
+ * License: See enclosed license.txt file.
+ */
+ -->
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');
+
+body{
+    margin: 10px 10px 10px 10px; 
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+    height: 100%;
+    color: rgb(72,72,72);
+}
+
+/* width */
+::-webkit-scrollbar {width: 8px;}
+/* Track */
+::-webkit-scrollbar-track {border-radius: 10px; margin: 10px;}
+/* Handle */
+::-webkit-scrollbar-thumb {background: lightgrey; border-radius: 10px;}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {background: rgb(124, 128, 133);}
+
+div#container {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+    margin-bottom: 5px;
+    text-align: center;
+    font-weight: 500;
+    height: calc(100% - 10px);
+}
+
+div#content {
+    font-family: monospace;
+    font-size: medium;
+    overflow-y: auto;
+    height: calc(100% - 20px);
+    font-weight: normal;
+    text-align: justify;
+    overflow-x: hidden;
+    max-width: 100%;
+    overflow-y: auto;
+}
+
+table, td, th {
+    padding: 2px 10px 2px 10px;
+    border-collapse: collapse;
+    text-align: left;
+}
+tr:nth-child(even) {background: rgb(235, 250, 245)}
+table {position: relative;}
+thead, th {
+    position: sticky;
+    top: 0px;
+    box-shadow: 0 2px 2px -1px rgb(69, 209, 158, 0.4);
+    background-color: #45d19e;
+    color: white;
+    padding: 10px;
+    font-weight: 100;
+}
+
+canvas#canvas {
+    display: none;
+    max-height: inherit;
+}
+</style>
+
+{{{styleBody}}}
+
+<div id="container">
+    {{{title}}}
+<div id="content">
+    {{{textcontent}}}               <!-- Handles simple text content -->
+
+    {{#table}}                      <!-- Handles table content -->
+    <table>
+        <thead><tr>{{#headers}}<th>{{.}}</th>{{/headers}}</tr></thead>
+        <tbody>
+            {{#rows}}<tr>{{#.}}<td>{{.}}</td>{{/.}}</tr>{{/rows}}
+        </tbody>
+    </table>
+    {{/table}}
+
+    <canvas id="canvas"></canvas>   <!-- Handles chartjs content -->
+</div>
+</div>

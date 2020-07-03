@@ -1,0 +1,71 @@
+<!--
+/* 
+ * (C) 2018 TekMonks. All rights reserved.
+ * License: MIT - see enclosed license.txt file.
+ */
+ -->
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');
+
+body{
+    margin: 0; padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 0;
+    border-style: none;
+    outline: none;
+    text-align: left;
+    background-color: transparent;
+    margin: 20px 5% 0px 5%;
+    border-bottom: 1px solid darkgray;
+    font-family: inherit;
+    font-size: smaller;
+}
+
+button {
+    width: 80%;
+    padding: 10px;
+    margin: 0;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border-style: none;
+    outline: none;
+    text-align: center;
+    background-color: rgb(51, 204, 102);
+    color: white;
+    position: relative;
+    margin: 30px 0% 20px 0%;
+    font-family: inherit;
+    font-size: inherit;
+    text-transform: uppercase;
+}
+
+button:hover {
+    filter: brightness(110%);
+    transition: all 0.3s ease;
+}
+
+span#error {
+    color: #e40000;
+    display: none;
+}
+
+</style>
+
+{{{styleBody}}}
+
+<div id="container">
+<span id="error">{{i18n.RegisterError}}</span>
+<input type="text" id="name" placeholder="{{i18n.Name}}" required>
+<input type="text" id="id" placeholder="{{i18n.Email}}" required>
+<input type="text" id="org" placeholder="{{i18n.Org}}" required>
+<input type="password" id="pass" placeholder="{{i18n.Password}}" required minlength="8" value="{{pass}}"
+    onkeyup="if (event.keyCode == 13) monkshu_env.components['register-box'].getShadowRootByContainedElement(this).querySelector('#submit').click();">
+<button id="submit" onclick='monkshu_env.components["register-box"].register(this)'>{{i18n.Register}}</button>
+</div>

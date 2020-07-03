@@ -1,0 +1,19 @@
+<style>
+body {
+    width: 350px;
+}
+
+span#error {
+    font: inherit;
+    font-size: smaller;
+    text-align: center;
+    width: 350px;
+    display: inline-block;
+}
+</style>
+
+<span id="error">{{error}}</span>
+
+<script>
+function onOK(element) {monkshu_env.components["dialog-box"].submit(element);}
+</script>
