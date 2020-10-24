@@ -9,76 +9,67 @@
 const _init = async _ => await $$.require(`${APP_CONSTANTS.COMPONENTS_PATH}/chart-box/3p/chartjs2.9.3.min.js`);
 
 /**
- * Renders given data as a bar graph. Makes the assumption that 
- * API data format is x, y and info where info is additional info.
+ * Renders given data as a bar graph. 
  * 
  * @param canvas    The hosting canvas element
- * @param content   The log file contents - as returned from loggraph API
+ * @param content   {x: x labels, ys:[[y values]], infos:[[info for each y, rendered as tooltips]]}
  * @param maxXTicks The maximum x-axis ticks allowed
- * @param ystep     The y-axis tick stepping
+ * @param gridLines Draw gridlines or not
+ * @param xAtZero   Start X at zero
+ * @param yAtZeros  Start Y at zero, array with one for each dataset y axis
+ * @param ysteps    The y-axis tick stepping, for each dataset
  * @param ylabels   The y-axis tick labels, as many as ticks on y-axis
- * @param bgColors  The background colors for the bars, array for each value
- * @param brColors  The border colors for the bars, array for each value
+ * @param bgColors  The background colors for the bars, array of arrays for each value in the dataset
+ * @param brColors  The border colors for the bars, array of arrays for each value in the dataset
  */
-async function drawBargraph(canvas, contents, maxXTicks, ystep, ylabels, bgColors, brColors) {
-    await _init(); const ctx = canvas.getContext("2d");
-
-    const data = {
-        labels: contents.x,
-        datasets: [{ data: contents.y, backgroundColor: bgColors, borderColor: brColors, borderWidth: 1 }]
-    }
-
-    const options = {
-        maintainAspectRatio: false, 
-        responsive: true, 
-        legend: { display: false },
-        tooltips: {callbacks: {label: item => contents.info[item.index].split("\n")}, displayColors:false},
-        scales: {
-            xAxes: [{ gridLines: {drawOnChartArea: false, drawTicks: false}, 
-                ticks: {padding:5, autoSkip: true, maxTicksLimit: maxXTicks, maxRotation: 0} }],
-            yAxes: [{ gridLines: {drawOnChartArea: false, drawTicks: false}, 
-                ticks: {padding:5, stepSize:ystep, callback:label => ylabels[label]?ylabels[label]:label} }]
-        }
-    }
-
-    return new Chart(ctx, {type: "bar", data, options});
+async function drawBargraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors) {
+    await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, "bar", 0, 1);
 }
 
 /**
- * Renders given data as a line graph. Makes the assumption that 
- * API data format is x, y and info where info is additional info.
+ * Renders given data as a line graph. Can support stacked line graphs, but can't
+ * support multi-axis graphs.
  * 
  * @param canvas    The hosting canvas element
- * @param content   The log file contents - as returned from loggraph API
+ * @param content   {x: x labels, ys:[[y values]], infos:[[info for each y, rendered as tooltips]]}
  * @param maxXTicks The maximum x-axis ticks allowed
- * @param ystep     The y-axis tick stepping
+ * @param gridLines Draw gridlines or not
+ * @param xAtZero   Start X at zero
+ * @param yAtZeros  Start Y at zero, array with one for each dataset y axis
+ * @param ysteps    The y-axis tick stepping, for each dataset
  * @param ylabels   The y-axis tick labels, as many as ticks on y-axis
  * @param bgColor   The fill color for the line
  * @param brColor   The border color for the line
  */
-async function drawLinegraph(canvas, contents, maxXTicks, ystep, ylabels, bgColor, brColor) {
-    await _init(); const ctx = canvas.getContext("2d");
+async function drawLinegraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors) {
+    await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, "line", 0.5, 2);
+}
 
-    const data = {
-        labels: contents.x,
-        datasets: [{ data: contents.y, backgroundColor: bgColor, borderColor: brColor, borderWidth: 2, pointRadius: 1 }]
-    }
+async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, type, pointWidth, lineWidth) {
+    await _init(); const ctx = canvas.getContext("2d"); gridLines = gridLines?gridLines.toLowerCase()=="true":false;
+
+    const datasets = []; for (const [i,ys] of contents.ys.entries()) datasets.push({ data: ys, 
+        backgroundColor: bgColors[i], borderColor: brColors[i], borderWidth: lineWidth, pointRadius: pointWidth });
+
+    const data = {labels: contents.x, datasets}
+
+    const yAxes = []; for (let i = 0; i < contents.ys.length; i++) yAxes.push({ 
+        gridLines: {drawOnChartArea: gridLines, drawTicks: false}, 
+        ticks: {padding:5, stepSize:ysteps[i], beginAtZero: yAtZeros?yAtZeros[i].toLowerCase()=="true":false, 
+            callback:label => ylabels[i][label] ? ylabels[i][label] : (ylabels[i]["else"]||ylabels[i]["else"]=="" ? ylabels[i]["else"]:label)} });
 
     const options = {
         maintainAspectRatio: false, 
         responsive: true, 
         legend: { display: false },
-        tooltips: {callbacks: {label: item => contents.info[item.index].split("\n")}, displayColors:false},
+        tooltips: {callbacks: {label: item => contents.infos[item.datasetIndex][item.index].split("\n")}, displayColors:false},
         animation: {animateScale:true},
-        scales: {
-            xAxes: [{ gridLines: {drawOnChartArea: false, drawTicks: false}, 
-                ticks: {padding:5, autoSkip: true, maxTicksLimit: maxXTicks, maxRotation: 0} }],
-            yAxes: [{ gridLines: {drawOnChartArea: false, drawTicks: false}, 
-                ticks: {padding:5, stepSize:ystep, callback:label => ylabels[label]?ylabels[label]:label} }]
-        }
+        scales: { xAxes: [{ gridLines: {drawOnChartArea: gridLines, drawTicks: false}, 
+                ticks: {padding:5, beginAtZero: xAtZero?xAtZero.toLowerCase() == "true":false, autoSkip: true,
+                maxTicksLimit: maxXTicks, maxRotation: 0} }], yAxes }
     }
 
-    return new Chart(ctx, {type: "line", data, options});
+    return new Chart(ctx, {type, data, options});
 }
 
 /**

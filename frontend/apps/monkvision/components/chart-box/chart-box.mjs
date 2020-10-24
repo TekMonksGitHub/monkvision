@@ -1,5 +1,5 @@
 /**
- * Can draw charts, tables and text dashboard components.
+ * Chart-Box - Can draw charts, tables and text dashboard components.
  *  
  * (C) 2020 TekMonks. All rights reserved.
  * License: See enclosed license.txt file.
@@ -10,6 +10,8 @@ import {apimanager as apiman} from "/framework/js/apimanager.mjs";
 import {monkshu_component} from "/framework/js/monkshu_component.mjs";
 
 async function elementRendered(element) {
+	await $$.require(`${APP_CONSTANTS.COMPONENTS_PATH}/chart-box/3p/xregexp-4.3.0-all-min.js`);	// load xregexp which is needed
+	
 	if (!element.__skip_refresh) _refreshData(element, true); else return;
 	const refreshInterval = element.getAttribute("refresh");
 	if (refreshInterval && !element.__chart_box_timer) {
@@ -67,15 +69,15 @@ async function _refreshData(element, force) {
 		contentDiv.scrollTop = contentDiv.scrollHeight; 
 	}	// scroll to bottom
 	
-	if (type == "table") {
-		const labelHash = {}; for (const label of element.getAttribute("labels").split(",")){
+	if (type == "table") {	// content: x, ys and infos
+		const contentIn = content.contents, labelHash = {}; for (const label of element.getAttribute("labels").split(",")){
 			const tuple = label.split(":");
 			labelHash[tuple[0].trim()] = tuple[1].trim();
 		}
-		const headers = []; for (const key of Object.keys(content.contents)) headers.push(labelHash[key]);
-		const key0 = Object.keys(content.contents)[0]; const length = content.contents[key0].length;
-		const rows = []; for (let i = 0; i < length; i++) {
-			const rowContent = []; for (const key of Object.keys(content.contents)) rowContent.push(content.contents[key][i]);
+		const headers = [labelHash["x"]]; for (let i = 0; i < contentIn.ys.length; i++) {headers.push(labelHash[`ys${i}`]); headers.push(labelHash[`infos${i}`]);}
+		const rows = []; for (let i = 0; i < contentIn.length; i++) {
+			const rowContent = [contentIn.x[i]]; for (let j = 0; j < contentIn.ys.length; j++) {
+				rowContent.push(contentIn.ys[j][i]||""); rowContent.push(contentIn.infos[j][i]||""); }
 			rows.push(rowContent);
 		}
 
@@ -89,27 +91,27 @@ async function _refreshData(element, force) {
 	if (type == "bargraph" || type == "linegraph") {
 		await bindData(data, id);
 
-		const labels = {}; const labelsRAW = element.getAttribute("ylabels"); 
-		for (const label of labelsRAW.split(",")) {const splits = label.split(":"); labels[splits[0]] = splits[1]};
+		const labels = _getLabels(_makeArray(element.getAttribute("ylabels")));
 
 		if (type == "bargraph") {
-			const colorHash = {}, ycolors = element.getAttribute("ycolors").split(","); for (const ycolor of ycolors) {
-				const tuples = ycolor.split(":");
-				colorHash[tuples[0].trim()] = [tuples[1].trim(), tuples[2].trim()];
-			}
-	
-			const bgColors = [], brColors = []; for (const y of content.contents.y) {
-				if (colorHash[y]) {bgColors.push(colorHash[y][0]); brColors.push(colorHash[y][1]);}
-				else {bgColors.push(colorHash["else"][0]); brColors.push(colorHash["else"][1]);}
+			const colorHash = _getColorHash(_makeArray(element.getAttribute("ycolors")));
+			const bgColors = [], brColors = []; for (const [i,ys] of content.contents.ys.entries()) {
+				const bgColorsThis = []; const brColorsThis = [];
+				for (const y of ys) if (colorHash[i][y]) {bgColorsThis.push(colorHash[i][y][0]); brColorsThis.push(colorHash[i][y][1]);}
+					else {bgColorsThis.push(colorHash[i]["else"][0]); brColorsThis.push(colorHash[i]["else"][1]);}
+				bgColors.push(bgColorsThis); brColors.push(brColorsThis);
 			}
 
 			memory.chart = await chart.drawBargraph(contentDiv.querySelector("canvas#canvas"), content.contents, 
-				element.getAttribute("maxticks"), element.getAttribute("ystep"), labels, bgColors, brColors);
+				element.getAttribute("maxticks"), element.getAttribute("gridLines"), element.getAttribute("xAtZero"), 
+				_makeArray(element.getAttribute("yAtZeros")), _makeArray(element.getAttribute("ysteps")), 
+				labels, bgColors, brColors);
 		}
 
 		if (type == "linegraph") memory.chart = await chart.drawLinegraph(contentDiv.querySelector("canvas#canvas"), content.contents, 
-			element.getAttribute("maxticks"), element.getAttribute("ystep"), labels, element.getAttribute("fillColor"), 
-			element.getAttribute("borderColor"));
+			element.getAttribute("maxticks"), element.getAttribute("gridLines"), element.getAttribute("xAtZero"), 
+			_makeArray(element.getAttribute("yAtZeros")), _makeArray(element.getAttribute("ysteps")), labels, 
+			_makeArray(element.getAttribute("fillColors")), _makeArray(element.getAttribute("borderColors")));
 	}
 
 	if (type == "piegraph" || type == "donutgraph") {
@@ -124,8 +126,33 @@ async function _refreshData(element, force) {
 			labelHash[tuple[0].trim()] = tuple[1].trim();
 		}
 		
-		memory.chart = await chart.drawPiegraph(contentDiv.querySelector("canvas#canvas"), content.contents, labelHash, colorHash, type == "donutgraph");
+		memory.chart = await chart.drawPiegraph(contentDiv.querySelector("canvas#canvas"), content.contents, 
+			labelHash, colorHash, type == "donutgraph");
 	}
+}
+
+const _makeArray = string => {
+	if (!string) return null; const raw = string.trim(); if (!raw.startsWith("[")) raw = `[${raw}]`;
+	const arrayVals = XRegExp.matchRecursive(raw, '\\[', '\\]', "g");
+	return arrayVals;
+}
+
+function _getColorHash(ycolors) {
+	const colorHash = []; for ( const ycolorSet of ycolors ) {
+		const colorHashThis = {}; 
+		for (const ycolor of ycolorSet.split(",")) {const tuples = ycolor.split(":"); colorHashThis[tuples[0].trim()] = [tuples[1].trim(), tuples[2].trim()]; }
+		colorHash.push(colorHashThis);
+	}
+	return colorHash;
+}
+
+function _getLabels(labelsRAW) {
+	const labels = []; for (const labelRAW of labelsRAW) {
+		const labelsThis = {};
+		for (const label of labelRAW.split(",")) {const splits = label.split(":"); labelsThis[splits[0]] = splits[1]};
+		labels.push(labelsThis);
+	}
+	return labels;
 }
 
 async function _getContent(api, params) {

@@ -4,6 +4,9 @@
     "/apps/monkvision/changepassword" : "/apis/changepassword.js?key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true",
     
     "/apps/monkvision/alerts" : "/apis/alerts.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true",
-    "/apps/monkvision/loggraph" : "/apis/loggraph.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true",
+    
+    "/apps/monkvision/loggraphfile" : "/apis/loggraphfile.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true",
+    "/apps/monkvision/loggraphdb" : "/apis/loggraphdb.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true",
+
     "/apps/monkvision/statusaggregator" : "/apis/statusaggregator.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true"
 }

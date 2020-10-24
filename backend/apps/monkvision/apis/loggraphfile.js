@@ -27,7 +27,7 @@ exports.doService = async jsonReq => {
             info.push(tuples[2].trim());
         }
 
-        return {result: true, type: "bargraph", contents: {x,y,info}};
+        return {result: true, type: "bargraph", contents: {length:x.length,x,ys:[y],infos:[info]}};
     } catch (err) {
         LOG.error(`File read issue: ${err}`);
         return {result: false};

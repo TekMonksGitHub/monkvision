@@ -1,10 +1,23 @@
 SCHEMA
 ======
 {
-    "alerts": {"html":"chart-box", "id":"alerts", "title":"{{i18n.CriticalAlerts}}", "api":"alerts", "type":"text", "refresh":60000, "styleBody":"div#container{height: calc(100vh - 105px) !important;}"},
-    "password": {"html":"chart-box", "id":"password", "title":"{{i18n.PasswordAttacks}}", "api":"loggraph", "type":"table", "refresh":60000, "labels":"x:{{i18n.time}},y:{{i18n.status}},info:{{i18n.additionalinfo}}", "params":"id=ssh_mon_139_59_219_134c__users_rohit_kapoor_source_cyberwarrior_scripts_checkbadlogins_sh&statusAsBoolean=true", "styleBody":"div#content{max-height: calc(33vh - 64px) !important;}"},
-    "sql": {"html":"chart-box", "id":"sql", "title":"{{i18n.SQLAttacks}}", "api":"loggraph", "type":"bargraph", "refresh":60000, "maxticks":5, "ystep":1, "ylabels":"1:{{i18n.OK}},0:{{i18n.Issue}}", "ycolors":"0.1:#D43F3F4C:#af3234,else:#40D59D4C:#0e8f7e", "params":"id=ssh_mon_139_59_219_134c__users_rohit_kapoor_source_cyberwarrior_scripts_checksqlinjection_sh"},
-    "ddos": {"html":"chart-box", "id":"ddos", "title":"{{i18n.DDOSAttacks}}", "api":"loggraph", "type":"bargraph", "refresh":60000, "maxticks":5, "ystep":1, "ylabels":"1:{{i18n.OK}},0:{{i18n.Issue}}", "ycolors":"0.1:#D43F3F4C:#af3234,else:#40D59D4C:#0e8f7e", "params":"id=ssh_mon_139_59_219_134c__users_rohit_kapoor_source_cyberwarrior_scripts_checkhttpddos_sh"}
+    "alerts": {"html":"chart-box", "id":"alerts", "title":"{{i18n.CriticalAlerts}}", "api":"alerts", "type":"text", 
+        "refresh":60000, "styleBody":"div#container{height: calc(100vh - 105px) !important;}"},
+
+    "http": {"html":"chart-box", "id":"password", "title":"HTTP Google", "api":"loggraphdb", "type":"table", 
+        "refresh":60000, "labels":"x:{{i18n.time}},ys0:{{i18n.status}},infos0:{{i18n.additionalinfo}}", 
+        "params":"id=html_mon_https___www_google_com_search_q_tekmonks&statusAsBoolean=true", 
+        "styleBody":"div#content{max-height: calc(33vh - 64px) !important;}"},
+
+    "sql": {"html":"chart-box", "id":"sql", "title":"{{i18n.SQLAttacks}}", "api":"loggraphfile", "type":"bargraph", 
+        "refresh":60000, "maxticks":5, "ysteps":"[0.10]", "ylabels":"[1:{{i18n.OK}},0:{{i18n.Issue}},else:]", 
+        "ycolors":"[0.1:#D43F3F4C:#af3234,else:#40D59D4C:#0e8f7e]", "yAtZeros":"[true]", "gridLines":"true",
+        "params":"id=ssh_mon_139_59_219_134c__users_rohit_kapoor_source_cyberwarrior_scripts_checksqlinjection_sh"},
+
+    "ddos": {"html":"chart-box", "id":"ddos", "title":"{{i18n.DDOSAttacks}}", "api":"loggraphfile", "type":"bargraph", 
+        "refresh":60000, "maxticks":5, "ysteps":"[0.10]", "ylabels":"[1:{{i18n.OK}},0:{{i18n.Issue}},else:]", 
+        "ycolors":"[0.1:#D43F3F4C:#af3234,else:#40D59D4C:#0e8f7e]", "yAtZeros":"[true]", "gridLines":"true",
+        "params":"id=ssh_mon_139_59_219_134c__users_rohit_kapoor_source_cyberwarrior_scripts_checkhttpddos_sh"}
 }
 ======
 
@@ -12,7 +25,7 @@ SCHEMA
 LAYOUT
 =================
 -----------------------------
-| alerts      |  password   |
+| alerts      |    http     |
 |-------------|-------------|
 | alerts      |     sql     |
 |-------------|-------------|

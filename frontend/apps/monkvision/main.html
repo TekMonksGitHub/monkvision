@@ -19,9 +19,9 @@ div#container {
 	position: absolute;
 	top: 0;
 	height: 100vh;
-	width: 95%;
+	width: calc(100% - 64px);
 	background-color: rgb(245, 247, 250);
-	border-radius: 40px;
+	border-top-left-radius: 40px;
 	z-index: 1;
 }
 
@@ -51,9 +51,19 @@ div#leftheader {
 div#leftheader > img.dashicon {
 	height: 48px;
 	width: 48px;
-	left: 8px;
+	left: 4px;
+	padding: 2px;
 	position: relative;
-	padding: 0;
+	border: 0.5px solid #45d19e;
+}
+
+div#leftheader > img.dashicon:hover {
+	left: 4px;
+	padding: 2px;
+    border-radius: 5px;
+    border-width: 0.5px;
+	border-style: outset;
+	border-color: white;
 }
 
 div#leftheader > img.dashicon.selected {
@@ -62,6 +72,7 @@ div#leftheader > img.dashicon.selected {
 	border-style: inset;
     border-radius: 5px;
     border-width: 0.5px;
+	border-color: white;
 }
 
 div#leftheader > span {
@@ -181,7 +192,7 @@ span#header > img#playpause:hover {
 		<input id="datetimepickerfrom" type="datetime-local" value="{{{dateTimeWeekAgo}}}" onchange="chart_box.setTimeRange(main.getAndUpdateTimeRange())">
 		<input id="datetimepickerto" type="datetime-local" value="{{{dateTimeNow}}}" onchange="chart_box.setTimeRange(main.getAndUpdateTimeRange())">
 		<img id="playpause" src="./img/pause.svg" onclick="main.playPauseCharts(this)">
-		<span-with-menu id="gear" styleBody="div.menuitem:hover{background: #41cf70 !important; color: white !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;}"><img src="./img/settings.svg" style="height: 30px;width: 30px;vertical-align: middle;">
+		<span-with-menu id="gear" styleBody="div.menuitem:hover{background: #41cf70 !important; color: white !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -120px;}"><img src="./img/settings.svg" style="height: 30px;width: 30px;vertical-align: middle;">
 			<menu-item onclick="main.changePassword(this)">Change Password</menu-item>
 		</span-with-menu>
 		<span id="signoff"><img src="./img/poweroff.svg" onclick="loginmanager.logout()"></span>
