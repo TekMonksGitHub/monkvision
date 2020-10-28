@@ -18,6 +18,9 @@ export const APP_CONSTANTS = {
     DIALOGS_PATH: APP_PATH+"/dialogs",
     COMPONENTS_PATH: APP_PATH+"/components",
 
+    // Dummy values
+    DUMMY_TOTP_SECRET: "JVXW423WNFZWS33OIJ4VIZLLJVXW423T",
+
     // Login constants
     MIN_PASS_LENGTH: 8,
     API_LOGIN: API_PATH+"/login",

@@ -2,7 +2,6 @@
  * (C) 2018 TekMonks. All rights reserved.
  * License: MIT - see enclosed license.txt file.
  */
-const speakeasy = require("speakeasy");
 import {router} from "/framework/js/router.mjs";
 import {loginmanager} from "../../js/loginmanager.mjs";
 import {monkshu_component} from "/framework/js/monkshu_component.mjs";
@@ -25,7 +24,7 @@ async function register(element) {
 	const passSelector = shadowRoot.querySelector("input#pass"); const pass = passSelector.value;
 	const orgSelector = shadowRoot.querySelector("input#org"); const org = orgSelector.value;
 	const routeOnSuccess = register_box.getHostElement(element).getAttribute("routeOnSuccess");
-	const totpSecret = speakeasy.generateSecret({length: 20}).base32;
+	const totpSecret = APP_CONSTANTS.DUMMY_TOTP_SECRET;
 	
 	if (!await loginmanager.register(name, id, pass, org, totpSecret)) shadowRoot.querySelector("span#error").style.display = "inline";
 	else router.loadPage(routeOnSuccess);

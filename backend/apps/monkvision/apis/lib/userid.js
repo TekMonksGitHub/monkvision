@@ -22,20 +22,20 @@ exports.getUserHash = data => {
 	}));
 }
 
-exports.register = async (id, name, org, pwph, totpSecret) => {
-	return new Promise(async resolve => {
+exports.register = (id, name, org, pwph, totpSecret) => {
+	return new Promise(async (resolve, _reject) => {
 		const exists = await exports.exists(pwph);
 		if (exists.result) {resolve({result:false}); return;}
 		const existsID = await exports.existsID(id);
 		if (existsID.result) {resolve({result:false}); return;}
 		pwph = await exports.getUserHash(pwph);
-		usersDB.run(`INSERT INTO users(id, name, org, pwph, totpsec) VALUES (?,?,?,?)`, 
-			[id,name,org,pwph, totpSecret], err => err?resolve({result:false}):resolve({result:true}));
+		usersDB.run(`INSERT INTO users(id, name, org, pwph, totpsec) VALUES (?,?,?,?,?)`, 
+			[id,name,org,pwph,totpSecret], err => err ? resolve({result: false}) : resolve({result: true}));
 	});
 }
 
 exports.exists = exports.login = pwph => {
-	return new Promise(resolve => {
+	return new Promise((resolve, _reject) => {
 		initDB()
 		.then(_ => exports.getUserHash(pwph))
 		.then(pwph => {
@@ -49,7 +49,7 @@ exports.exists = exports.login = pwph => {
 }
 
 exports.existsID = id => {
-	return new Promise(async resolve => {
+	return new Promise(async (resolve, _reject) => {
 		await initDB();
 		usersDB.all(`SELECT id, name, org, totpsec FROM users WHERE id = ? COLLATE NOCASE;`, [id], (err, rows) => {
 			if (err || !rows.length) resolve({result: false});
@@ -59,7 +59,7 @@ exports.existsID = id => {
 }
 
 exports.changepwph = (id, pwph) => {
-	return new Promise((resolve, _) => {
+	return new Promise((resolve, _reject) => {
 		initDB()
 		.then(_ => exports.getUserHash(pwph))
 		.then(pwph => {

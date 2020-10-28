@@ -10,7 +10,7 @@ import {apimanager as apiman} from "/framework/js/apimanager.mjs";
 
 let currTimeout; let logoutListeners = [];
 
-async function signin(id, pass) {
+function signin(id, pass) {
     const pwph = `${id} ${pass}`;
     logoutListeners = [];   // reset listeners on sign in
         
@@ -31,7 +31,7 @@ async function signin(id, pass) {
     });
 }
 
-async function register(name, id, pass, org, totpSecret) {
+function register(name, id, pass, org, totpSecret) {
     const pwph = `${id} ${pass}`;
 
     return new Promise(async (resolve, _reject) => {
@@ -51,7 +51,7 @@ async function register(name, id, pass, org, totpSecret) {
     });
 }
 
-async function changepassword(id, pass) {
+function changepassword(id, pass) {
     const pwph = `${id} ${pass}`;
         
     return new Promise(async (resolve, _reject) => {
