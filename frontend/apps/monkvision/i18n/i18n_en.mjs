@@ -47,5 +47,6 @@ export const i18n = {
 "dash2.title": "DDoS and Password Attacks",
 "time": "Time",
 "status": "Status",
-"additionalinfo": "Additional Information"
+"additionalinfo": "Additional Information",
+"none": "None"
 }

@@ -5,7 +5,6 @@
  * License: See enclosed license.txt file.
  */
 import {chart} from "./lib/chart.mjs";
-import {loginmanager} from "../../js/loginmanager.mjs";
 import {apimanager as apiman} from "/framework/js/apimanager.mjs";
 import {monkshu_component} from "/framework/js/monkshu_component.mjs";
 
@@ -13,18 +12,6 @@ async function elementRendered(element) {
 	await $$.require(`${APP_CONSTANTS.COMPONENTS_PATH}/chart-box/3p/xregexp-4.3.0-all-min.js`);	// load xregexp which is needed
 	
 	if (!element.__skip_refresh) _refreshData(element, true); else return;
-	const refreshInterval = element.getAttribute("refresh");
-	if (refreshInterval && !element.__chart_box_timer) {
-		element.__chart_box_timer = setInterval(_=>_refreshData(element), refreshInterval);
-		loginmanager.addLogoutListener(_=>clearInterval(element.__chart_box_timer));
-	}
-}
-
-function setRefresh(enabled) {
-	for (const element of chart_box.getAllElementInstances()) {
-		if (element.__chart_box_timer) {clearInterval(element.__chart_box_timer); delete element.__chart_box_timer;}	// delete old timers
-		if (enabled && element.getAttribute("refresh")) element.__chart_box_timer = setInterval(_=>_refreshData(element), element.getAttribute("refresh"));	// set new refresh timers
-	}
 }
 
 function getTimeRange() {
@@ -53,7 +40,7 @@ async function _refreshData(element, force) {
 	else memory.contents = content.contents;
 
 	const data = {}; if (element.getAttribute("styleBody")) data.styleBody = `<style>${element.getAttribute("styleBody")}</style>`;
-	data.title = element.getAttribute("title");
+	data.title = content.title || element.getAttribute("title");
 
 	const bindData = async (data, id) => {
 		element.__skip_refresh = true; 
@@ -166,6 +153,5 @@ async function _getContent(api, params) {
 	return resp;
 }
 
-const trueWebComponentMode = true;	// making this false renders the component without using Shadow DOM
-export const chart_box = {trueWebComponentMode, elementRendered, setTimeRange, getTimeRange, setRefresh}
+export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange}
 monkshu_component.register("chart-box", `${APP_CONSTANTS.APP_PATH}/components/chart-box/chart-box.html`, chart_box);

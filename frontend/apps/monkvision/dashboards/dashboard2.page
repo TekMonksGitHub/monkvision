@@ -2,12 +2,12 @@ SCHEMA
 ======
 {
     "pass": {"html":"chart-box", "id":"pass", "title":"{{i18n.PasswordAttacks}}", "api":"loggraphfile", "type":"linegraph", 
-        "refresh":5000, "maxticks":5, "ysteps":"[0.1]", "ylabels":"[1:{{i18n.OK}},0:{{i18n.Issue}},else:]", 
+        "maxticks":5, "ysteps":"[0.1]", "ylabels":"[1:{{i18n.OK}},0:{{i18n.Issue}},else:]", 
         "fillColors":"[#40D59D4C]", "borderColors":"[#0e8f7e]", "yAtZeros":"[true]", "gridLines":"true",
         "params":"id=ssh_mon_139_59_219_134c__users_rohit_kapoor_source_cyberwarrior_scripts_checkbadlogins_sh"},
 
     "ddos2": {"html":"chart-box", "id":"ddos2", "title":"{{i18n.DDOSAttacks}}", "api":"statusaggregator", 
-        "type":"donutgraph", "refresh":5000, "labels":"1:{{i18n.OK}},0:{{i18n.Issue}}", 
+        "type":"donutgraph", "labels":"1:{{i18n.OK}},0:{{i18n.Issue}}", 
         "colors":"1:#D43F3F4C:#af3234,0:#40D59D4C:#0e8f7e", 
         "params":"id=ssh_mon_139_59_219_134c__users_rohit_kapoor_source_cyberwarrior_scripts_checkhttpddos_sh"}
 }

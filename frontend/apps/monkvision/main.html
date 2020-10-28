@@ -182,15 +182,15 @@ span#header > img#playpause:hover {
 <body>
 <div id="leftheader">
 	{{#dashboards}}
-	<img id="{{id}}" class="dashicon" src="./img/dashicon.svg" alt="{{title}}" title="{{title}}" onclick="router.loadPage('./main.html?dash=./dashboards/{{file}}&title={{title}}');"><span>{{name}}</span>
+	<img id="{{id}}" class="dashicon" src="./img/dashicon.svg" alt="{{title}}" title="{{title}}" onclick="router.loadPage('./main.html?dash=./dashboards/{{file}}&title={{title}}&refresh={{refresh}}');"><span>{{name}}</span>
 	{{/dashboards}}
 </div>
 <div id="container">
 	<span id="header">
 		<img id="textlogo" src="./img/textlogo.png">
 		<span id="title">{{title}}</span>
-		<input id="datetimepickerfrom" type="datetime-local" value="{{{dateTimeWeekAgo}}}" onchange="chart_box.setTimeRange(main.getAndUpdateTimeRange())">
-		<input id="datetimepickerto" type="datetime-local" value="{{{dateTimeNow}}}" onchange="chart_box.setTimeRange(main.getAndUpdateTimeRange())">
+		<input id="datetimepickerfrom" type="datetime-local" value="{{{dateTimeWeekAgo}}}" onchange="main.timeRangeUpdated(true)">
+		<input id="datetimepickerto" type="datetime-local" value="{{{dateTimeNow}}}" onchange="main.timeRangeUpdated(true)">
 		<img id="playpause" src="./img/pause.svg" onclick="main.playPauseCharts(this)">
 		<span-with-menu id="gear" styleBody="div.menuitem:hover{background: #41cf70 !important; color: white !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -120px;}"><img src="./img/settings.svg" style="height: 30px;width: 30px;vertical-align: middle;">
 			<menu-item onclick="main.changePassword(this)">Change Password</menu-item>

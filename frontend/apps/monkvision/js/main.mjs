@@ -8,23 +8,25 @@ import {loginmanager} from "./loginmanager.mjs";
 import {session} from "/framework/js/session.mjs";
 import {chart_box} from "../components/chart-box/chart-box.mjs";
 
-const SELECTED_DATES = "selecteddates";
+const SELECTED_DATES = "__monkvision_selecteddates", DASHBOARD_TIMER = "__monkvision_dashtimer", REFRESH_INTERVAL = "__monkvision_refresh";
 
-function getAndUpdateTimeRange() {
-    const dates = { from: document.querySelector("input#datetimepickerfrom").value,
+const dateAsHTMLDateValue = date => new Date(date.toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
+
+function timeRangeUpdated(stopRefresh, dates) {
+    if (!dates) dates = { from: document.querySelector("input#datetimepickerfrom").value,
         to: document.querySelector("input#datetimepickerto").value };
+    else { document.querySelector("input#datetimepickerfrom").value = dates.from;
+        document.querySelector("input#datetimepickerto").value = dates.to;
+    }
+
     session.set(SELECTED_DATES, dates);
-    return dates;
+    chart_box.setTimeRange(dates);
+    if (stopRefresh) _stopRefresh(); // user selected a particular time range, stop refresh
 }
 
 function playPauseCharts(img) {
-    if (img.src.endsWith("play.svg")) {
-        img.src = "./img/pause.svg";
-        chart_box.setRefresh(true);
-    } else {
-        img.src = "./img/play.svg";
-        chart_box.setRefresh(false);
-    }
+    if (img.src.endsWith("play.svg")) { img.src = "./img/pause.svg"; _startRefresh();} 
+    else { img.src = "./img/play.svg"; _stopRefresh(); }
 }
 
 async function interceptPageLoad() {
@@ -32,38 +34,46 @@ async function interceptPageLoad() {
         // load dashboards config and build the data object
         const dashboardsRaw = await (await fetch(`${APP_CONSTANTS.APP_PATH}/dashboards/dashboards.json`)).json();
         data.dashboards = [];
-        for (const key of Object.keys(dashboardsRaw)) data.dashboards.push(
-            {name: await i18n.get(key, session.get($$.MONKSHU_CONSTANTS.LANG_ID)), file: dashboardsRaw[key],
-                title: await i18n.get(`${key}.title`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)), id: key} );
+        for (const key of Object.keys(dashboardsRaw)) {
+            const file = dashboardsRaw[key].split(",")[0], refresh = parseInt(dashboardsRaw[key].split(",")[1].split(":")[1]);
+            data.dashboards.push({name: await i18n.get(key, session.get($$.MONKSHU_CONSTANTS.LANG_ID)), 
+                file, refresh, title: await i18n.get(`${key}.title`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)), id: key} );
+        }
 
         // add in dashboard path and title, to the page data object
         const currentURL = new URL(router.getCurrentURL());
         if (!currentURL.searchParams.get("dash")) { // load first dashboard if none was provided in the incoming URL
             data.title = data.dashboards[0].title; 
-            data.dash = `./dashboards/${data.dashboards[0].file}`;
+            data.dash = `./dashboards/${data.dashboards[0].file}`; 
+            data.refresh = data.dashboards[0].refresh;
         } else {                                                // else get dashboard path and title from the URL
             data.title = currentURL.searchParams.get("title"); 
             data.dash = currentURL.searchParams.get("dash");
+            data.refresh = currentURL.searchParams.get("refresh");
         }
 
-        // set the dates
+        // set the dates data
         if (!session.get(SELECTED_DATES)) {
             const dateToday = new Date(), dateWeekAgo = new Date(); dateWeekAgo.setDate(dateToday.getDate() - 7);
-            data.dateTimeNow = new Date(dateToday.toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
-            data.dateTimeWeekAgo = new Date(dateWeekAgo.toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
+            data.dateTimeNow = dateAsHTMLDateValue(dateToday); data.dateTimeWeekAgo = dateAsHTMLDateValue(dateWeekAgo);
         } else {
-            data.dateTimeNow = session.get("selecteddates").to;
-            data.dateTimeWeekAgo = session.get("selecteddates").from;
+            data.dateTimeNow = session.get(SELECTED_DATES).to;
+            data.dateTimeWeekAgo = session.get(SELECTED_DATES).from;
         }
-        
-        chart_box.setTimeRange({from: data.dateTimeWeekAgo, to: data.dateTimeNow});
     }
 
-    window.monkshu_env.onRouterLoadPage.push(async data=>{           // select current dashboard icon on page load
+    window.monkshu_env.onRouterLoadPage.push(async (data, url) =>{         
+        if (url.indexOf("main.html") == -1) return; // not for us
+
+        // select current dashboard icon on page load
         const dashboardsRaw = await (await fetch(`${APP_CONSTANTS.APP_PATH}/dashboards/dashboards.json`)).json();
         const allDashIcons = document.querySelectorAll("div#leftheader > img.dashicon");
         for (const dashIcon of allDashIcons) if (data.dash.endsWith(dashboardsRaw[dashIcon.id]))
             dashIcon.classList.add("selected"); else dashIcon.classList.remove("selected");
+
+        // load initial charts and set the refresh interval
+        timeRangeUpdated(false);    // load initial charts they will get the dates from HTML
+        if (data.refresh) {session.set(REFRESH_INTERVAL, data.refresh); _startRefresh()};
     });
 }
 
@@ -76,4 +86,16 @@ async function changePassword(_element) {
     });
 }
 
-export const main = {changePassword, interceptPageLoad, getAndUpdateTimeRange, playPauseCharts};
+const _stopRefresh = _ => {if (session.get(DASHBOARD_TIMER)) clearInterval(session.get(DASHBOARD_TIMER));}
+
+function _startRefresh() {
+    _stopRefresh(); if (!session.get(REFRESH_INTERVAL)) return;
+
+    session.set(DASHBOARD_TIMER, setInterval(_=>{
+        const dateToday = new Date(), dateWeekAgo = new Date(); dateWeekAgo.setDate(dateToday.getDate() - 7);
+        timeRangeUpdated(false, {from: dateAsHTMLDateValue(dateWeekAgo), to: dateAsHTMLDateValue(dateToday)});
+    }, session.get(REFRESH_INTERVAL)));
+    loginmanager.addLogoutListener(_=>clearInterval(session.get(DASHBOARD_TIMER)));
+}
+
+export const main = {changePassword, interceptPageLoad, timeRangeUpdated, playPauseCharts};
