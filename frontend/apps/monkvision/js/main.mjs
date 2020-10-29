@@ -21,12 +21,12 @@ function timeRangeUpdated(stopRefresh, dates) {
 
     session.set(SELECTED_DATES, dates);
     chart_box.setTimeRange(dates);
-    if (stopRefresh) _stopRefresh(); // user selected a particular time range, stop refresh
+    if (stopRefresh) playPauseCharts(document.querySelector("img#playpause"), "stop"); // user selected a particular time range, stop refresh
 }
 
-function playPauseCharts(img) {
-    if (img.src.endsWith("play.svg")) { img.src = "./img/pause.svg"; _startRefresh();} 
-    else { img.src = "./img/play.svg"; _stopRefresh(); }
+function playPauseCharts(img, force) {
+    if (img.src.endsWith("play.svg")&&force!="stop") { img.src = "./img/pause.svg"; _startRefresh(); } 
+    else if (img.src.endsWith("pause.svg")&&force!="start") { img.src = "./img/play.svg"; _stopRefresh(); }
 }
 
 async function interceptPageLoad() {

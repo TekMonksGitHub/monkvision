@@ -23,7 +23,7 @@ const _init = async _ => await $$.require(`${APP_CONSTANTS.COMPONENTS_PATH}/char
  * @param brColors  The border colors for the bars, array of arrays for each value in the dataset
  */
 async function drawBargraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors) {
-    await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, "bar", 0, 1);
+    return await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, "bar", 0, 1);
 }
 
 /**
@@ -42,7 +42,7 @@ async function drawBargraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAt
  * @param brColor   The border color for the line
  */
 async function drawLinegraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors) {
-    await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, "line", 0.5, 2);
+    return await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, "line", 0.5, 2);
 }
 
 async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, type, pointWidth, lineWidth) {

@@ -17,7 +17,7 @@ let dbInstance, dbRunAsync, dbAllAsync;
  * @return The rows read or false on error - returned via async or callback (if callback is provided)
  */
 exports.getAlerts = async (range, callback) => {
-    const query = "select error, additional_err from alerts where timestamp >= ? and timestamp <= ?";
+    const query = "select timestamp, error, additional_err from alerts where timestamp >= ? and timestamp <= ?";
     const rows = await exports.getQuery(query, [range.from, range.to]);
     if (callback) callback(rows?null:"DB read error", rows?rows:null);
     else return rows;

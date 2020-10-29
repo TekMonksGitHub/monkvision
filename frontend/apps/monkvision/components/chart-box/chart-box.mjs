@@ -31,29 +31,42 @@ function setTimeRange(timeRange) {
 	for (const element of chart_box.getAllElementInstances()) _refreshData(element);
 }
 
+function _escapeHTML(text) {
+	const textNode = document.createTextNode(text);
+	const p = document.createElement("p");
+	p.appendChild(textNode);
+	return p.innerHTML;
+}
+
+const _isNullOrUndefined = object => object == null || object == undefined;
+
 async function _refreshData(element, force) {
 	const id = element.id, api = element.getAttribute("api"), params = element.getAttribute("params"), type = element.getAttribute("type");
-	const content =  await _getContent(api, params); if (!content || !content.contents) return;	// nothing to do
+	const content =  await _getContent(api, params); 
 	const memory = chart_box.getMemory(id);
+	const bindData = async (data, id) => { element.__skip_refresh = true; await chart_box.bindData(data, id); 
+			delete element.__skip_refresh; }
+	const clearChart = _ => {if (memory.chart) {memory.chart.destroy(); delete memory.chart;}}
+	const createData = _ => {return {title: content? content.title || element.getAttribute("title"):element.getAttribute("title"), 
+		styleBody: element.getAttribute("styleBody")?`<style>${element.getAttribute("styleBody")}</style>`:null}};
 
-	if (!force && JSON.stringify(memory.contents) == JSON.stringify(content.contents)) return;	// return if data didn't change
-	else memory.contents = content.contents;
+	if (!force && content && !content.contents) {	// clear everything if data is empty and changed
+		if (memory.contents) {await bindData(createData(), id); clearChart(); delete memory.contents;}	// destroy any table etc.
+		return;
+	} else if (!force && content && JSON.stringify(memory.contents) == JSON.stringify(content.contents)) return;	// return if data didn't change
+	else if (content) memory.contents = content.contents; else delete memory.contents;	// we will now render new data
 
-	const data = {}; if (element.getAttribute("styleBody")) data.styleBody = `<style>${element.getAttribute("styleBody")}</style>`;
-	data.title = content.title || element.getAttribute("title");
-
-	const bindData = async (data, id) => {
-		element.__skip_refresh = true; 
-		await chart_box.bindData(data, id); 
-		delete element.__skip_refresh;
-	}
+	const data = createData();
 
 	const contentDiv = chart_box.getShadowRootByHostId(id).querySelector("div#content"); 
+	
 	if (type == "text") {
 		contentDiv.innerHTML = "";	// clear it so scrollHeight below is always accurate
 		data.textcontent = content.contents;
 		await bindData(data, id);
 		contentDiv.scrollTop = contentDiv.scrollHeight; 
+		contentDiv.style["overflow-x"] = "scroll";	// we allow text to scroll
+		return;
 	}	// scroll to bottom
 	
 	if (type == "table") {	// content: x, ys and infos
@@ -61,22 +74,26 @@ async function _refreshData(element, force) {
 			const tuple = label.split(":");
 			labelHash[tuple[0].trim()] = tuple[1].trim();
 		}
-		const headers = [labelHash["x"]]; for (let i = 0; i < contentIn.ys.length; i++) {headers.push(labelHash[`ys${i}`]); headers.push(labelHash[`infos${i}`]);}
-		const rows = []; for (let i = 0; i < contentIn.length; i++) {
-			const rowContent = [contentIn.x[i]]; for (let j = 0; j < contentIn.ys.length; j++) {
-				rowContent.push(contentIn.ys[j][i]||""); rowContent.push(contentIn.infos[j][i]||""); }
-			rows.push(rowContent);
+		if (contentIn) {
+			const headers = [labelHash["x"]]; for (let i = 0; i < contentIn.ys.length; i++) {headers.push(labelHash[`ys${i}`]); headers.push(labelHash[`infos${i}`]);}
+			const rows = []; for (let i = 0; i < contentIn.length; i++) {
+				const rowContent = [contentIn.x[i]]; for (let j = 0; j < contentIn.ys.length; j++) {
+					rowContent.push(_isNullOrUndefined(contentIn.ys[j][i])?"":contentIn.ys[j][i]); 
+					rowContent.push(_isNullOrUndefined(contentIn.infos[j][i])?"":contentIn.infos[j][i]);
+				}
+				rows.push(rowContent);
+			}
+			data.table = {headers, rows};
 		}
-
-		data.table = {headers, rows};
 		await bindData(data, id);
 		contentDiv.scrollTop = contentDiv.scrollHeight; 
+		return;
 	}
 
-	if (memory.chart) {memory.chart.destroy(); delete memory.chart;}	// destroy the old chart if it exists.
+	clearChart();	// destroy the old chart if it exists as we will now refresh charts.
 
 	if (type == "bargraph" || type == "linegraph") {
-		await bindData(data, id);
+		await bindData(data, id); if (!content || !content.contents) return;
 
 		const labels = _getLabels(_makeArray(element.getAttribute("ylabels")));
 
@@ -99,10 +116,12 @@ async function _refreshData(element, force) {
 			element.getAttribute("maxticks"), element.getAttribute("gridLines"), element.getAttribute("xAtZero"), 
 			_makeArray(element.getAttribute("yAtZeros")), _makeArray(element.getAttribute("ysteps")), labels, 
 			_makeArray(element.getAttribute("fillColors")), _makeArray(element.getAttribute("borderColors")));
+		
+		return;
 	}
 
 	if (type == "piegraph" || type == "donutgraph") {
-		await bindData(data, id);
+		await bindData(data, id); if (!content || !content.contents) return;
 		const colorHash = {}, colors = element.getAttribute("colors").split(","); for (const color of colors) {
 			const tuples = color.split(":");
 			colorHash[tuples[0].trim()] = [tuples[1].trim(), tuples[2].trim()];
@@ -115,6 +134,8 @@ async function _refreshData(element, force) {
 		
 		memory.chart = await chart.drawPiegraph(contentDiv.querySelector("canvas#canvas"), content.contents, 
 			labelHash, colorHash, type == "donutgraph");
+
+		return;
 	}
 }
 
@@ -148,7 +169,8 @@ async function _getContent(api, params) {
 	const paramObj = {timeRange: getTimeRange()}; if (params) for (const param of params.split("&")) paramObj[param.split("=")[0]] = param.split("=")[1];
 	const resp = await apiman.rest(API_TO_CALL, "GET", paramObj, true, false);
 
-	if (resp && resp.type=="text" && resp.contents) resp.contents = resp.contents.replace(/(?:\r\n|\r|\n)/g, '<br>');
+	if (resp && resp.type=="text" && resp.contents && resp.contents.length) for (const [i,line] of resp.contents.entries())
+		resp.contents[i] = _escapeHTML(line).replace(/(?:\r\n|\r|\n)/g, '<br>');
 
 	return resp;
 }
