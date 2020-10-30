@@ -65,7 +65,6 @@ async function _refreshData(element, force) {
 		data.textcontent = content.contents;
 		await bindData(data, id);
 		contentDiv.scrollTop = contentDiv.scrollHeight; 
-		contentDiv.style["overflow-x"] = "scroll";	// we allow text to scroll
 		return;
 	}	// scroll to bottom
 	
@@ -127,9 +126,13 @@ async function _refreshData(element, force) {
 			colorHash[tuples[0].trim()] = [tuples[1].trim(), tuples[2].trim()];
 		}
 
+		let contentTotal = 0; for (const key of Object.keys(content.contents)) contentTotal += parseInt(content.contents[key]);
+
 		const labelHash = {}, labels = element.getAttribute("labels").split(","); for (const label of labels) {
 			const tuple = label.split(":");
 			labelHash[tuple[0].trim()] = tuple[1].trim();
+			if (element.getAttribute("labelsShowPercentage").toLowerCase() == "true") labelHash[tuple[0].trim()] +=
+				` - ${Math.round(parseInt(content.contents[tuple[0].trim()])/contentTotal*100)}%`;
 		}
 		
 		memory.chart = await chart.drawPiegraph(contentDiv.querySelector("canvas#canvas"), content.contents, 

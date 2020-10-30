@@ -4,20 +4,20 @@ SCHEMA
     "alerts": {"html":"chart-box", "id":"alerts", "title":"{{i18n.CriticalAlerts}}", "api":"alerts", "type":"text",
         "styleBody":"div#container{height: calc(100vh - 105px) !important;}"},
 
+    "httpPie": {"html":"chart-box", "id":"httpPie", "title":"HTTP Google Pie", "api":"statusaggregator", "type":"piegraph", 
+        "labels":"1:{{i18n.OK}},0:{{i18n.Issue}}", "labelsShowPercentage": "true",
+        "colors":"0:#D43F3F4C:#af3234,1:#40D59D4C:#0e8f7e", 
+        "params":"id=html_mon_https___www_google_com_search_q_tekmonks"},
+
     "http": {"html":"chart-box", "id":"password", "api":"loggraph", "type":"table", 
         "labels":"x:{{i18n.time}},ys0:{{i18n.status}},infos0:{{i18n.additionalinfo}}", 
         "params":"id=html_mon_https___www_google_com_search_q_tekmonks&statusAsBoolean=true&nullValue={{i18n.none}}&title=HTTP Google", 
         "styleBody":"div#content{max-height: calc(33vh - 64px) !important;}"},
 
-    "httpBar": {"html":"chart-box", "id":"sql", "title":"HTTP Google Bar", "api":"loggraph", "type":"bargraph", 
+    "httpBar": {"html":"chart-box", "id":"httpBar", "title":"HTTP Google Bar", "api":"loggraph", "type":"bargraph", 
         "maxticks":5, "ysteps":"[0.10]", "ylabels":"[1:{{i18n.OK}},0:{{i18n.Issue}},else:]", 
         "ycolors":"[0.1:#D43F3F4C:#af3234,else:#40D59D4C:#0e8f7e]", "yAtZeros":"[true]", "gridLines":"true",
-        "params":"id=html_mon_https___www_google_com_search_q_tekmonks&statusAsBoolean=false&statusFalseValue=0.1&statusTrueValue=1&nullValue={{i18n.none}}"},
-
-    "ddos": {"html":"chart-box", "id":"ddos", "title":"{{i18n.DDOSAttacks}}", "api":"loggraphfile", "type":"bargraph", 
-        "maxticks":5, "ysteps":"[0.10]", "ylabels":"[1:{{i18n.OK}},0:{{i18n.Issue}},else:]", 
-        "ycolors":"[0.1:#D43F3F4C:#af3234,else:#40D59D4C:#0e8f7e]", "yAtZeros":"[true]", "gridLines":"true",
-        "params":"id=ssh_mon_139_59_219_134c__users_rohit_kapoor_source_cyberwarrior_scripts_checkhttpddos_sh"}
+        "params":"id=html_mon_https___www_google_com_search_q_tekmonks&statusAsBoolean=false&statusFalseValue=0.1&statusTrueValue=1&nullValue={{i18n.none}}"}
 }
 ======
 
@@ -25,11 +25,11 @@ SCHEMA
 LAYOUT
 =================
 -----------------------------
-| alerts      |    http     |
+| alerts      |   httpPie   |
+|-------------|-------------|
+| alerts      |     http    |
 |-------------|-------------|
 | alerts      |   httpBar   |
-|-------------|-------------|
-| alerts      |    ddos     |
 -----------------------------
 =================
 Row Heights = 33.33%,33.33%,33.33%

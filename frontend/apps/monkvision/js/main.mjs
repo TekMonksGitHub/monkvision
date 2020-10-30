@@ -25,8 +25,8 @@ function timeRangeUpdated(stopRefresh, dates) {
 }
 
 function playPauseCharts(img, force) {
-    if (img.src.endsWith("play.svg")&&force!="stop") { img.src = "./img/pause.svg"; _startRefresh(); } 
-    else if (img.src.endsWith("pause.svg")&&force!="start") { img.src = "./img/play.svg"; _stopRefresh(); }
+    if (img.src.endsWith("play.svg") && force!="stop") { img.src = "./img/pause.svg"; _startRefresh(); } 
+    else if (img.src.endsWith("pause.svg") && force!="start") { img.src = "./img/play.svg"; _stopRefresh(); }
 }
 
 async function interceptPageLoad() {
@@ -68,7 +68,7 @@ async function interceptPageLoad() {
         // select current dashboard icon on page load
         const dashboardsRaw = await (await fetch(`${APP_CONSTANTS.APP_PATH}/dashboards/dashboards.json`)).json();
         const allDashIcons = document.querySelectorAll("div#leftheader > img.dashicon");
-        for (const dashIcon of allDashIcons) if (data.dash.endsWith(dashboardsRaw[dashIcon.id]))
+        for (const dashIcon of allDashIcons) if (data.dash.endsWith(dashboardsRaw[dashIcon.id].split(",")[0]))
             dashIcon.classList.add("selected"); else dashIcon.classList.remove("selected");
 
         // load initial charts and set the refresh interval
