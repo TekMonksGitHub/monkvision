@@ -4,6 +4,10 @@ SCHEMA
     "alerts": {"html":"chart-box", "id":"alerts", "title":"{{i18n.CriticalAlerts}}", "api":"alerts", "type":"text",
         "styleBody":"div#container{height: calc(100vh - 105px) !important;}"},
 
+    "banner": {"html":"chart-box", "id":"httpBanner", "title": "Will be overridden", "api":"statusbanner", 
+        "type":"metrictext", 
+        "params":"id=html_mon_https___www_google_com_search_q_tekmonks&percent100Colors=#ffffff,#45d19e&elseColors=#ffffff,#ff3f3fcc&percent100Explanation=No issues seen&elseExplanation=There are issues&elseTitle=Success Rate"},
+
     "httpPie": {"html":"chart-box", "id":"httpPie", "title":"HTTP Google Pie", "api":"statusaggregator", "type":"piegraph", 
         "labels":"1:{{i18n.OK}},0:{{i18n.Issue}}", "labelsShowPercentage": "true",
         "colors":"0:#D43F3F4C:#af3234,1:#40D59D4C:#0e8f7e", 
@@ -24,16 +28,16 @@ SCHEMA
 
 LAYOUT
 =================
------------------------------
-| alerts      |   httpPie   |
-|-------------|-------------|
-| alerts      |     http    |
-|-------------|-------------|
-| alerts      |   httpBar   |
------------------------------
+------------------------------------
+| alerts      | banner | httpPie   |
+|-------------|--------------------|
+| alerts      |     http           |
+|-------------|--------------------|
+| alerts      |   httpBar          |
+------------------------------------
 =================
 Row Heights = 33.33%,33.33%,33.33%
-Col Widths = 35%,65%
+Col Widths = 35%,25%,40%
 =================
 
 
@@ -53,5 +57,6 @@ body {margin: 0;}
     border-radius: 10px;
     margin: 5px;
     background-color: white;
+    color: rgb(72,72,72);
 }
 =======

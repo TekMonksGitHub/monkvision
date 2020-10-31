@@ -17,7 +17,7 @@ exports.doService = async jsonReq => {
     for (const row of rows) if (row.status==1) numTrue++; else numFalse++;
 
     const result = {result: true, type: "piegraph", contents: {1: numTrue, 0: numFalse}}; 
-    if (jsonReq.title) result.title = jsonReq.title; return result;
+    if (jsonReq.title) result.contents.title = jsonReq.title; return result;
 }
 
 const validateRequest = jsonReq => (jsonReq && jsonReq.id && jsonReq.timeRange);

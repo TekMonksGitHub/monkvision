@@ -7,5 +7,7 @@
     
     "/apps/monkvision/loggraph" : "/apis/loggraph.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true",
 
-    "/apps/monkvision/statusaggregator" : "/apis/statusaggregator.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true"
+    "/apps/monkvision/statusaggregator" : "/apis/statusaggregator.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true",
+
+    "/apps/monkvision/statusbanner" : "/apis/statusbanner.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true"
 }

@@ -37,7 +37,7 @@ exports.doService = async jsonReq => {
     }
 
     const result = {result: true, type: "bargraph", contents: {length:x.length,x,ys:[y],infos:[info]}}; 
-    if (jsonReq.title) result.title = jsonReq.title; return result;
+    if (jsonReq.title) result.contents.title = jsonReq.title; return result;
 }
 
 const validateRequest = jsonReq => (jsonReq && jsonReq.id && jsonReq.timeRange);

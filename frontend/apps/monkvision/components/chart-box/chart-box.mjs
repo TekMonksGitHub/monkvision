@@ -47,7 +47,7 @@ async function _refreshData(element, force) {
 	const bindData = async (data, id) => { element.__skip_refresh = true; await chart_box.bindData(data, id); 
 			delete element.__skip_refresh; }
 	const clearChart = _ => {if (memory.chart) {memory.chart.destroy(); delete memory.chart;}}
-	const createData = _ => {return {title: content? content.title || element.getAttribute("title"):element.getAttribute("title"), 
+	const createData = _ => {return {title: content&&content.contents? content.contents.title || element.getAttribute("title"):element.getAttribute("title"), 
 		styleBody: element.getAttribute("styleBody")?`<style>${element.getAttribute("styleBody")}</style>`:null}};
 
 	if (!force && content && !content.contents) {	// clear everything if data is empty and changed
@@ -62,11 +62,20 @@ async function _refreshData(element, force) {
 	
 	if (type == "text") {
 		contentDiv.innerHTML = "";	// clear it so scrollHeight below is always accurate
-		data.textcontent = content.contents;
+		data.textcontent = content?content.contents||"":"";
 		await bindData(data, id);
-		contentDiv.scrollTop = contentDiv.scrollHeight; 
+		contentDiv.scrollTop = contentDiv.scrollHeight; // scroll to bottom
 		return;
-	}	// scroll to bottom
+	}	
+
+	if (type == "metrictext") {
+		contentDiv.innerHTML = "";	// clear it 
+		const metrictext = {}; data.metrictext = metrictext;
+		metrictext.textmain = content.contents.textmain; metrictext.textexplanation = content.contents.textexplanation;
+		metrictext.styleMetric = `<style>body{background-color: ${content.contents.bgcolor}; color: ${content.contents.fgcolor}; margin: 0px !important;} div#container{padding-top: 10px;}</style>`;
+		await bindData(data, id);
+		return;
+	}	
 	
 	if (type == "table") {	// content: x, ys and infos
 		const contentIn = content.contents, labelHash = {}; for (const label of element.getAttribute("labels").split(",")){

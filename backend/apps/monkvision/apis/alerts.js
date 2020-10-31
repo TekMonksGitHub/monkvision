@@ -16,7 +16,8 @@ exports.doService = async jsonReq => {
     let contents = [];
     for (const row of rows) contents.push(`Time: ${utils.fromSQLiteToUTCOrLocalTime(row.timestamp, jsonReq.notUTC)}\nError: ${row.error}\nAdditional information: ${row.additional_err}\n\n`);
     
-    return {result: true, type: "text", contents};
+    const result = {result: true, type: "text", contents};
+    if (jsonReq.title) result.contents.title = jsonReq.title; return result;
 }
 
 const validateRequest = jsonReq => (jsonReq && jsonReq.timeRange);
