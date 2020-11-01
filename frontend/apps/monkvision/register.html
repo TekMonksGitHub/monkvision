@@ -4,20 +4,20 @@
 body {
 	margin: 0; padding: 0;
 	font-family: 'Raleway';
-	background-color: rgb(79, 180, 237);
+	background-color: rgb(17, 17, 17, 0.911);
 	min-height: 600px;
 }
 
 body::after {
-  content: "";
-  background: url(./img/logob.png);
-  background-size: auto 100%;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  opacity: 0.05;
-  position: absolute;
-  z-index: -1;   
+	content: "";
+	background: url(./img/logob.png);
+	background-size: auto 100%;
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	opacity: 0.05;
+	position: absolute;
+	z-index: -1;   
 }
 
 .lgbox {
@@ -160,7 +160,7 @@ span#signin > span > a {
 
 <div class="lgbox">
 	<span><br><br>{{i18n.RegisterMsg}}<br><br></span>
-	<register-box roles="[APP_CONSTANTS.GUEST_ROLE, APP_CONSTANTS.USER_ROLE]" routeOnSuccess="./main.html"></register-box>
+	<register-box roles="[APP_CONSTANTS.GUEST_ROLE, APP_CONSTANTS.USER_ROLE]"></register-box>
 </div>
 
 <div class="langbox">

@@ -7,6 +7,7 @@ export const i18n = {
 "Email": "Email",
 "Org": "Organization",
 "RegisterError": "Error, email is already registered",
+"RegisterOK": "Success, please wait for approval",
 "Hi":"Hi,",
 "MyStatus": "My Status",
 "Logout" : "Logout",

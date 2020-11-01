@@ -29,7 +29,7 @@ exports.register = async (id, name, org, pwph, totpSecret) => {
 		const existsID = await exports.existsID(id);
 		if (existsID.result) {resolve({result:false}); return;}
 		pwph = await exports.getUserHash(pwph);
-		usersDB.run(`INSERT INTO users(id, name, org, pwph, totpsec) VALUES (?,?,?,?)`, 
+		usersDB.run(`INSERT INTO users(id, name, org, pwph, totpsec) VALUES (?,?,?,?,?)`, 
 			[id,name,org,pwph, totpSecret], err => err?resolve({result:false}):resolve({result:true}));
 	});
 }
@@ -39,9 +39,9 @@ exports.exists = exports.login = pwph => {
 		initDB()
 		.then(_ => exports.getUserHash(pwph))
 		.then(pwph => {
-			usersDB.all(`SELECT id, name, org, totpsec FROM users WHERE pwph = ? COLLATE NOCASE;`, [pwph], (err, rows) => {
-				if (err || !rows.length) resolve({result: false});
-				else resolve({result: true, name: rows[0].name, org: rows[0].org, id: rows[0].id, totpsec: rows[0].totpsec});
+			usersDB.all(`SELECT * FROM users WHERE pwph = ? COLLATE NOCASE;`, [pwph], (err, rows) => {
+				if (err || !rows.length || !rows[0].approved) resolve({result: false});
+				else resolve({result: true, name: rows[0].name, org: rows[0].org, id: rows[0].id, totpsec: rows[0].totpsec, approved: rows[0].approved});
 			})
 		})
 		.catch(_ => resolve({result: false}));

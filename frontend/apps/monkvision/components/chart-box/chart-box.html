@@ -53,7 +53,7 @@ div#content > div#textcontent > span#text > p {
     font-family: monospace;
     font-size: medium;
 }
-div#content > div#textcontent > span#textcontent > p:hover {background-color: rgb(235, 250, 245);}
+div#content > div#textcontent > span#text > p:hover {background-color: rgb(235, 250, 245);}
 
 div#content > div#metrictextcontainer {
     display: flex;
@@ -81,6 +81,7 @@ table, td, th {
     border-collapse: collapse;
     text-align: left;
     font-size: small;
+    color: inherit;
 }
 tr:nth-child(even) {background: rgb(235, 250, 245)}
 table {position: relative; width: 100%;}
@@ -93,6 +94,7 @@ thead, th {
     padding: 10px;
     font-weight: 100;
 }
+
 
 canvas#canvas {
     display: none;
@@ -114,6 +116,7 @@ canvas#canvas {
     {{#metrictext}}                 <!-- Handles metric text content -->
     {{{styleMetric}}}
     <div id="metrictextcontainer"><div id="metrictext">
+    {{#icon}}<span id="metricicon"><img src="{{.}}"></span>{{/icon}}
     <span id="metrictextmain">{{textmain}}</span>
     <span id="metrictextexplanation">{{textexplanation}}</span>
     </div></div>

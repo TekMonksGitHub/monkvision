@@ -18,12 +18,18 @@ exports.doService = async jsonReq => {
 
     // calculate issue percentage
     const round = Math.round, truePercent = numTrue*100/(numTrue+numFalse), colorCode = `percent${round(truePercent)}Colors`, 
-        explanationCode = `percent${round(truePercent)}Explanation`, titleCode = `percent${round(truePercent)}Title`;
+        iconCode = `percent${round(truePercent)}Icon`, explanationCode = `percent${round(truePercent)}Explanation`, 
+        titleCode = `percent${round(truePercent)}Title`;
 
     // set title
     let title = null;
     if (jsonReq[titleCode]) title = jsonReq[titleCode];
-    else if (jsonReq["elseTitle"]) title = jsonReq["elseTitle"];;
+    else if (jsonReq["elseTitle"]) title = jsonReq["elseTitle"];
+
+    // set icon
+    let icon = null;
+    if (jsonReq[iconCode]) icon = jsonReq[iconCode];
+    else if (jsonReq["elseIcon"]) icon = jsonReq["elseIcon"];;
     
     // set color codes based on success percentage
     let fgcolor = "rgb(72,72,72)", bgcolor = "white";
@@ -36,7 +42,7 @@ exports.doService = async jsonReq => {
     else if (jsonReq["elseExplanation"]) textexplanation = jsonReq["elseExplanation"];
 
     const result = {result: true, type: "metrictext", contents: {textmain:`${round(truePercent)} %`, fgcolor, bgcolor, textexplanation}}; 
-    if (title) result.contents.title = title; return result;
+    if (title) result.contents.title = title; if (icon) result.contents.icon = icon; return result;
 }
 
 const validateRequest = jsonReq => (jsonReq && jsonReq.id && jsonReq.timeRange);

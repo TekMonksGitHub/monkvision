@@ -39,14 +39,8 @@ async function register(name, id, pass, org, totpSecret) {
         dcodeIO.bcrypt.hash(pwph, APP_CONSTANTS.BCRYPT_SALT, async (_err, hash) => {
             const req = {name, id, pwph: hash, org, totpSecret}; 
             const resp = await apiman.rest(APP_CONSTANTS.API_REGISTER, "POST", req, false, true);
-            if (resp && resp.result) {
-                session.set(APP_CONSTANTS.USERID, id); 
-                session.set(APP_CONSTANTS.USERNAME, name);
-                session.set(APP_CONSTANTS.USERORG, org);
-                securityguard.setCurrentRole(APP_CONSTANTS.USER_ROLE);
-                startAutoLogoutTimer();
-                resolve(true);
-            } else {LOG.error(`Registration failed for ${id}`); resolve(false);}
+            if (resp && resp.result) resolve(true);
+            else {LOG.error(`Registration failed for ${id}`); resolve(false);}
         });
     });
 }

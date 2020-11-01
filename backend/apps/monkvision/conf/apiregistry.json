@@ -1,6 +1,6 @@
 {
     "/apps/monkvision/login" : "/apis/login.js?needsToken=false&addsToken=sub:access",
-    "/apps/monkvision/register" : "/apis/register.js?needsToken=false&addsToken=sub:access",
+    "/apps/monkvision/register" : "/apis/register.js?needsToken=false",
     "/apps/monkvision/changepassword" : "/apis/changepassword.js?key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true",
     
     "/apps/monkvision/alerts" : "/apis/alerts.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true",

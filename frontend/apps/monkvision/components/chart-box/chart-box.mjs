@@ -70,15 +70,18 @@ async function _refreshData(element, force) {
 
 	if (type == "metrictext") {
 		contentDiv.innerHTML = "";	// clear it 
+		if (!content || !content.contents) return;
 		const metrictext = {}; data.metrictext = metrictext;
 		metrictext.textmain = content.contents.textmain; metrictext.textexplanation = content.contents.textexplanation;
+		if (content.contents.icon) metrictext.icon = content.contents.icon;
 		metrictext.styleMetric = `<style>body{background-color: ${content.contents.bgcolor}; color: ${content.contents.fgcolor}; margin: 0px !important;} div#container{padding-top: 10px;}</style>`;
 		await bindData(data, id);
 		return;
 	}	
 	
 	if (type == "table") {	// content: x, ys and infos
-		const contentIn = content.contents, labelHash = {}; for (const label of element.getAttribute("labels").split(",")){
+		const contentIn = content && content.contents?content.contents:null, labelHash = {}; 
+		for (const label of element.getAttribute("labels").split(",")){
 			const tuple = label.split(":");
 			labelHash[tuple[0].trim()] = tuple[1].trim();
 		}
