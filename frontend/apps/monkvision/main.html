@@ -117,12 +117,12 @@ span#header > img#playpause:hover {
 <body>
 <div id="leftheader">
 	{{#dashboards}}
-	<img id="{{id}}" class="dashicon" src="./img/dashicon.svg" alt="{{title}}" title="{{title}}" onclick="router.loadPage('./main.html?dash=./dashboards/{{file}}&title={{title}}&refresh={{refresh}}&name={{name}}');"><span>{{name}}</span>
+	<img id="{{id}}" class="dashicon" src="{{{htmlData.dashicon}}}" alt="{{title}}" title="{{title}}" onclick="router.loadPage('./main.html?dash=./dashboards/{{file}}&title={{title}}&refresh={{refresh}}&name={{name}}');"><span>{{name}}</span>
 	{{/dashboards}}
 </div>
 <div id="container">
 	<span id="header">
-		<img id="textlogo" src="./img/textlogo.png">
+		<img id="textlogo" src="{{{htmlData.textlogo}}}">
 		<span id="title">{{title}}</span>
 		<input id="datetimepickerfrom" type="datetime-local" value="{{{dateTimeWeekAgo}}}" onchange="main.timeRangeUpdated(true)">
 		<input id="datetimepickerto" type="datetime-local" value="{{{dateTimeNow}}}" onchange="main.timeRangeUpdated(true)">

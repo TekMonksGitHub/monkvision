@@ -1,50 +1,24 @@
 <style>
-@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');
-
- 
 body {
 	margin: 0; padding: 0;
-	font-family: 'Raleway';
-	background-color: rgba(17, 17, 17, 0.911);
 	min-height: 600px;
 }
 
 body::after {
   content: "";
-  background: url(./img/logob.png);
-  background-size: auto 100%;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  opacity: 0.05;
   position: absolute;
   z-index: -1;   
 }
 
 .lgbox {
 	position: absolute;
-	top: max(80px, calc(50% - 20%));
-	left: max(400px, calc(70% - 160px));
-	width: 320px;
-	background-color: #ffffff;
-	border-radius: 20px;
-	box-shadow: -2px 6px 53px -23px rgba(0,0,0,0.75);
-	padding: 10px 20px 10px 20px;
 	text-align: center;
-	font-size: smaller;
-	padding-right: 40px;
 }
 
-div.lgbox > span {
-	font-weight: 600;
-	font-size: small;
-}
+div.lgbox > span {white-space: normal;}
 
 .langbox {
 	position: absolute;
-	top: max(560px, calc(100vh - 40px));
-	right: 40px;
-	color: white;
 	text-align: center;
 	cursor: default;
 }
@@ -54,77 +28,35 @@ div.lgbox > span {
 	font-size: 11px;
 }
 
-a:link {text-decoration:none; color:black;}    /* unvisited link */
-a:visited {text-decoration:none;} /* visited link */
-a:hover {text-decoration:underline;}   /* mouse over link */
-a:active {text-decoration:underline;}  /* selected link */
+a:link, a:visited {text-decoration:none;}    
+a:hover, a:active {text-decoration:underline;} 
 
 .advtextbox{
 	position: absolute;
-	top: calc(50% - 20%);
-	left: 10%;
-	width: 400px;
-	color: #ffffff;
 	text-align: center;
 }
 
-.advtextbox > h1 {
-	font-weight: 250;
-	font-family: 'Raleway';
-}
+.advtextbox > h1 {white-space: normal;}
 
-.advtextbox > h2 {
-	font-weight: 250;
-	font-family: 'Raleway';
-	font-size: medium;
-}
+.advtextbox > h2 {white-space: normal;}
 
 .advtextbox > p {
-	font-weight: 400;
-	font-family: 'Raleway';
-	font-size: medium;
-	background-color: #ffffff;
-	color: black;
-	border-radius: 10px;
-	padding: 10px 5px 10px 5px;
-	width: 120px;
-	left: calc(50% - 60px);
 	position: relative;
-	font-size: smaller;
-	margin-top: 30px;
 	cursor: default;
 }
 
-img.logo {
-	top: 40px;
-	left: 100px;
-	width: 148px;
-	height: 25px;
-	position: absolute;
-}
+img.logo {position: absolute;}
 
 span#signin {
-	top: 40px;
-	right: 100px;
 	position: absolute;
-	font-size: 0.8em;
-	font-weight: 500;
-	color: #ffffff;
 	cursor: default;
 }
 
 span#signin > span {padding-right: 30px;}
 
-span#signin > span:last-child {
-	color: #ffca36;
-	font-weight: 700;
-	text-transform: uppercase;
-}
+span#signin > span:last-child {white-space: normal;}
 
-span#signin > span > a {
-	text-decoration: none;
-	color: inherit;
-}
+span#signin > span > a {text-decoration: none;}
 </style>
 
 <!doctype html>
@@ -134,16 +66,17 @@ span#signin > span > a {
 
 	<link href="./img/favicon.ico" rel="icon" type="image/x-icon">
 	
-	<title>{{i18n.Title}}</title>
+	<title>{{i18n.title}}</title>
 	
 	<script type="module">
 	import {login_box} from "./components/login-box/login-box.mjs"; 
 	import {language} from "./js/language.mjs"; window.language=language;
 	</script>
+	{{{css}}}
 </head>
 
 <body>
-<img class="logo" src="./img/logo.png"></img>
+<img class="logo" src="{{{htmlData.logo}}}" onclick="window.open('{{{htmlData.aboutLink}}}', '_blank')"></img>
 
 <span id="signin">
 	<span><a href="{{#_org_monkshu_makeLink}}./register.html{{/_org_monkshu_makeLink}}">{{i18n.Register}}</a></span>
@@ -153,7 +86,7 @@ span#signin > span > a {
 <div class="advtextbox">
 	<h1>{{i18n.logintagline}}</h1>
 	<h2>{{i18n.loginsubtag}}</h2>
-	<p onclick="window.open('https://twitter.com/tekmonks/status/1061000581735702528', '_blank')">{{i18n.learn}}</p>
+	<p onclick="window.open('{{{htmlData.aboutLink}}}', '_blank')">{{i18n.learn}}</p>
 </div>
 
 <div class="lgbox">

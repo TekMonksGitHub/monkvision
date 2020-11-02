@@ -1,7 +1,4 @@
 export const i18n = {
-"logintagline": "Active Cyberdefense",
-"loginsubtag": "World's only enterprise-wide AI based active cyberdefense solution.",
-"learn":"Learn More",
 "Name": "Name",
 "Email": "Email",
 "Org": "Organization",

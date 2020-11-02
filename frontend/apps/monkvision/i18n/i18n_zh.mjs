@@ -1,7 +1,4 @@
 export const i18n = {
-"logintagline": "世界上第一个数字办公室",
-"loginsubtag": "安全，集成且易于使用。 立即尝试，看看如何更改组织。",
-"learn":"学到更多",
 "Name": "名称",
 "Email": "Email",
 "Org": "Organization",
@@ -31,9 +28,6 @@ export const i18n = {
 "NewPassword": "New password",
 "ShowPassword": "Show password",
 "TypeAgain": "Type again",
-"Search": "搜索",
-"Upload": "上传",
-"Create": "建立",
 "OK": "OK",
 "Cancel": "取消"
 }

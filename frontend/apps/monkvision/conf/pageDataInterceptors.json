@@ -1,3 +1,5 @@
 [
-    {"module": "js/main.mjs", "function":"interceptPageLoad"}
+    {"module": "js/main.mjs", "function":"interceptPageLoad"},
+    {"module": "js/login.mjs", "function":"interceptPageLoad"},
+    {"module": "js/register.mjs", "function":"interceptPageLoad"}
 ]

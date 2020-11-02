@@ -1,7 +1,4 @@
 export const i18n = {
-"logintagline": "ใช้งานกลาโหมไซเบอร์",
-"loginsubtag": "โซลูชั่นการป้องกันไซเบอร์ในโลกไซเบอร์ที่ใช้งานทั่วโลกเพียงองค์กรเดียว",
-"learn":"เรียนรู้เพิ่มเติม",
 "Name": "ชื่อ",
 "Email": "Email",
 "Org": "Organization",
@@ -31,9 +28,6 @@ export const i18n = {
 "NewPassword": "New password",
 "ShowPassword": "Show password",
 "TypeAgain": "Type again",
-"Search": "ค้นหา",
-"Upload": "ที่อัพโหลด",
-"Create": "สร้าง",
 "OK": "ตกลง",
 "Cancel": "ยกเลิก"
 }
