@@ -37,5 +37,9 @@
             "additionalinfo": "Additional Information",
             "none": "None"
         }
+    },
+    "main_html_data": {
+        "span-with-menu#gear": "styleBody='div.menuitem:hover{background: #41cf70 !important; color: white !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -120px;}'",
+        "span-with-menu#gear>img": "style='height: 30px;width: 30px;vertical-align: middle;'"
     }
 }

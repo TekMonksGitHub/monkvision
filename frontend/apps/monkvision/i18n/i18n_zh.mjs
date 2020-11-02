@@ -1,5 +1,4 @@
 export const i18n = {
-"Title" : "Monkvision仪表板",
 "logintagline": "世界上第一个数字办公室",
 "loginsubtag": "安全，集成且易于使用。 立即尝试，看看如何更改组织。",
 "learn":"学到更多",

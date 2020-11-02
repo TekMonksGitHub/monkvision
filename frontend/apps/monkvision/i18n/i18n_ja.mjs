@@ -1,5 +1,4 @@
 export const i18n = {
-"Title" : "Monkvisionダッシュボード",
 "logintagline": "世界初のデジタルオフィス",
 "loginsubtag": "安全で統合され、使いやすい。 今日それを試して、あなたの組織を変えることができる方法を見てください。",
 "learn":"もっと詳しく知る",

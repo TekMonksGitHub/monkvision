@@ -23,6 +23,9 @@ async function addThemeDataAndCSS(pageData, pageName) {
         const i18nThis = await i18n.getI18NObject(key);
         Object.assign(i18nThis, APP_THEME[`${pageName}_i18n`][key]);
     }
+
+    // add HTML data
+    pageData.htmlData = APP_THEME[`${pageName}_html_data`];
     
     return pageData;
 }
