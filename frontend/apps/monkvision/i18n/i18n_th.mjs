@@ -21,6 +21,7 @@ export const i18n = {
 "SignIn" : "เข้าสู่ระบบ",
 "Join": "Join",
 "FillField": "กรุณากรอกข้อมูลในช่องนี้",
+"ChangePassword": "Change Password",
 "PWNOTSAME": "Passwords are not the same.",
 "PWMUSTBE": "Passwords must be minimum 10 characters.",
 "PWCHANGEFAILED": "Password change failed.",
@@ -35,16 +36,5 @@ export const i18n = {
 "Upload": "ที่อัพโหลด",
 "Create": "สร้าง",
 "OK": "ตกลง",
-"Issue": "ปัญหา",
-"Cancel": "ยกเลิก",
-"InternalError": "ข้อผิดพลาดภายใน",
-"CriticalAlerts": "Critical Alerts",
-"PasswordAttacks": "Password Attacks",
-"SQLAttacks": "SQL Injections Attacks",
-"DDOSAttacks": "DDoS Attacks",
-"dash1": "Dash 1",
-"dash2": "Dash 2",
-"time": "Time",
-"status": "Status",
-"additionalinfo": "Additional Information"
+"Cancel": "ยกเลิก"
 }

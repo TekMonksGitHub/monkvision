@@ -1,7 +1,10 @@
-/* 
+/**
+ * Main app layout page
+ *  
  * (C) 2020 TekMonks. All rights reserved.
- * License: MIT - see enclosed license.txt file.
+ * License: See enclosed license.txt file.
  */
+import {utils} from "./utils.mjs";
 import {i18n} from "/framework/js/i18n.mjs";
 import {router} from "/framework/js/router.mjs";
 import {loginmanager} from "./loginmanager.mjs";
@@ -31,25 +34,30 @@ function playPauseCharts(img, force) {
 
 async function interceptPageLoad() {
     window.monkshu_env.pageload_funcs[`${APP_CONSTANTS.APP_PATH}/main.html`] = async data => {
+         // add in css, theme and html data to the page data object
+         await utils.addThemeDataAndCSS(data, "main");
+
         // load dashboards config and build the data object
         const dashboardsRaw = await (await fetch(`${APP_CONSTANTS.APP_PATH}/dashboards/dashboards.json`)).json();
         data.dashboards = [];
         for (const key of Object.keys(dashboardsRaw)) {
-            const file = dashboardsRaw[key].split(",")[0], refresh = parseInt(dashboardsRaw[key].split(",")[1].split(":")[1]);
-            data.dashboards.push({name: await i18n.get(key, session.get($$.MONKSHU_CONSTANTS.LANG_ID)), 
-                file, refresh, title: await i18n.get(`${key}.title`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)), id: key} );
+            const file = dashboardsRaw[key].split(",")[0], refresh = parseInt(dashboardsRaw[key].split(",")[1].split(":")[1]),
+                name = await i18n.get(`name_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)), title = await i18n.get(`title_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID));
+            data.dashboards.push({name, file, refresh, title, id: key} );
         }
 
-        // add in dashboard path and title, to the page data object
+        // add in dashboard path, and page title to the page data object
         const currentURL = new URL(router.getCurrentURL());
         if (!currentURL.searchParams.get("dash")) { // load first dashboard if none was provided in the incoming URL
             data.title = data.dashboards[0].title; 
             data.dash = `./dashboards/${data.dashboards[0].file}`; 
             data.refresh = data.dashboards[0].refresh;
+            data.pageTitle = `${await i18n.get("title", session.get($$.MONKSHU_CONSTANTS.LANG_ID))} - ${data.dashboards[0].name}`;
         } else {                                                // else get dashboard path and title from the URL
             data.title = currentURL.searchParams.get("title"); 
             data.dash = currentURL.searchParams.get("dash");
             data.refresh = currentURL.searchParams.get("refresh");
+            data.pageTitle = `${await i18n.get("title", session.get($$.MONKSHU_CONSTANTS.LANG_ID))} - ${currentURL.searchParams.get("name")}`;
         }
 
         // set the dates data

@@ -3,6 +3,10 @@
  */
 const userid = require(`${__dirname}/lib/userid.js`);
 
+/**
+ * Logs a user in
+ * @param {object} jsonReq The incoming request, must have pwph property set
+ */
 exports.doService = async jsonReq => {
 	if (!validateRequest(jsonReq)) {LOG.error("Validation failure."); return CONSTANTS.FALSE_RESULT;}
 	

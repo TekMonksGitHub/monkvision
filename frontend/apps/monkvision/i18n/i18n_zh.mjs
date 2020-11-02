@@ -21,6 +21,7 @@ export const i18n = {
 "SignIn" : "登陆",
 "Join": "Join",
 "FillField": "请填写此字段。",
+"ChangePassword": "Change Password",
 "PWNOTSAME": "Passwords are not the same.",
 "PWMUSTBE": "Passwords must be minimum 10 characters.",
 "PWCHANGEFAILED": "Password change failed.",
@@ -35,16 +36,5 @@ export const i18n = {
 "Upload": "上传",
 "Create": "建立",
 "OK": "OK",
-"Issue": "问题",
-"Cancel": "取消",
-"InternalError": "内部错误",
-"CriticalAlerts": "Critical Alerts",
-"PasswordAttacks": "Password Attacks",
-"SQLAttacks": "SQL Injections Attacks",
-"DDOSAttacks": "DDoS Attacks",
-"dash1": "Dash 1",
-"dash2": "Dash 2",
-"time": "Time",
-"status": "Status",
-"additionalinfo": "Additional Information"
+"Cancel": "取消"
 }

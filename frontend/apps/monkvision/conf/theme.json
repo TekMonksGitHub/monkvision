@@ -1,0 +1,41 @@
+{
+    "main_css": {
+        "*": "@import url('https://fonts.googleapis.com/css?family=Raleway');",
+        "body": "background-color: rgb(245, 247, 250); font-family: 'Raleway';",
+        "div#container": "background-color: rgb(245, 247, 250); border-top-left-radius: 20px; left: 64px; width: calc(100% - 64px);",
+        "div#maincontent": "top: 65px; width: calc(95vw - 60px); height: calc(100vh - 65px); left: 30px;",
+        "div#leftheader": "background-color: #45d19e; padding-top: 40px;",
+        "div#leftheader > img.dashicon": "border: 0.5px solid #45d19e; height: 48px; width: 48px; left: 4px; padding: 2px;",
+        "div#leftheader > img.dashicon:hover": "left: 4px; padding: 2px; border-radius: 5px; border-width: 0.5px; border-style: outset; border-color: white;",
+        "div#leftheader > img.dashicon.selected": "left: 4px; padding: 2px; border-style: inset; border-radius: 5px; border-width: 0.5px; border-color: white;",
+        "div#leftheader > span": "color: white; padding-bottom: 30px; width: 64px; left: 0px; font-size: smaller; font-weight: 500;",
+        "span#header": "top: 15px; left: 20px; color: #41cf70; width: calc(100% - 30px); font-family: 'Raleway';",
+        "span#header > img#textlogo": "height: 20px; width: 125px;",
+        "span#header > span#signoff": "margin-right: 20px;",
+        "span#header > span#signoff > img": "height: 30px; width: 30px;",
+        "span#header > span#title": "width: 300px; font-size: 0.85em; font-weight: bold; background-color: white; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); border-radius: 5px; padding: 5px; color: rgba(0,0,0,0.75);",
+        "input#datetimepickerfrom, input#datetimepickerfrom:active, input#datetimepickerto, input#datetimepickerto:active":
+            "font-size: 0.8em; font-family: sans-serif; color: rgba(0,0,0,0.75);border-radius: 4px; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); padding: 2px; border-style: none;",
+        "span#header > img#playpause": "height: 30px; width: 30px;"
+    },
+    "main_i18n": {
+        "en": {
+            "title": "Monkvision Dashboards",
+            "name_dash1": "Overview",
+            "title_dash1": "Overview of the systems",
+            "name_dash2": "Analyze",
+            "title_dash2": "In depth analysis",
+            "Issue": "Problem",
+            "Cancel": "Cancel",
+            "InternalError": "Internal error",
+            "CriticalAlerts": "Critical Alerts",
+            "PasswordAttacks": "Password Attacks",
+            "SQLAttacks": "SQL Injections Attacks",
+            "DDOSAttacks": "DDoS Attacks",
+            "time": "Time",
+            "status": "Status",
+            "additionalinfo": "Additional Information",
+            "none": "None"
+        }
+    }
+}

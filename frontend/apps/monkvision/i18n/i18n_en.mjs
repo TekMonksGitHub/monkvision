@@ -1,5 +1,4 @@
 export const i18n = {
-"Title" : "Monkvision Dashboards",
 "logintagline": "Active Cyberdefense",
 "loginsubtag": "World's only enterprise-wide AI based active cyberdefense solution.",
 "learn":"Learn More",
@@ -22,6 +21,7 @@ export const i18n = {
 "Join": "Join",
 "BadLogin" : "Incorrect Login",
 "FillField": "Please fill out this field.",
+"ChangePassword": "Change Password",
 "PWNOTSAME": "Passwords are not the same.",
 "PWMUSTBE": "Passwords must be minimum 10 characters.",
 "PWCHANGEFAILED": "Password change failed.",
@@ -31,23 +31,6 @@ export const i18n = {
 "NewPassword": "New password",
 "ShowPassword": "Show password",
 "TypeAgain": "Type again",
-"Search": "Search",
-"Upload": "Upload",
-"Create": "Create",
 "OK": "OK",
-"Issue": "Problem",
-"Cancel": "Cancel",
-"InternalError": "Internal error",
-"CriticalAlerts": "Critical Alerts",
-"PasswordAttacks": "Password Attacks",
-"SQLAttacks": "SQL Injections Attacks",
-"DDOSAttacks": "DDoS Attacks",
-"dash1": "Overview",
-"dash1.title": "Overall security posture of the system",
-"dash2": "DDoS",
-"dash2.title": "DDoS and Password Attacks",
-"time": "Time",
-"status": "Status",
-"additionalinfo": "Additional Information",
-"none": "None"
+"Cancel": "Cancel"
 }

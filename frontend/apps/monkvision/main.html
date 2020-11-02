@@ -2,36 +2,25 @@
 (C) 2020 TekMonks. All rights reserved.
 -->
 <style>
-@import url('https://fonts.googleapis.com/css?family=Raleway');
-
+/* Most of these are overridden or coming from theme.json */
 body {
 	margin: 0;
 	padding: 0;
-	font-family: 'Raleway';
 	min-height: 600px;
 	z-index: -10;
-	background-color: rgb(245, 247, 250);
 	overflow: hidden;
 }
 
 div#container {
-	left: 64px;
 	position: absolute;
 	top: 0;
 	height: 100vh;
-	width: calc(100% - 64px);
-	background-color: rgb(245, 247, 250);
-	border-top-left-radius: 40px;
 	z-index: 1;
 }
 
 div#maincontent {
 	position: absolute;
-	top: 65px;
-	width: calc(95vw - 60px);
-	height: calc(100vh - 65px);
 	background-color: transparent;
-	left: 30px;
 	z-index: -1;
 }
 
@@ -39,9 +28,7 @@ div#leftheader {
 	position: absolute;
 	left: 0%;
 	width: 50vw;
-	background-color: #45d19e;
 	height: 100vh;
-	padding-top: 40px;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
@@ -49,74 +36,39 @@ div#leftheader {
 }
 
 div#leftheader > img.dashicon {
-	height: 48px;
-	width: 48px;
-	left: 4px;
-	padding: 2px;
 	position: relative;
-	border: 0.5px solid #45d19e;
 }
 
-div#leftheader > img.dashicon:hover {
-	left: 4px;
-	padding: 2px;
-    border-radius: 5px;
-    border-width: 0.5px;
-	border-style: outset;
-	border-color: white;
-}
+div#leftheader > img.dashicon:hover {white-space: normal;} /* this is just to document this css setting here, else it'd be empty */
 
-div#leftheader > img.dashicon.selected {
-	left: 4px;
-	padding: 2px;
-	border-style: inset;
-    border-radius: 5px;
-    border-width: 0.5px;
-	border-color: white;
-}
+div#leftheader > img.dashicon.selected {white-space: normal;} /* this is just to document this css setting here, else it'd be empty */
 
 div#leftheader > span {
-	padding-bottom: 30px;
-	color: white;
-	width: 64px;
 	text-align: center;
-	left: 0px;
 	position: relative;
-	font-size: smaller;
-	font-weight: 500;
 }
 
 span#header {
-	top: 15px;
-	left: 20px;
 	position: absolute;
-	color: #41cf70;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
-	width: calc(100% - 30px);
 }
 
 span#header > img#textlogo {
-	height: 20px;
-	width: 125px;
 	vertical-align: middle;
 }
 
 span#header > span-with-menu#gear {
-	font-family: "Raleway";
 	z-index: 1;
 }
 
 span#header > span#signoff {
 	vertical-align: middle;
-	margin-right: 20px;
 }
 
 span#header > span#signoff > img {
-	height: 30px;
-	width: 30px;
 	vertical-align: middle;
 }
 span#header > span#signoff > img:hover {
@@ -125,32 +77,14 @@ span#header > span#signoff > img:hover {
 }
 
 span#header > span#title {
-	width: 300px;
 	text-align: center;
-	color: rgba(0,0,0,0.75);
-	font-size: 0.85em;
-	font-weight: bold;
-	font-family: "Raleway";
-	background-color: white;
-	border-radius: 5px;
-	padding: 5px;
-	box-shadow: 0 0 1px rgba(34, 25, 25, 0.4);
 }
 
 input#datetimepickerfrom, input#datetimepickerfrom:active, input#datetimepickerto, input#datetimepickerto:active {
-	border-radius: 4px;
-	box-shadow: 0 0 1px rgba(34, 25, 25, 0.4);
-	padding: 2px;
-	border-style: none;
-	font-size: 0.8em;
-	font-family: sans-serif;
-	color: rgba(0,0,0,0.75);
+	white-space: normal;	/* this is just to document this css setting here, else it'd be empty */
 }
 
-span#header > img#playpause {
-	height: 30px;
-	width: 30px;
-}
+span#header > img#playpause {white-space: normal;} /* this is just to document this css setting here, else it'd be empty */
 span#header > img#playpause:hover {
 	filter: brightness(70%);
 	transition: all 1s ease;
@@ -176,13 +110,14 @@ span#header > img#playpause:hover {
 	import {router} from "/framework/js/router.mjs"; window.router = router;
 	</script>
 		
-	<title>{{i18n.Title}}</title>
+	<title>{{pageTitle}}</title>
+	{{{css}}}
 </head>
 
 <body>
 <div id="leftheader">
 	{{#dashboards}}
-	<img id="{{id}}" class="dashicon" src="./img/dashicon.svg" alt="{{title}}" title="{{title}}" onclick="router.loadPage('./main.html?dash=./dashboards/{{file}}&title={{title}}&refresh={{refresh}}');"><span>{{name}}</span>
+	<img id="{{id}}" class="dashicon" src="./img/dashicon.svg" alt="{{title}}" title="{{title}}" onclick="router.loadPage('./main.html?dash=./dashboards/{{file}}&title={{title}}&refresh={{refresh}}&name={{name}}');"><span>{{name}}</span>
 	{{/dashboards}}
 </div>
 <div id="container">
@@ -193,7 +128,7 @@ span#header > img#playpause:hover {
 		<input id="datetimepickerto" type="datetime-local" value="{{{dateTimeNow}}}" onchange="main.timeRangeUpdated(true)">
 		<img id="playpause" src="./img/pause.svg" onclick="main.playPauseCharts(this)">
 		<span-with-menu id="gear" styleBody="div.menuitem:hover{background: #41cf70 !important; color: white !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -120px;}"><img src="./img/settings.svg" style="height: 30px;width: 30px;vertical-align: middle;">
-			<menu-item onclick="main.changePassword(this)">Change Password</menu-item>
+			<menu-item onclick="main.changePassword(this)">{{i18n.ChangePassword}}</menu-item>
 		</span-with-menu>
 		<span id="signoff"><img src="./img/poweroff.svg" onclick="loginmanager.logout()"></span>
 	</span>

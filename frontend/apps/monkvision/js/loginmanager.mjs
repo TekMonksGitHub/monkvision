@@ -77,7 +77,8 @@ function startAutoLogoutTimer() {
     if (!session.get(APP_CONSTANTS.USERID)) return; // not logged in
     
     const events = ["load", "mousemove", "mousedown", "click", "scroll", "keypress"];
-    const resetTimer = _=> {_stoptAutoLogoutTimer(); currTimeout = setTimeout(_=>logout(), APP_CONSTANTS.TIMEOUT);}
+    const resetTimer = _=> {_stoptAutoLogoutTimer(); currTimeout = setTimeout(_=>{
+        LOG.error("Auto logout on timeout"); logout()}, APP_CONSTANTS.TIMEOUT);}
     for (const event of events) {document.addEventListener(event, resetTimer);}
     resetTimer();   // start the timing
 }
