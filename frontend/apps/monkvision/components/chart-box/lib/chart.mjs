@@ -21,9 +21,11 @@ const _init = async _ => await $$.require(`${APP_CONSTANTS.COMPONENTS_PATH}/char
  * @param ylabels   The y-axis tick labels, as many as ticks on y-axis
  * @param bgColors  The background colors for the bars, array of arrays for each value in the dataset
  * @param brColors  The border colors for the bars, array of arrays for each value in the dataset
+ * @param labelColor The label color
+ * @param gridColor The grid color
  */
-async function drawBargraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors) {
-    return await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, "bar", 0, 1);
+async function drawBargraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, labelColor, gridColor) {
+    return await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, labelColor, gridColor, "bar", 0, 1);
 }
 
 /**
@@ -40,12 +42,14 @@ async function drawBargraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAt
  * @param ylabels   The y-axis tick labels, as many as ticks on y-axis
  * @param bgColor   The fill color for the line
  * @param brColor   The border color for the line
+ * @param labelColor The label color
+ * @param gridColor The grid color
  */
-async function drawLinegraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors) {
-    return await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, "line", 0.5, 2);
+async function drawLinegraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, labelColor, gridColor) {
+    return await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, labelColor, gridColor, "line", 0.5, 2);
 }
 
-async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, type, pointWidth, lineWidth) {
+async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, labelColor, gridColor, type, pointWidth, lineWidth) {
     await _init(); const ctx = canvas.getContext("2d"); gridLines = gridLines?gridLines.toLowerCase()=="true":false;
 
     const datasets = []; for (const [i,ys] of contents.ys.entries()) datasets.push({ data: ys, 
@@ -54,19 +58,20 @@ async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZe
     const data = {labels: contents.x, datasets}
 
     const yAxes = []; for (let i = 0; i < contents.ys.length; i++) yAxes.push({ 
-        gridLines: {drawOnChartArea: gridLines, drawTicks: false}, 
+        gridLines: {drawOnChartArea: gridLines, drawTicks: false, color: gridColor}, 
         ticks: {padding:5, stepSize:ysteps[i], beginAtZero: yAtZeros?yAtZeros[i].toLowerCase()=="true":false, 
-            callback:label => ylabels[i][label] ? ylabels[i][label] : (ylabels[i]["else"]||ylabels[i]["else"]=="" ? ylabels[i]["else"]:label)} });
+            callback:label => ylabels[i][label] ? ylabels[i][label] : (ylabels[i]["else"]||ylabels[i]["else"]=="" ? ylabels[i]["else"]:label),
+            fontColor: labelColor} });
 
     const options = {
         maintainAspectRatio: false, 
         responsive: true, 
-        legend: { display: false },
+        legend: {display: false},
         tooltips: {callbacks: {label: item => contents.infos[item.datasetIndex][item.index].split("\n")}, displayColors:false},
         animation: {animateScale:true},
-        scales: { xAxes: [{ gridLines: {drawOnChartArea: gridLines, drawTicks: false}, 
+        scales: { xAxes: [{ gridLines: {drawOnChartArea: gridLines, drawTicks: false, color: gridColor}, 
                 ticks: {padding:5, beginAtZero: xAtZero?xAtZero.toLowerCase() == "true":false, autoSkip: true,
-                maxTicksLimit: maxXTicks, maxRotation: 0} }], yAxes }
+                maxTicksLimit: maxXTicks, maxRotation: 0, fontColor: labelColor} }], yAxes }
     }
 
     return new Chart(ctx, {type, data, options});
@@ -80,8 +85,10 @@ async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZe
  * @param contents  The graph contents - must be {"labelKey":"value",...} object
  * @param labelHash The labels, must be of format {"labelKey":"label",...} object
  * @param colorHash The colors, must be of format {"labelKey":["fill","stroke"],...} object
+ * @param labelColor The label color
+ * @param isDonut   Set to true for donut graph
  */
-async function drawPiegraph(canvas, contents, labelHash, colorHash, isDonut) {
+async function drawPiegraph(canvas, contents, labelHash, colorHash, labelColor, isDonut) {
     await _init(); const ctx = canvas.getContext("2d");
 
     const datas = [], labels = [], borders = [], backgrounds = [];
@@ -96,7 +103,8 @@ async function drawPiegraph(canvas, contents, labelHash, colorHash, isDonut) {
         maintainAspectRatio: false, 
         responsive: true, 
         tooltips: {displayColors:false},
-        animation: {animateScale:true}
+        animation: {animateScale:true},
+        legend: {labels: {fontColor: labelColor}}
     }
 
     return new Chart(ctx, {type: isDonut?"doughnut":"pie", data, options});

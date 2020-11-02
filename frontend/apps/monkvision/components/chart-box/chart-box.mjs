@@ -107,6 +107,8 @@ async function _refreshData(element, force) {
 		await bindData(data, id); if (!content || !content.contents) return;
 
 		const labels = _getLabels(_makeArray(element.getAttribute("ylabels")));
+		const labelColor = element.getAttribute("labelColor") || "black";
+		const gridColor = element.getAttribute("gridColor") || "darkgrey";
 
 		if (type == "bargraph") {
 			const colorHash = _getColorHash(_makeArray(element.getAttribute("ycolors")));
@@ -120,7 +122,7 @@ async function _refreshData(element, force) {
 			memory.chart = await chart.drawBargraph(contentDiv.querySelector("canvas#canvas"), content.contents, 
 				element.getAttribute("maxticks"), element.getAttribute("gridLines"), element.getAttribute("xAtZero"), 
 				_makeArray(element.getAttribute("yAtZeros")), _makeArray(element.getAttribute("ysteps")), 
-				labels, bgColors, brColors);
+				labels, bgColors, brColors, labelColor, gridColor);
 		}
 
 		if (type == "linegraph") memory.chart = await chart.drawLinegraph(contentDiv.querySelector("canvas#canvas"), content.contents, 
@@ -146,9 +148,11 @@ async function _refreshData(element, force) {
 			if (element.getAttribute("labelsShowPercentage").toLowerCase() == "true") labelHash[tuple[0].trim()] +=
 				` - ${Math.round(parseInt(content.contents[tuple[0].trim()])/contentTotal*100)}%`;
 		}
+
+		const labelColor = element.getAttribute("labelColor") || "black";
 		
 		memory.chart = await chart.drawPiegraph(contentDiv.querySelector("canvas#canvas"), content.contents, 
-			labelHash, colorHash, type == "donutgraph");
+			labelHash, colorHash, labelColor, type == "donutgraph");
 
 		return;
 	}
