@@ -1,19 +1,19 @@
 {
     "login_css": {
         "*": "@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');",
-        "body": "font-family: 'Raleway'; background-color: rgba(17, 17, 17, 0.911);",
+        "body": "font-family: 'Raleway'; background-color: rgba(240, 240, 240, 0.911);",
         "body::after": "background: url(./img/logob.png); background-size: auto 100%; width: 100%; height: 100%; background-repeat: no-repeat; opacity: 0.05;",
         ".lgbox": "top: max(80px, calc(50% - 20%)); left: max(400px, calc(70% - 160px)); width: 320px; background-color: #ffffff; border-radius: 20px; box-shadow: -2px 6px 53px -23px rgba(0,0,0,0.75); padding: 10px 40px 10px 20px; font-size: smaller;",
         "div.lgbox > span": "font-weight: 600; font-size: small;",
         ".langbox": "top: max(560px, calc(100vh - 40px)); right: 40px; color: white;",
         "a:link": "color:black;",
-        ".advtextbox": "top: calc(50% - 20%); left: 10%; width: 400px; color: #ffffff;",
+        ".advtextbox": "top: calc(50% - 20%); left: 10%; width: 400px; color: #0c0d0e;",
         ".advtextbox > h1": "font-weight: 250; font-family: 'Raleway';",
         ".advtextbox > h2": "font-weight: 250; font-family: 'Raleway'; font-size: medium;",
         ".advtextbox > p": "font-weight: 400; font-family: 'Raleway'; font-size: smaller; background-color: #ffffff; color: black; border-radius: 10px; padding: 10px 5px 10px 5px; width: 120px; left: calc(50% - 60px); margin-top: 30px;",
-        "img.logo": "top: 40px; left: 100px; width: 148px; height: 25px;",
-        "span#signin": "top: 40px; right: 100px; position: absolute; font-size: 0.8em; font-weight: 500; color: #ffffff;",
-        "span#signin > span:last-child": "color: #ffca36; font-weight: 700; text-transform: uppercase;",
+        "img.logo": "top: 20px; left: 30px; width: 148px; height: 57px;",
+        "span#signin": "top: 40px; right: 100px; position: absolute; font-size: 0.8em; font-weight: 500; color: #0c0d0e;",
+        "span#signin > span:last-child": "color: #bd5c00; font-weight: 700; text-transform: uppercase;",
         "span#signin > span > a":"color: inherit;"
     },
     "login_i18n": {
@@ -25,26 +25,26 @@
         }
     },
     "login_html_data": {
-        "logo": "./img/logo.png",
+        "logo": "./img/logo_light.png",
         "aboutLink": "https://twitter.com/tekmonks/status/1061000581735702528"
     },
 
 
     "register_css": {
         "*": "@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');",
-        "body": "font-family: 'Raleway'; background-color: rgba(17, 17, 17, 0.911);",
+        "body": "font-family: 'Raleway'; background-color: rgba(240, 240, 240, 0.911);",
         "body::after": "background: url(./img/logob.png); background-size: auto 100%; width: 100%; height: 100%; background-repeat: no-repeat; opacity: 0.05;",
         ".lgbox": "top: max(80px, 25%); left: max(400px, calc(70% - 160px)); width: 320px; background-color: #ffffff; border-radius: 20px; box-shadow: -2px 6px 53px -23px rgba(0,0,0,0.75); padding: 10px 20px 10px 20px; font-size: smaller; padding-right: 40px;",
         "div.lgbox > span": "font-weight: 600; font-size: small;",
         ".langbox": "top: max(560px, calc(100vh - 40px)); right: 40px; color: white;",
         "a:link": "color:black;",
-        ".advtextbox": "top: calc(50% - 20%); left: 10%; width: 400px; color: #ffffff;",
+        ".advtextbox": "top: calc(50% - 20%); left: 10%; width: 400px; color: #0c0d0e;",
         ".advtextbox > h1": "font-weight: 250; font-family: 'Raleway';",
         ".advtextbox > h2": "font-weight: 250; font-family: 'Raleway'; font-size: medium;",
         ".advtextbox > p": "font-weight: 400; font-family: 'Raleway'; font-size: smaller; background-color: #ffffff; color: black; border-radius: 10px; padding: 10px 5px 10px 5px; width: 120px; left: calc(50% - 60px); margin-top: 30px;",
         "img.logo": "top: 40px; left: 100px; width: 148px; height: 25px;",
-        "span#signin": "top: 40px; right: 100px; position: absolute; font-size: 0.8em; font-weight: 500; color: #ffffff;",
-        "span#signin > span:last-child": "color: #ffca36; font-weight: 700; text-transform: uppercase;",
+        "span#signin": "top: 40px; right: 100px; position: absolute; font-size: 0.8em; font-weight: 500; color: #0c0d0e;",
+        "span#signin > span:last-child": "color: #bd5c00; font-weight: 700; text-transform: uppercase;",
         "span#signin > span > a":"color: inherit;"
     },
     "register_i18n": {
@@ -63,21 +63,21 @@
     
     "main_css": {
         "*": "@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');",
-        "body": "background-color: rgb(80, 80, 80); font-family: 'Raleway';",
-        "div#container": "background-color: rgb(30, 30, 30); border-top-left-radius: 20px; left: 64px; width: calc(100% - 64px);",
+        "body": "background-color: rgb(245, 247, 250); font-family: 'Raleway';",
+        "div#container": "background-color: rgb(245, 247, 250); border-top-left-radius: 20px; left: 64px; width: calc(100% - 64px);",
         "div#maincontent": "top: 65px; width: calc(95vw - 60px); height: calc(100vh - 65px); left: 30px;",
-        "div#leftheader": "background-color: rgba(17, 17, 17, 0.911); padding-top: 40px;",
-        "div#leftheader > img.dashicon": "border: 0.5px solid rgba(17, 17, 17, 0.911); height: 48px; width: 48px; left: 4px; padding: 2px;",
+        "div#leftheader": "background-color: #45d19e; padding-top: 40px;",
+        "div#leftheader > img.dashicon": "border: 0.5px solid #45d19e; height: 48px; width: 48px; left: 4px; padding: 2px;",
         "div#leftheader > img.dashicon:hover": "left: 4px; padding: 2px; border-radius: 5px; border-width: 0.5px; border-style: outset; border-color: white;",
-        "div#leftheader > img.dashicon.selected": "left: 4px; padding: 2px; border-style: inset; border-radius: 5px; border-width: 0.5px; border-color: rgba(250,250,250,0.95);",
-        "div#leftheader > span": "color: rgba(250,250,250,0.95); padding-bottom: 30px; width: 64px; left: 0px; font-size: smaller; font-weight: 500;",
+        "div#leftheader > img.dashicon.selected": "left: 4px; padding: 2px; border-style: inset; border-radius: 5px; border-width: 0.5px; border-color: white;",
+        "div#leftheader > span": "color: white; padding-bottom: 30px; width: 64px; left: 0px; font-size: smaller; font-weight: 500;",
         "span#header": "top: 15px; left: 20px; color: #41cf70; width: calc(100% - 30px); font-family: 'Raleway';",
         "span#header > img#textlogo": "height: 20px; width: 125px;",
         "span#header > span#signoff": "margin-right: 20px;",
         "span#header > span#signoff > img": "height: 30px; width: 30px;",
-        "span#header > span#title": "width: 300px; font-size: 0.85em; font-weight: bold; background-color: rgb(80,80,80); box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); border-radius: 5px; padding: 5px; color: rgba(250,250,250,0.95);",
+        "span#header > span#title": "width: 300px; font-size: 0.85em; font-weight: bold; background-color: white; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); border-radius: 5px; padding: 5px; color: rgba(0,0,0,0.75);",
         "input#datetimepickerfrom, input#datetimepickerfrom:active, input#datetimepickerto, input#datetimepickerto:active":
-            "font-size: 0.8em; font-family: sans-serif; background-color: rgb(80,80,80); color: rgba(250,250,250,0.95); border-radius: 4px; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); padding: 2px; border-style: none;",
+            "font-size: 0.8em; font-family: sans-serif; color: rgba(0,0,0,0.75);border-radius: 4px; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); padding: 2px; border-style: none;",
         "span#header > img#playpause": "height: 30px; width: 30px;"
     },
     "main_i18n": {
@@ -104,9 +104,9 @@
         }
     },
     "main_html_data": {
-        "span-with-menu#gear": "styleBody='div.menuitem{color: rgba(80,80,80,0.9)} div.menuitem:hover{background: rgba(80,80,80,0.9) !important; color: rgba(250,250,250,0.95) !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -120px;}'",
+        "span-with-menu#gear": "styleBody='div.menuitem:hover{background: #45d19e !important; color: white !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -120px;}'",
         "span-with-menu#gear>img": "style='height: 30px;width: 30px;vertical-align: middle;'",
-        "textlogo": "./img/logo.png",
+        "textlogo": "./img/textlogo.png",
         "dashicon": "./img/dashicon.svg"
     }
 }

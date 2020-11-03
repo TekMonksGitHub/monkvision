@@ -86,11 +86,12 @@ async function _refreshData(element, force) {
 			labelHash[tuple[0].trim()] = tuple[1].trim();
 		}
 		if (contentIn) {
-			const headers = [labelHash["x"]]; for (let i = 0; i < contentIn.ys.length; i++) {headers.push(labelHash[`ys${i}`]); headers.push(labelHash[`infos${i}`]);}
+			const headers = [labelHash["x"]]; for (let i = 0; i < contentIn.ys.length; i++) {headers.push(labelHash[`ys${i}`]);}
 			const rows = []; for (let i = 0; i < contentIn.length; i++) {
-				const rowContent = [contentIn.x[i]]; for (let j = 0; j < contentIn.ys.length; j++) {
-					rowContent.push(_isNullOrUndefined(contentIn.ys[j][i])?"":contentIn.ys[j][i]); 
-					rowContent.push(_isNullOrUndefined(contentIn.infos[j][i])?"":contentIn.infos[j][i]);
+				const rowContent = [{notooltip: contentIn.x[i]}]; for (let j = 0; j < contentIn.ys.length; j++) {
+					const contentY = _isNullOrUndefined(contentIn.ys[j][i])?"":contentIn.ys[j][i];
+					if (contentIn.infos[j][i]) rowContent.push({tooltip: {tip: contentIn.infos[j][i], val: contentY}}); 
+					else rowContent.push({notooltip: contentY}); 
 				}
 				rows.push(rowContent);
 			}

@@ -82,6 +82,7 @@ table, td, th {
     text-align: left;
     font-size: small;
     color: inherit;
+    position: relative;
 }
 tr:nth-child(even) {background: rgb(235, 250, 245)}
 table {position: relative; width: 100%;}
@@ -93,6 +94,34 @@ thead, th {
     color: white;
     padding: 10px;
     font-weight: 100;
+    z-index: 2;
+}
+td:hover:after {
+    background: #111;
+    background: rgba(0,0,0,.8);
+    border-radius: .5em;
+    bottom: 1.35em;
+    color: #fff;
+    content: attr(title);
+    display: block;
+    left: 1em;
+    padding: .3em 1em;
+    position: absolute;
+    text-shadow: 0 1px 0 #000;
+    white-space: nowrap;
+    z-index: 98;
+}
+td:hover:before {
+    border: solid;
+    border-color: #111 transparent;
+    border-color: rgba(0,0,0,.8) transparent;
+    border-width: .4em .4em 0 .4em;
+    bottom: 1em;
+    content: "";
+    display: block;
+    left: 2em;
+    position: absolute;
+    z-index: 99;
 }
 
 
@@ -126,7 +155,10 @@ canvas#canvas {
     <table>
         <thead><tr>{{#headers}}<th>{{.}}</th>{{/headers}}</tr></thead>
         <tbody>
-            {{#rows}}<tr>{{#.}}<td>{{.}}</td>{{/.}}</tr>{{/rows}}
+            {{#rows}}<tr>{{#.}}
+                {{#notooltip}}<td title="{{.}}">{{.}}</td>{{/notooltip}}
+                {{#tooltip}}<td title="{{tip}}">{{val}}</td>{{/tooltip}}
+            {{/.}}</tr>{{/rows}}
         </tbody>
     </table>
     {{/table}}

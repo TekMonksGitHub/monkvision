@@ -15,7 +15,7 @@ SCHEMA
         "params":"id=html_mon_https___www_google_com_search_q_tekmonks"},
 
     "http": {"html":"chart-box", "id":"password", "api":"loggraph", "type":"table", 
-        "labels":"x:{{i18n.time}},ys0:{{i18n.status}},infos0:{{i18n.additionalinfo}}", 
+        "labels":"x:{{i18n.time}},ys0:{{i18n.status}}", 
         "params":"id=html_mon_https___www_google_com_search_q_tekmonks&statusAsBoolean=true&nullValue={{i18n.none}}&title={{i18n.httpGoogle}}", 
         "styleBody":"div#content{max-height: calc(33vh - 64px) !important;} thead, th{box-shadow: 0 2px 2px -1px rgb(30,30,30,0.4); background-color: rgb(40,40,40); color: rgba(250,250,250);} tr:nth-child(even) {background: rgb(80, 80, 80)}"},
 

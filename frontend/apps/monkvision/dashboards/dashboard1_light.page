@@ -14,7 +14,7 @@ SCHEMA
         "params":"id=html_mon_https___www_google_com_search_q_tekmonks"},
 
     "http": {"html":"chart-box", "id":"password", "api":"loggraph", "type":"table", 
-        "labels":"x:{{i18n.time}},ys0:{{i18n.status}},infos0:{{i18n.additionalinfo}}", 
+        "labels":"x:{{i18n.time}},ys0:{{i18n.status}}", 
         "params":"id=html_mon_https___www_google_com_search_q_tekmonks&statusAsBoolean=true&nullValue={{i18n.none}}&title={{i18n.httpGoogle}}", 
         "styleBody":"div#content{max-height: calc(33vh - 64px) !important;}"},
 
