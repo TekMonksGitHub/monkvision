@@ -46,7 +46,10 @@ async function _refreshData(element, force) {
 	const memory = chart_box.getMemory(id);
 	const bindData = async (data, id) => { element.__skip_refresh = true; await chart_box.bindData(data, id); 
 			delete element.__skip_refresh; }
-	const clearChart = _ => {if (memory.chart) {memory.chart.destroy(); delete memory.chart;}}
+	const clearChart = shadowRoot => {if (memory.chart) {memory.chart.destroy(); delete memory.chart;}
+		const canvasNode = shadowRoot.querySelector("canvas#canvas"), canvasParent = canvasNode.parentNode, 
+			canvasClone = canvasNode.cloneNode();
+		canvasNode.remove(); canvasParent.appendChild(canvasClone); }
 	const createData = _ => {return {title: content&&content.contents? content.contents.title || element.getAttribute("title"):element.getAttribute("title"), 
 		styleBody: element.getAttribute("styleBody")?`<style>${element.getAttribute("styleBody")}</style>`:null}};
 
@@ -58,7 +61,7 @@ async function _refreshData(element, force) {
 
 	const data = createData();
 
-	const contentDiv = chart_box.getShadowRootByHostId(id).querySelector("div#content"); 
+	const shadowRoot = chart_box.getShadowRootByHostId(id), contentDiv = shadowRoot.querySelector("div#content"); 
 	
 	if (type == "text") {
 		contentDiv.innerHTML = "";	// clear it so scrollHeight below is always accurate
@@ -102,7 +105,7 @@ async function _refreshData(element, force) {
 		return;
 	}
 
-	clearChart();	// destroy the old chart if it exists as we will now refresh charts.
+	clearChart(shadowRoot);	// destroy the old chart if it exists as we will now refresh charts.
 
 	if (type == "bargraph" || type == "linegraph") {
 		await bindData(data, id); if (!content || !content.contents) return;
@@ -123,13 +126,15 @@ async function _refreshData(element, force) {
 			memory.chart = await chart.drawBargraph(contentDiv.querySelector("canvas#canvas"), content.contents, 
 				element.getAttribute("maxticks"), element.getAttribute("gridLines"), element.getAttribute("xAtZero"), 
 				_makeArray(element.getAttribute("yAtZeros")), _makeArray(element.getAttribute("ysteps")), 
-				labels, bgColors, brColors, labelColor, gridColor);
+				labels, _makeArray(element.getAttribute("ymaxs")), bgColors, brColors, labelColor, gridColor);
 		}
 
-		if (type == "linegraph") memory.chart = await chart.drawLinegraph(contentDiv.querySelector("canvas#canvas"), content.contents, 
-			element.getAttribute("maxticks"), element.getAttribute("gridLines"), element.getAttribute("xAtZero"), 
-			_makeArray(element.getAttribute("yAtZeros")), _makeArray(element.getAttribute("ysteps")), labels, 
-			_makeArray(element.getAttribute("fillColors")), _makeArray(element.getAttribute("borderColors")));
+		if (type == "linegraph") memory.chart = await chart.drawLinegraph(contentDiv.querySelector("canvas#canvas"), 
+			content.contents, element.getAttribute("maxticks"), element.getAttribute("gridLines"), 
+			element.getAttribute("xAtZero"), _makeArray(element.getAttribute("yAtZeros")), 
+			_makeArray(element.getAttribute("ysteps")), labels, _makeArray(element.getAttribute("ymaxs")), 
+			_makeArray(element.getAttribute("fillColors")),_makeArray(element.getAttribute("borderColors")), 
+			labelColor, gridColor);
 		
 		return;
 	}

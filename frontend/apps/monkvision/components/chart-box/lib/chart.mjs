@@ -19,13 +19,14 @@ const _init = async _ => await $$.require(`${APP_CONSTANTS.COMPONENTS_PATH}/char
  * @param yAtZeros  Start Y at zero, array with one for each dataset y axis
  * @param ysteps    The y-axis tick stepping, for each dataset
  * @param ylabels   The y-axis tick labels, as many as ticks on y-axis
+ * @param ymaxs     The max Y value
  * @param bgColors  The background colors for the bars, array of arrays for each value in the dataset
  * @param brColors  The border colors for the bars, array of arrays for each value in the dataset
  * @param labelColor The label color
  * @param gridColor The grid color
  */
-async function drawBargraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, labelColor, gridColor) {
-    return await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, labelColor, gridColor, "bar", 0, 1);
+async function drawBargraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor) {
+    return await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor, "bar", 0, 1);
 }
 
 /**
@@ -40,28 +41,30 @@ async function drawBargraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAt
  * @param yAtZeros  Start Y at zero, array with one for each dataset y axis
  * @param ysteps    The y-axis tick stepping, for each dataset
  * @param ylabels   The y-axis tick labels, as many as ticks on y-axis
+ * @param ymaxs     The max Y value
  * @param bgColor   The fill color for the line
  * @param brColor   The border color for the line
  * @param labelColor The label color
  * @param gridColor The grid color
  */
-async function drawLinegraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, labelColor, gridColor) {
-    return await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, labelColor, gridColor, "line", 0.5, 2);
+async function drawLinegraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor) {
+    return await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor, "line", 0.5, 2);
 }
 
-async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, bgColors, brColors, labelColor, gridColor, type, pointWidth, lineWidth) {
+async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor, type, pointWidth, lineWidth) {
     await _init(); const ctx = canvas.getContext("2d"); gridLines = gridLines?gridLines.toLowerCase()=="true":false;
 
     const datasets = []; for (const [i,ys] of contents.ys.entries()) datasets.push({ data: ys, 
-        backgroundColor: bgColors[i], borderColor: brColors[i], borderWidth: lineWidth, pointRadius: pointWidth });
+        backgroundColor: bgColors[i], borderColor: brColors[i], borderWidth: lineWidth, pointRadius: pointWidth,
+        yAxisID: `yaxis${i}` });
 
     const data = {labels: contents.x, datasets}
 
     const yAxes = []; for (let i = 0; i < contents.ys.length; i++) yAxes.push({ 
-        gridLines: {drawOnChartArea: gridLines, drawTicks: false, color: gridColor}, 
+        gridLines: {drawOnChartArea: gridLines, drawTicks: false, color: gridColor}, id: `yaxis${i}`, type: 'linear', 
         ticks: {padding:5, stepSize:ysteps[i], beginAtZero: yAtZeros?yAtZeros[i].toLowerCase()=="true":false, 
             callback:label => ylabels[i][label] ? ylabels[i][label] : (ylabels[i]["else"]||ylabels[i]["else"]=="" ? ylabels[i]["else"]:label),
-            fontColor: labelColor} });
+            fontColor: labelColor, suggestedMax: ymaxs&&ymaxs[i]?ymaxs[i]:null} });
 
     const options = {
         maintainAspectRatio: false, 

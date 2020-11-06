@@ -21,6 +21,7 @@ SCHEMA
     "httpBar": {"html":"chart-box", "id":"httpBar", "title":"{{i18n.httpGoogleBar}}", "api":"loggraph", "type":"bargraph", 
         "maxticks":5, "ysteps":"[0.10]", "ylabels":"[1:{{i18n.OK}},0:{{i18n.Issue}},else:]", 
         "ycolors":"[0.1:#D43F3F4C:#af3234,else:#40D59D4C:#0e8f7e]", "yAtZeros":"[true]", "gridLines":"true",
+        "gridColor": "rgba(120,120,120,0.20)",
         "params":"id=html_mon_https___www_google_com_search_q_tekmonks&statusAsBoolean=false&statusFalseValue=0.1&statusTrueValue=1&nullValue={{i18n.none}}"}
 }
 ======
