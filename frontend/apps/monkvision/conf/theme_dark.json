@@ -11,7 +11,7 @@
         ".advtextbox > h1": "font-weight: 250; font-family: 'Raleway';",
         ".advtextbox > h2": "font-weight: 250; font-family: 'Raleway'; font-size: medium;",
         ".advtextbox > p": "font-weight: 400; font-family: 'Raleway'; font-size: smaller; background-color: #ffffff; color: black; border-radius: 10px; padding: 10px 5px 10px 5px; width: 120px; left: calc(50% - 60px); margin-top: 30px;",
-        "img.logo": "top: 40px; left: 100px; width: 148px; height: 25px;",
+        "img.logo": "top: 20px; left: 30px; width: 148px; height: 57px;",
         "span#signin": "top: 40px; right: 100px; position: absolute; font-size: 0.8em; font-weight: 500; color: #ffffff;",
         "span#signin > span:last-child": "color: #ffca36; font-weight: 700; text-transform: uppercase;",
         "span#signin > span > a":"color: inherit;"
@@ -25,7 +25,7 @@
         }
     },
     "login_html_data": {
-        "logo": "./img/logo.png",
+        "logo": "./img/logo_dark.png",
         "aboutLink": "https://twitter.com/tekmonks/status/1061000581735702528"
     },
 
@@ -72,7 +72,7 @@
         "div#leftheader > img.dashicon.selected": "left: 4px; padding: 2px; border-style: inset; border-radius: 5px; border-width: 0.5px; border-color: rgba(250,250,250,0.95);",
         "div#leftheader > span": "color: rgba(250,250,250,0.95); padding-bottom: 30px; width: 64px; left: 0px; font-size: smaller; font-weight: 500;",
         "span#header": "top: 15px; left: 20px; color: #41cf70; width: calc(100% - 30px); font-family: 'Raleway';",
-        "span#header > img#textlogo": "height: 20px; width: 125px;",
+        "span#header > img#textlogo": "height: 13px; width: 100px;",
         "span#header > span#signoff": "margin-right: 20px;",
         "span#header > span#signoff > img": "height: 30px; width: 30px;",
         "span#header > span#title": "width: 300px; font-size: 0.85em; font-weight: bold; background-color: rgb(80,80,80); box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); border-radius: 5px; padding: 5px; color: rgba(250,250,250,0.95);",
@@ -85,8 +85,8 @@
             "title": "Monkvision Dashboards",
             "name_dash1": "Overview",
             "title_dash1": "Overview of the systems",
-            "name_dash2": "Analyze",
-            "title_dash2": "In depth analysis",
+            "name_dash2": "Examples",
+            "title_dash2": "Example Charts",
             "Issue": "Problem",
             "Cancel": "Cancel",
             "InternalError": "Internal error",
@@ -106,7 +106,7 @@
     "main_html_data": {
         "span-with-menu#gear": "styleBody='div.menuitem{color: rgba(80,80,80,0.9)} div.menuitem:hover{background: rgba(80,80,80,0.9) !important; color: rgba(250,250,250,0.95) !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -120px;}'",
         "span-with-menu#gear>img": "style='height: 30px;width: 30px;vertical-align: middle;'",
-        "textlogo": "./img/logo.png",
+        "textlogo": "./img/textlogo_dark.png",
         "dashicon": "./img/dashicon.svg"
     }
 }

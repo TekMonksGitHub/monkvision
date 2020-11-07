@@ -72,7 +72,7 @@
         "div#leftheader > img.dashicon.selected": "left: 4px; padding: 2px; border-style: inset; border-radius: 5px; border-width: 0.5px; border-color: white;",
         "div#leftheader > span": "color: white; padding-bottom: 30px; width: 64px; left: 0px; font-size: smaller; font-weight: 500;",
         "span#header": "top: 15px; left: 20px; color: #41cf70; width: calc(100% - 30px); font-family: 'Raleway';",
-        "span#header > img#textlogo": "height: 20px; width: 125px;",
+        "span#header > img#textlogo": "height: 12px; width: 100px;",
         "span#header > span#signoff": "margin-right: 20px;",
         "span#header > span#signoff > img": "height: 30px; width: 30px;",
         "span#header > span#title": "width: 300px; font-size: 0.85em; font-weight: bold; background-color: white; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); border-radius: 5px; padding: 5px; color: rgba(0,0,0,0.75);",
@@ -85,8 +85,8 @@
             "title": "Monkvision Dashboards",
             "name_dash1": "Overview",
             "title_dash1": "Overview of the systems",
-            "name_dash2": "Analyze",
-            "title_dash2": "In depth analysis",
+            "name_dash2": "Examples",
+            "title_dash2": "Example Charts",
             "Issue": "Problem",
             "Cancel": "Cancel",
             "InternalError": "Internal error",
@@ -106,7 +106,7 @@
     "main_html_data": {
         "span-with-menu#gear": "styleBody='div.menuitem:hover{background: #45d19e !important; color: white !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -120px;}'",
         "span-with-menu#gear>img": "style='height: 30px;width: 30px;vertical-align: middle;'",
-        "textlogo": "./img/textlogo.png",
+        "textlogo": "./img/textlogo_light.png",
         "dashicon": "./img/dashicon.svg"
     }
 }

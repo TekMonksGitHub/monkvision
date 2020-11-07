@@ -59,7 +59,7 @@ async function _refreshData(element, force) {
 	} else if (!force && content && JSON.stringify(memory.contents) == JSON.stringify(content.contents)) return;	// return if data didn't change
 	else if (content) memory.contents = content.contents; else delete memory.contents;	// we will now render new data
 
-	const data = createData();
+	const data = createData(); delete content.contents.title;	// title, if it exists, is only for rendering
 
 	const shadowRoot = chart_box.getShadowRootByHostId(id), contentDiv = shadowRoot.querySelector("div#content"); 
 	
@@ -126,7 +126,8 @@ async function _refreshData(element, force) {
 			memory.chart = await chart.drawBargraph(contentDiv.querySelector("canvas#canvas"), content.contents, 
 				element.getAttribute("maxticks"), element.getAttribute("gridLines"), element.getAttribute("xAtZero"), 
 				_makeArray(element.getAttribute("yAtZeros")), _makeArray(element.getAttribute("ysteps")), 
-				labels, _makeArray(element.getAttribute("ymaxs")), bgColors, brColors, labelColor, gridColor);
+				labels, _makeArray(element.getAttribute("ymaxs")), bgColors, brColors, labelColor, gridColor,
+				(element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"));
 		}
 
 		if (type == "linegraph") memory.chart = await chart.drawLinegraph(contentDiv.querySelector("canvas#canvas"), 
@@ -134,12 +135,12 @@ async function _refreshData(element, force) {
 			element.getAttribute("xAtZero"), _makeArray(element.getAttribute("yAtZeros")), 
 			_makeArray(element.getAttribute("ysteps")), labels, _makeArray(element.getAttribute("ymaxs")), 
 			_makeArray(element.getAttribute("fillColors")),_makeArray(element.getAttribute("borderColors")), 
-			labelColor, gridColor);
+			labelColor, gridColor, (element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"));
 		
 		return;
 	}
 
-	if (type == "piegraph" || type == "donutgraph") {
+	if (type == "piegraph" || type == "donutgraph" || type == "polargraph") {
 		await bindData(data, id); if (!content || !content.contents) return;
 		const colorHash = {}, colors = element.getAttribute("colors").split(","); for (const color of colors) {
 			const tuples = color.split(":");
@@ -157,8 +158,9 @@ async function _refreshData(element, force) {
 
 		const labelColor = element.getAttribute("labelColor") || "black";
 		
+		let kind = "pie"; if (type == "donutgraph") kind = "doughnut"; if (type == "polargraph") kind = "polarArea";
 		memory.chart = await chart.drawPiegraph(contentDiv.querySelector("canvas#canvas"), content.contents, 
-			labelHash, colorHash, labelColor, type == "donutgraph");
+			labelHash, colorHash, labelColor, kind);
 
 		return;
 	}
