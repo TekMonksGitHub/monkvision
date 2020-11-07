@@ -124,14 +124,15 @@ async function _refreshData(element, force) {
 			}
 
 			memory.chart = await chart.drawBargraph(contentDiv.querySelector("canvas#canvas"), content.contents, 
-				element.getAttribute("maxticks"), element.getAttribute("gridLines"), element.getAttribute("xAtZero"), 
-				_makeArray(element.getAttribute("yAtZeros")), _makeArray(element.getAttribute("ysteps")), 
-				labels, _makeArray(element.getAttribute("ymaxs")), bgColors, brColors, labelColor, gridColor,
+				element.getAttribute("maxticks"), _isTrue(element.getAttribute("gridLines")), 
+				element.getAttribute("xAtZero"), _makeArray(element.getAttribute("yAtZeros")), 
+				_makeArray(element.getAttribute("ysteps")), labels, _makeArray(element.getAttribute("ymaxs")), 
+				bgColors, brColors, labelColor, gridColor, 
 				(element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"));
 		}
 
 		if (type == "linegraph") memory.chart = await chart.drawLinegraph(contentDiv.querySelector("canvas#canvas"), 
-			content.contents, element.getAttribute("maxticks"), element.getAttribute("gridLines"), 
+			content.contents, element.getAttribute("maxticks"), _isTrue(element.getAttribute("gridLines")), 
 			element.getAttribute("xAtZero"), _makeArray(element.getAttribute("yAtZeros")), 
 			_makeArray(element.getAttribute("ysteps")), labels, _makeArray(element.getAttribute("ymaxs")), 
 			_makeArray(element.getAttribute("fillColors")),_makeArray(element.getAttribute("borderColors")), 
@@ -160,7 +161,8 @@ async function _refreshData(element, force) {
 		
 		let kind = "pie"; if (type == "donutgraph") kind = "doughnut"; if (type == "polargraph") kind = "polarArea";
 		memory.chart = await chart.drawPiegraph(contentDiv.querySelector("canvas#canvas"), content.contents, 
-			labelHash, colorHash, labelColor, kind);
+			labelHash, colorHash, labelColor, _isTrue(element.getAttribute("gridLines")), 
+			element.getAttribute("gridColor") || "darkgrey", kind);
 
 		return;
 	}
@@ -201,6 +203,8 @@ async function _getContent(api, params) {
 
 	return resp;
 }
+
+const _isTrue = string => string?string.toLowerCase() == "true":false;
 
 export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange}
 monkshu_component.register("chart-box", `${APP_CONSTANTS.APP_PATH}/components/chart-box/chart-box.html`, chart_box);

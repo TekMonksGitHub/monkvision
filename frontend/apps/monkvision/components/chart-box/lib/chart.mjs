@@ -54,7 +54,7 @@ async function drawLinegraph(canvas, contents, maxXTicks, gridLines, xAtZero, yA
 }
 
 async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor, singleAxis, type, pointWidth, lineWidth) {
-    await _init(); const ctx = canvas.getContext("2d"); gridLines = gridLines?gridLines.toLowerCase()=="true":false;
+    await _init(); const ctx = canvas.getContext("2d"); 
 
     const datasets = []; for (const [i,ys] of contents.ys.entries()) datasets.push({ data: ys, 
         backgroundColor: bgColors[i], borderColor: brColors[i], borderWidth: lineWidth, pointRadius: pointWidth,
@@ -91,9 +91,11 @@ async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZe
  * @param labelHash The labels, must be of format {"labelKey":"label",...} object
  * @param colorHash The colors, must be of format {"labelKey":["fill","stroke"],...} object
  * @param labelColor The label color
+ * @param gridLines Draw gridlines or not
+ * @param gridColor The grid color
  * @param type   Can be pie, doughnut or polararea
  */
-async function drawPiegraph(canvas, contents, labelHash, colorHash, labelColor, type="pie") {
+async function drawPiegraph(canvas, contents, labelHash, colorHash, labelColor, gridLines, gridColor, type="pie") {
     await _init(); const ctx = canvas.getContext("2d");
 
     const datas = [], labels = [], borders = [], backgrounds = [];
@@ -111,6 +113,11 @@ async function drawPiegraph(canvas, contents, labelHash, colorHash, labelColor, 
         animation: {animateScale:true},
         legend: {labels: {fontColor: labelColor}}
     }
+
+    if (type == "polarArea") options.scale = {
+        ticks: {showLabelBackdrop: false, fontColor:labelColor},
+        gridLines: {display: gridLines, color: gridColor?gridColor:null}
+    };
 
     return new Chart(ctx, {type, data, options});
 }

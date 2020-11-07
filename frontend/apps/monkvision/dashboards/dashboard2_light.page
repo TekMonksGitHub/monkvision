@@ -14,6 +14,7 @@ SCHEMA
     "randompolar": {"html":"chart-box", "id":"rpolar", "title":"Random Data Polar", "api":"randomaggregator", "type":"polargraph", 
         "labels":"2:Data 3,1:Data 2,0:Data 1", "labelsShowPercentage": "true",
         "colors":"0:#D43F3F4C:#af3234,1:#40D59D4C:#0e8f7e,2:#F7DC6F4C:#d4ac0d", 
+        "gridLines":"true", "gridColor": "rgba(120,120,120,0.20)",
         "params":"numys=3"},
     
     "randomline": {"html":"chart-box", "id":"rline", "title":"Random Data Lines", "api":"randomgraph", "type":"linegraph", 
