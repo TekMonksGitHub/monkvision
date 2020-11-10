@@ -2,7 +2,7 @@ SCHEMA
 ======
 {
     "alerts": {"html":"chart-box", "id":"alerts", "title":"{{i18n.CriticalAlerts}}", "api":"alerts", "type":"text",
-        "styleBody":"div#container{height: calc(100vh - 105px) !important;}"},
+        "styleBody":"div#container{height: calc(100vh - 105px) !important;} div#content > div#textcontent > span#text > p:hover {background-color: rgb(235, 250, 245);}"},
 
     "banner": {"html":"chart-box", "id":"httpBanner", "title": "Will be overridden", "api":"statusbanner", 
         "type":"metrictext", 
@@ -10,18 +10,20 @@ SCHEMA
 
     "httpPie": {"html":"chart-box", "id":"httpPie", "title":"{{i18n.httpGooglePie}}", "api":"statusaggregator", "type":"piegraph", 
         "labels":"1:{{i18n.OK}},0:{{i18n.Issue}}", "labelsShowPercentage": "true",
-        "colors":"0:#D43F3F4C:#af3234,1:#40D59D4C:#0e8f7e", 
+        "colors":"0:#D43F3F4C:#af3234,1:#40D59D4C:#0e8f7e", "labelColor":"rgba(120,120,120,0.2)",
+        "styleBody": "div#content{overflow-y: hidden}",
         "params":"id=html_mon_https___www_google_com_search_q_tekmonks"},
 
     "http": {"html":"chart-box", "id":"password", "api":"loggraph", "type":"table", 
         "labels":"x:{{i18n.time}},ys0:{{i18n.status}}", 
         "params":"id=html_mon_https___www_google_com_search_q_tekmonks&statusAsBoolean=true&nullValue={{i18n.none}}&title={{i18n.httpGoogle}}", 
-        "styleBody":"div#content{max-height: calc(33vh - 64px) !important;}"},
+        "styleBody":"div#content{max-height: calc(33vh - 64px) !important;} thead, th{box-shadow: 0 2px 2px -1px rgb(69, 209, 158, 0.4); background-color: #45d19e; color: rgb(250,250,250);} tr:nth-child(even) {background: rgb(235, 250, 245)}"},
 
     "httpBar": {"html":"chart-box", "id":"httpBar", "title":"{{i18n.httpGoogleBar}}", "api":"loggraph", "type":"bargraph", 
         "maxticks":5, "ysteps":"[0.10]", "ylabels":"[1:{{i18n.OK}},0:{{i18n.Issue}},else:]", 
         "ycolors":"[0.1:#D43F3F4C:#af3234,else:#40D59D4C:#0e8f7e]", "yAtZeros":"[true]", "gridLines":"true",
-        "gridColor": "rgba(120,120,120,0.20)",
+        "labelColor":"rgba(120,120,120,0.2)", "gridColor": "rgba(120,120,120,0.20)",
+        "styleBody": "div#content{overflow-y: hidden}",
         "params":"id=html_mon_https___www_google_com_search_q_tekmonks&statusAsBoolean=false&statusFalseValue=0.1&statusTrueValue=1&nullValue={{i18n.none}}"}
 }
 ======
@@ -59,5 +61,6 @@ body {margin: 0;}
     margin: 5px;
     background-color: white;
     color: rgb(72,72,72);
+    border: 0.1px solid rgba(250,250,250,0);
 }
 =======
