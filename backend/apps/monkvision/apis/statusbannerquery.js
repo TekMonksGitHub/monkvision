@@ -10,14 +10,15 @@ const utils = require(`${APP_CONSTANTS.LIB_DIR}/utils.js`);
 exports.doService = async jsonReq => {
 	if (!validateRequest(jsonReq)) {LOG.error("Validation failure."); return CONSTANTS.FALSE_RESULT;}
 	
-	const rows = await db.getLogs(jsonReq.id, utils.getTimeRangeForSQLite(JSON.parse(jsonReq.timeRange)));
+	const queryParams = _getAdditionalQueryParams(jsonReq); const timeRange = utils.getTimeRangeForSQLite(JSON.parse(jsonReq.timeRange));
+    queryParams.$from = timeRange.from; queryParams.$to = timeRange.to;
+    const rows = await db.runGetQueryFromID(jsonReq.id, queryParams);
     if (!rows) {LOG.error("DB read issue"); return CONSTANTS.FALSE_RESULT;}
 
-    let numTrue = 0, numFalse = 0;
-    for (const row of rows) if (row.status==1) numTrue++; else numFalse++;
+    const truePercent = rows[0].percent;
 
     // calculate issue percentage
-    const round = Math.floor, truePercent = numTrue*100/(numTrue+numFalse), colorCode = `percent${round(truePercent)}Colors`, 
+    const round = Math.floor, colorCode = `percent${round(truePercent)}Colors`, 
         iconCode = `percent${round(truePercent)}Icon`, explanationCode = `percent${round(truePercent)}Explanation`, 
         titleCode = `percent${round(truePercent)}Title`;
 
@@ -43,6 +44,15 @@ exports.doService = async jsonReq => {
 
     const result = {result: true, type: "metrictext", contents: {textmain:`${round(truePercent)} %`, fgcolor, bgcolor, textexplanation}}; 
     if (title) result.contents.title = title; if (icon) result.contents.icon = icon; return result;
+}
+
+function _getAdditionalQueryParams(jsonReq) {
+    const additional_params = {};
+    for (const key of Object.keys(jsonReq)) if (key.startsWith("$qp_")) {
+        const paramName = key.substring(4);
+        additional_params[`$${paramName}`] = jsonReq[key];
+    }
+    return additional_params;
 }
 
 const validateRequest = jsonReq => (jsonReq && jsonReq.id && jsonReq.timeRange);

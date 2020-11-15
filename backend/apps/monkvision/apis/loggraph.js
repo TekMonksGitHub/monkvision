@@ -24,7 +24,7 @@ exports.doService = async jsonReq => {
 	if (!validateRequest(jsonReq)) {LOG.error("Validation failure."); return CONSTANTS.FALSE_RESULT;}
     
     const rows = await db.getLogs(jsonReq.id, utils.getTimeRangeForSQLite(JSON.parse(jsonReq.timeRange)));
-    if (!rows) {LOG.error(`DB read issue: ${err}`); return CONSTANTS.FALSE_RESULT;}
+    if (!rows) {LOG.error("DB read issue"); return CONSTANTS.FALSE_RESULT;}
 
     const x = [], y = [], info = [], falseStatusValue = jsonReq.statusFalseValue?jsonReq.statusFalseValue:0.1,
         trueStatusValue = jsonReq.statusTrueValue?jsonReq.statusTrueValue:1;

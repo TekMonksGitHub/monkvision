@@ -1,3 +1,7 @@
 {
-    "db": "c:/Users/Rohit Kapoor/source/monboss/db/monboss.db"
+    "db": "c:/Users/Rohit Kapoor/source/monboss/db/monboss.db",
+    "queries": {
+        "clientAvails": "select timestamp, round(sum(status)*100/count(status)) as status, group_concat(case when status=0 then logid end) as additional_status from logs where timestamp > $from and timestamp < $to group by round(strftime('%s',timestamp)/$timeStep)",
+        "clientAvailsBanner": "select cast(sum(status) as float)*100/count(status) as percent from logs where timestamp > $from and timestamp < $to"
+    }
 }

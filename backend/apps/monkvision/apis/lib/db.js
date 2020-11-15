@@ -6,6 +6,7 @@
  */
 const util = require("util");
 const sqlite3 = require("sqlite3");
+const DB_QUERIES = require(`${APP_CONSTANTS.CONF_DIR}/monkvision.json`).queries;
 const DB_PATH = require("path").resolve(require(`${APP_CONSTANTS.CONF_DIR}/monkvision.json`).db);
 
 let dbInstance, dbRunAsync, dbAllAsync;
@@ -40,11 +41,11 @@ exports.getLogs = async (logid, range, callback) => {
 /**
  * Runs the given SQL command e.g. insert, delete etc.
  * @param {string} cmd The command to run
- * @param {array} params The params for SQL
+ * @param {array} params The params for SQL - array or object
  * @return true on success, and false on error
  */
 exports.runCmd = async (cmd, params=[]) => {
-    await _initDB(); params = Array.isArray(params)?params:[params];
+    await _initDB(); 
     try {await dbRunAsync(cmd, params); return true}
     catch (err) {LOG.error(`DB error running, ${cmd}, with params ${params}, error: ${err}`); return false;}
 }
@@ -52,14 +53,21 @@ exports.runCmd = async (cmd, params=[]) => {
 /**
  * Runs the given query e.g. select and returns the rows from the result.
  * @param {string} cmd The command to run
- * @param {array} params The params for SQL
+ * @param {object} params The params for SQL - array or object
  * @return rows array on success, and false on error 
  */
 exports.getQuery = async(cmd, params=[]) => {
-    await _initDB(); params = Array.isArray(params)?params:[params];
+    await _initDB(); 
     try {return await dbAllAsync(cmd, params);}
-    catch (err) {LOG.error(`DB error running, ${cmd}, with params ${params}, error: ${err}`); return false;}
+    catch (err) {LOG.error(`DB error running, ${cmd}, with params ${JSON.stringify(params)}, error: ${err}`); return false;}
 }
+
+/**
+ * Runs the given query from ID, e.g. select and returns the rows from the result.
+ * @param {string} id The query ID
+ * @param {array} params The params for the SQL
+ */
+exports.runGetQueryFromID = async (id, params=[]) => await exports.getQuery(DB_QUERIES[id], params);
 
 exports.init = async _ => await _initDB();
 

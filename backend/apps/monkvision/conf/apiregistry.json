@@ -12,5 +12,9 @@
     "/apps/monkvision/statusbanner" : "/apis/statusbanner.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true",
 
     "/apps/monkvision/randomgraph" : "/apis/randomgraph.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true",
-    "/apps/monkvision/randomaggregator" : "/apis/randomaggregator.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true"
+    "/apps/monkvision/randomaggregator" : "/apis/randomaggregator.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true",
+
+    "/apps/monkvision/loggraphquery" : "/apis/loggraphquery.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true",
+    
+    "/apps/monkvision/statusbannerquery" : "/apis/statusbannerquery.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true"
 }

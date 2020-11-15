@@ -1,0 +1,52 @@
+SCHEMA
+======
+{
+    "alerts": {"html":"chart-box", "id":"alerts", "title":"{{i18n.CriticalAlerts}}", "api":"alerts", "type":"text",
+        "styleBody":"div#container{height: calc(100vh - 105px) !important;} div#content > div#textcontent > span#text > p:hover {background-color: rgb(80, 80, 80);}"},
+
+    "clientBanner": {"html":"chart-box", "id":"clientBanner", "title": "Will be overridden", 
+        "api":"statusbannerquery", "type":"metrictext", 
+        "params":"id=clientAvailsBanner&percent100Colors=#ffffff,#45d19e&elseColors=#ffffff,#ff3f3fcc&elseIcon=./img/server_icon.svg&percent100Explanation=No issues seen&elseExplanation=There are issues&elseTitle=Success Rate"},
+
+    "clientBar": {"html":"chart-box", "id":"clientBar", "title":"Overall Status", "api":"loggraphquery", 
+        "type":"bargraph", "maxticks":5, "ysteps":"[10]", "ylabels":"[100:{{i18n.OK}},0:{{i18n.Issue}},else:]", 
+        "ymaxs":"[100]", "ycolors":"[else:#D43F3F4C:#af3234,100:#40D59D4C:#0e8f7e]", "yAtZeros":"[true]", 
+        "gridLines":"true", "labelColor":"rgba(250,250,250,0.95)", "gridColor": "rgba(250,250,250,0.20)",
+        "styleBody": "div#content{overflow-y: hidden}", "params":"id=clientAvails&$qp_timeStep=12000&nullValue={{i18n.none}}&valueTemplate=Value: $$yvalue$$%\nBad Log IDs Follow\n$$value$$%"}
+}
+======
+
+
+LAYOUT
+=================
+--------------------------------
+|   alerts    | clientBanner   |
+|------------------------------|
+|   alerts    |   clientBar    |
+--------------------------------
+=================
+Row Heights = 50%,50%
+Col Widths = 30%,70%
+=================
+
+
+CSS CLASSES
+===========
+CONTAINER CLASSES = grid-container-extension
+ITEM CLASSES = grid-item-extension
+PER ITEM CLASS = class
+===========
+
+
+CSS
+=======
+body {margin: 0;}
+.grid-item-extension {
+    box-shadow:  0 0 1px rgba(34, 25, 25, 0.4);
+    border-radius: 10px;
+    margin: 5px;
+    background-color: rgb(30,30,30); 
+    color: rgba(250,250,250,0.95);
+    border: 0.1px solid rgba(250,250,250,0.95);
+}
+=======

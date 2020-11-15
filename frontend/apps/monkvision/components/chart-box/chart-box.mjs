@@ -45,21 +45,21 @@ async function _refreshData(element, force) {
 	const content =  await _getContent(api, params); 
 	const memory = chart_box.getMemory(id);
 	const bindData = async (data, id) => { element.__skip_refresh = true; await chart_box.bindData(data, id); 
-			delete element.__skip_refresh; }
-	const clearChart = shadowRoot => {if (memory.chart) {memory.chart.destroy(); delete memory.chart;}
-		const canvasNode = shadowRoot.querySelector("canvas#canvas"), canvasParent = canvasNode.parentNode, 
-			canvasClone = canvasNode.cloneNode();
+		delete element.__skip_refresh; }
+	const clearChart = shadowRoot => { if (memory.chart) {memory.chart.destroy(); delete memory.chart;}
+		const canvasNode = shadowRoot.querySelector("canvas#canvas"), canvasParent = canvasNode.parentNode, canvasClone = canvasNode.cloneNode();
 		canvasNode.remove(); canvasParent.appendChild(canvasClone); }
 	const createData = _ => {return {title: content&&content.contents? content.contents.title || element.getAttribute("title"):element.getAttribute("title"), 
 		styleBody: element.getAttribute("styleBody")?`<style>${element.getAttribute("styleBody")}</style>`:null}};
+	const clone = object => object?JSON.parse(JSON.stringify(object)):null;
 
 	if (!force && content && !content.contents) {	// clear everything if data is empty and changed
 		if (memory.contents) {await bindData(createData(), id); clearChart(); delete memory.contents;}	// destroy any table etc.
 		return;
 	} else if (!force && content && JSON.stringify(memory.contents) == JSON.stringify(content.contents)) return;	// return if data didn't change
-	else if (content) memory.contents = content.contents; else delete memory.contents;	// we will now render new data
+	else if (content) memory.contents = clone(content.contents); else delete memory.contents;	// we will now render new data
 
-	const data = createData(); delete content.contents.title;	// title, if it exists, is only for rendering
+	const data = createData(); if (content && content.contents) delete content.contents.title;	// title, if it exists, is only for rendering
 
 	const shadowRoot = chart_box.getShadowRootByHostId(id), contentDiv = shadowRoot.querySelector("div#content"); 
 	
