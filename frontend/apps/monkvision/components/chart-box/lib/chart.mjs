@@ -87,21 +87,24 @@ async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZe
  * API data format is x, y and info where info is additional info.
  * 
  * @param canvas    The hosting canvas element
- * @param contents  The graph contents - must be {"labelKey":"value",...} object
- * @param labelHash The labels, must be of format {"labelKey":"label",...} object
- * @param colorHash The colors, must be of format {"labelKey":["fill","stroke"],...} object
+ * @param contents  The graph contents - must be {data, labels, colors, infos} where
+ *                  data:{"labelKey":"value",...}, 
+ *                  labels, must be of format {"labelKey":"label",...} object
+ *                  the colors, must be of format {"labelKey":["fill","stroke"],...} object
+ *                  and infos must be infos:{"labelKey":"tooltip",...} object
  * @param labelColor The label color
  * @param gridLines Draw gridlines or not
  * @param gridColor The grid color
  * @param type   Can be pie, doughnut or polararea
  */
-async function drawPiegraph(canvas, contents, labelHash, colorHash, labelColor, gridLines, gridColor, type="pie") {
+async function drawPiegraph(canvas, rawContents, labelColor, gridLines, gridColor, type="pie") {
     await _init(); const ctx = canvas.getContext("2d");
 
-    const datas = [], labels = [], borders = [], backgrounds = [];
+    const datas = [], labels = [], borders = [], backgrounds = [], infos = [], contents = rawContents.data, 
+        labelHash = rawContents.labels, colorHash = rawContents.colors, infoHash = rawContents.infos||[];
     for (const key of Object.keys(contents)) {
         datas.push(contents[key]); labels.push(labelHash[key]); 
-        borders.push(colorHash[key][1]); backgrounds.push(colorHash[key][0])
+        borders.push(colorHash[key][1]); backgrounds.push(colorHash[key][0]); infos.push(infoHash[key]||labelHash[key]);
     }
 
     const data = {labels, datasets: [{ data:datas, backgroundColor: backgrounds, borderColor: borders, borderWidth: 2}]}
@@ -109,7 +112,7 @@ async function drawPiegraph(canvas, contents, labelHash, colorHash, labelColor, 
     const options = {
         maintainAspectRatio: false, 
         responsive: true, 
-        tooltips: {displayColors:false},
+        tooltips: {callbacks: {label: item => infos[item.index].split("\n")}, displayColors:false},
         animation: {animateScale:true},
         legend: {labels: {fontColor: labelColor}}
     }

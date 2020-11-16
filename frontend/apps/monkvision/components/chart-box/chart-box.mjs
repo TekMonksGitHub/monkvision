@@ -157,11 +157,12 @@ async function _refreshData(element, force) {
 				` - ${Math.round(parseInt(content.contents[tuple[0].trim()])/contentTotal*100)}%`;
 		}
 
-		const labelColor = element.getAttribute("labelColor") || "black";
+		const labelColor = element.getAttribute("labelColor") || "black"; 
+		const infos = content.contents.infos; delete content.contents.infos;
 		
 		let kind = "pie"; if (type == "donutgraph") kind = "doughnut"; if (type == "polargraph") kind = "polarArea";
-		memory.chart = await chart.drawPiegraph(contentDiv.querySelector("canvas#canvas"), content.contents, 
-			labelHash, colorHash, labelColor, _isTrue(element.getAttribute("gridLines")), 
+		memory.chart = await chart.drawPiegraph(contentDiv.querySelector("canvas#canvas"), {data:content.contents, 
+			labels: labelHash, colors: colorHash, infos}, labelColor, _isTrue(element.getAttribute("gridLines")), 
 			element.getAttribute("gridColor") || "darkgrey", kind);
 
 		return;

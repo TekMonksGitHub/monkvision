@@ -99,9 +99,8 @@ const _stopRefresh = _ => {if (session.get(DASHBOARD_TIMER)) clearInterval(sessi
 function _startRefresh() {
     _stopRefresh(); if (!session.get(REFRESH_INTERVAL)) return;
 
-    session.set(DASHBOARD_TIMER, setInterval(_=>{
-        const dateToday = new Date(), dateWeekAgo = new Date(); dateWeekAgo.setDate(dateToday.getDate() - 7);
-        timeRangeUpdated(false, {from: dateAsHTMLDateValue(dateWeekAgo), to: dateAsHTMLDateValue(dateToday)});
+    session.set(DASHBOARD_TIMER, setInterval(_=>{timeRangeUpdated(false, 
+        {from: document.querySelector("input#datetimepickerfrom").value, to: dateAsHTMLDateValue(new Date())});
     }, session.get(REFRESH_INTERVAL)));
     loginmanager.addLogoutListener(_=>clearInterval(session.get(DASHBOARD_TIMER)));
 }

@@ -26,15 +26,26 @@ exports.doService = async jsonReq => {
     const rows = await db.runGetQueryFromID(jsonReq.id, queryParams);
     if (!rows) {LOG.error("DB read issue"); return CONSTANTS.FALSE_RESULT;}
 
-    const x = [], y = [], info = [];
-    for (const row of rows) {
-        x.push(utils.fromSQLiteToUTCOrLocalTime(row.timestamp, jsonReq.notUTC)); y.push(row.status);
-        info.push(!row.additional_status || row.additional_status=="" ? 
-            (jsonReq.nullValue?jsonReq.nullValue:row.additional_status) : 
-                _getValueTemplate(jsonReq, row.status, row.additional_status.split(",").join("\n")));
+    const x = [], ys = [], infos = [];
+    for (const [index,row] of rows.entries()) {
+        x.push(utils.fromSQLiteToUTCOrLocalTime(row.x, jsonReq.notUTC)); 
+
+        let i = 0; while (row[`y${i}`]) {if (!ys[i]) ys.push([]); ys[i][index] = row[`y${i}`]; i++;}
+
+        for (let j = 0; j < i; j++) {   // i holds the total ys now
+            if (!infos[j]) infos.push([]); 
+            let additional_status = row[`info${j}`];
+
+            additional_status = !additional_status || additional_status=="" ? 
+                (jsonReq.nullValue?jsonReq.nullValue:additional_status) : additional_status.split(",").join("\n");
+
+            additional_status = _getValueTemplate(jsonReq, row[`y${j}`], additional_status);
+
+            infos[j][index] = additional_status;
+        }
     }
 
-    const result = {result: true, type: "bargraph", contents: {length:x.length,x,ys:[y],infos:[info]}}; 
+    const result = {result: true, type: "bargraph", contents: {length:x.length,x,ys,infos}}; 
     if (jsonReq.title) result.contents.title = jsonReq.title; return result;
 }
 
