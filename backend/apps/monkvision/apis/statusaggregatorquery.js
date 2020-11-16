@@ -15,7 +15,11 @@ exports.doService = async jsonReq => {
     const rows = await db.runGetQueryFromID(jsonReq.id, queryParams);
     if (!rows) {LOG.error("DB read issue"); return CONSTANTS.FALSE_RESULT;}
 
-    const contents = {}; for (const key of rows[0].keys) contents[key] = rows[0][key];
+    const contents = {infos:{}}; for (const key of Object.keys(rows[0])) {
+        if (key.endsWith(jsonReq.info_suffix)) 
+            contents.infos[key.substring(0, key.length - jsonReq.info_suffix.length)] = rows[0][key].split(",").join("\n");
+        else contents[key] = rows[0][key];
+    }
 
     const result = {result: true, type: "piegraph", contents}; 
     if (jsonReq.title) result.contents.title = jsonReq.title; return result;

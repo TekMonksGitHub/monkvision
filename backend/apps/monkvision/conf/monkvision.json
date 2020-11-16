@@ -3,6 +3,6 @@
     "queries": {
         "clientAvails": "select timestamp as x, round(sum(status)*100/count(status)) as y0, group_concat(case when status=0 then logid end) as info0 from logs where timestamp > $from and timestamp < $to group by round(strftime('%s',timestamp)/$timeStep)",
         "clientAvailsBanner": "select cast(sum(status) as float)*100/count(status) as percent from logs where timestamp > $from and timestamp < $to",
-        "clientAvailsPie": "select sum(status) as y1, count(status) - sum(status) as y0, group_concat(case when status=0 then logid end) as info0, $none as info1 from logs where timestamp > $from and timestamp < $to"
+        "clientAvailsPie": "select sum(status) as y1, count(status) - sum(status) as y0, group_concat(case when status=0 then logid end) as y0_info, $none as y1_info from logs where timestamp > $from and timestamp < $to"
     }
 }

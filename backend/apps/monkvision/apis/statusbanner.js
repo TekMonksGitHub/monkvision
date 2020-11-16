@@ -41,7 +41,7 @@ exports.doService = async jsonReq => {
     if (jsonReq[explanationCode]) textexplanation = jsonReq[explanationCode];
     else if (jsonReq["elseExplanation"]) textexplanation = jsonReq["elseExplanation"];
 
-    const result = {result: true, type: "metrictext", contents: {textmain:`${round(truePercent)} %`, fgcolor, bgcolor, textexplanation}}; 
+    const result = {result: true, type: "metrictext", contents: {textmain:`${parseFloat(truePercent).toFixed(2)} %`, fgcolor, bgcolor, textexplanation}}; 
     if (title) result.contents.title = title; if (icon) result.contents.icon = icon; return result;
 }
 

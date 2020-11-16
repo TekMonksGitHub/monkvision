@@ -143,6 +143,9 @@ async function _refreshData(element, force) {
 
 	if (type == "piegraph" || type == "donutgraph" || type == "polargraph") {
 		await bindData(data, id); if (!content || !content.contents) return;
+
+		const infos = clone(content.contents.infos); delete content.contents.infos;
+
 		const colorHash = {}, colors = element.getAttribute("colors").split(","); for (const color of colors) {
 			const tuples = color.split(":");
 			colorHash[tuples[0].trim()] = [tuples[1].trim(), tuples[2].trim()];
@@ -154,11 +157,10 @@ async function _refreshData(element, force) {
 			const tuple = label.split(":");
 			labelHash[tuple[0].trim()] = tuple[1].trim();
 			if (element.getAttribute("labelsShowPercentage").toLowerCase() == "true") labelHash[tuple[0].trim()] +=
-				` - ${Math.round(parseInt(content.contents[tuple[0].trim()])/contentTotal*100)}%`;
+				` - ${parseFloat(parseInt(content.contents[tuple[0].trim()])/contentTotal*100).toFixed(2)}%`;
 		}
 
 		const labelColor = element.getAttribute("labelColor") || "black"; 
-		const infos = content.contents.infos; delete content.contents.infos;
 		
 		let kind = "pie"; if (type == "donutgraph") kind = "doughnut"; if (type == "polargraph") kind = "polarArea";
 		memory.chart = await chart.drawPiegraph(contentDiv.querySelector("canvas#canvas"), {data:content.contents, 
