@@ -115,7 +115,7 @@ async function drawPiegraph(canvas, rawContents, labelColor, gridLines, gridColo
         tooltips: {callbacks: {
             title: item => labels[item[0].index],
             label: item => datas[item.index],
-            afterLabel: item => infos[item.index].split("\n")
+            afterLabel: item => infos[item.index] == labels[item.index] ? "" : infos[item.index].split("\n")
         }, displayColors:false},
         animation: {animateScale:true},
         legend: {labels: {fontColor: labelColor}}
