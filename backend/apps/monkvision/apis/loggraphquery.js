@@ -1,6 +1,11 @@
 /** 
- * Returns MonBoss or CyberWarrior log file's contents as bar graph
- * data based on dynamic queries.
+ * Returns contents as bar graph with data based on dynamic queries.
+ * 
+ * Incoming params
+ *  id - The query ID, which is used then to pickup the query from monkvision.json in conf. This
+ *       query must return x, y<0 to n> and infos<0 to n>
+ *  timeRange - The time range for the query
+ *  $qa_<something> - The query parameters
  * 
  * (C) 2020 TekMonks. All rights reserved.
  */

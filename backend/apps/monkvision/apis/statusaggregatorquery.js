@@ -1,6 +1,16 @@
 /** 
  * Returns as aggregated by query.
  * 
+ * Incoming params
+ *  id - The query ID, which is used then to pickup the query from monkvision.json in conf. This query
+ *       must return various y values, e.g. as y0, y1 etc. and then information about them as y0_info, 
+ *       y1_info etc. assuming the info_suffix is _info, in this case.
+ *  timeRange - The time range for the query
+ *  info_suffix - The suffix for columns which carry information for the aggregated value columns
+ *  $qa_<something> - The query parameters
+ *  title - Optional - the title to return back
+ *  
+ * 
  * (C) 2020 TekMonks. All rights reserved.
  */
 
@@ -34,4 +44,4 @@ function _getAdditionalQueryParams(jsonReq) {
     return additional_params;
 }
 
-const validateRequest = jsonReq => (jsonReq && jsonReq.id && jsonReq.timeRange);
+const validateRequest = jsonReq => (jsonReq && jsonReq.id && jsonReq.info_suffix && jsonReq.timeRange);

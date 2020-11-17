@@ -1,5 +1,13 @@
 /** 
- * Returns MonBoss or CyberWarrior log file's status as banner text.
+ * Returns status as banner text based on query.
+ * 
+ * Incoming params
+ *  id - The query ID, which is used then to pickup the query from monkvision.json in conf. This
+ *       query must return percent column with calculated percentage.
+ *  timeRange - The time range for the query
+ *  $qa_<something> - The query parameters
+ *  percent<number>[Title, Colors, Icon, Explanation] - Title, colors, icons etc. to send back
+ *                                                      based on the calculated percentage
  * 
  * (C) 2020 TekMonks. All rights reserved.
  */
@@ -23,7 +31,7 @@ exports.doService = async jsonReq => {
         titleCode = `percent${round(truePercent)}Title`;
 
     // set title
-    let title = null;
+    let title = "Status";
     if (jsonReq[titleCode]) title = jsonReq[titleCode];
     else if (jsonReq["elseTitle"]) title = jsonReq["elseTitle"];
 
