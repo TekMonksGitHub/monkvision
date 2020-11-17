@@ -18,7 +18,7 @@ let dbInstance, dbRunAsync, dbAllAsync;
  * @return The rows read or false on error - returned via async or callback (if callback is provided)
  */
 exports.getAlerts = async (range, callback) => {
-    const query = "select timestamp, error, additional_err from alerts where timestamp >= ? and timestamp <= ?";
+    const query = "select timestamp, error, additional_err, system from alerts where timestamp >= ? and timestamp <= ?";
     const rows = await exports.getQuery(query, [range.from, range.to]);
     if (callback) callback(rows?null:"DB read error", rows?rows:null);
     else return rows;
@@ -32,7 +32,7 @@ exports.getAlerts = async (range, callback) => {
  * @return The rows read or false on error - returned via async or callback (if callback is provided)
  */
 exports.getLogs = async (logid, range, callback) => {
-    const query = "select timestamp, status, additional_status from logs where logid = ? and timestamp >= ? and timestamp <= ?";
+    const query = "select timestamp, status, additional_status, system from logs where logid = ? and timestamp >= ? and timestamp <= ?";
     const rows = await exports.getQuery(query, [logid, range.from, range.to]);
     if (callback) callback(rows?null:"DB read error", rows?rows:null);
     else return rows;

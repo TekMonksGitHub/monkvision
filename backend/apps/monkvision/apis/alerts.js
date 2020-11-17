@@ -14,7 +14,7 @@ exports.doService = async jsonReq => {
     if (!rows) {LOG.error(`DB read issue: ${err}`); return CONSTANTS.FALSE_RESULT;}
     
     let contents = [];
-    for (const row of rows) contents.push(`Time: ${utils.fromSQLiteToUTCOrLocalTime(row.timestamp, jsonReq.notUTC)}\nError: ${row.error}\nAdditional information: ${row.additional_err}\n\n`);
+    for (const row of rows) contents.push(`Time: ${utils.fromSQLiteToUTCOrLocalTime(row.timestamp, jsonReq.notUTC)}\nError: ${row.error}\nAdditional information: ${row.additional_err||""}\nSystem: ${row.system||""}\n\n`);
     
     const result = {result: true, type: "text", contents};
     if (jsonReq.title) result.contents.title = jsonReq.title; return result;

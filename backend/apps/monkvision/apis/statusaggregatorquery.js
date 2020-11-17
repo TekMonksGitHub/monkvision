@@ -10,7 +10,7 @@
  *  $qa_<something> - The query parameters
  *  title - Optional - the title to return back
  *  
- * 
+ *
  * (C) 2020 TekMonks. All rights reserved.
  */
 
@@ -26,9 +26,10 @@ exports.doService = async jsonReq => {
     if (!rows) {LOG.error("DB read issue"); return CONSTANTS.FALSE_RESULT;}
 
     const contents = {infos:{}}; for (const key of Object.keys(rows[0])) {
-        if (key.endsWith(jsonReq.info_suffix)) 
-            contents.infos[key.substring(0, key.length - jsonReq.info_suffix.length)] = rows[0][key].split(",").join("\n");
-        else contents[key] = rows[0][key];
+        if (key.endsWith(jsonReq.info_suffix)) { 
+            if (rows[0][key]) contents.infos[
+                key.substring(0, key.length - jsonReq.info_suffix.length)] = rows[0][key].split(",").join("\n"); 
+        } else contents[key] = rows[0][key];
     }
 
     const result = {result: true, type: "piegraph", contents}; 
