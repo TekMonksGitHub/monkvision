@@ -15,7 +15,6 @@ const init = async _ => {
 	if (!session.get($$.MONKSHU_CONSTANTS.LANG_ID)) session.set($$.MONKSHU_CONSTANTS.LANG_ID, "en");
 	securityguard.setPermissionsMap(APP_CONSTANTS.PERMISSIONS_MAP);
 	securityguard.setCurrentRole(securityguard.getCurrentRole() || APP_CONSTANTS.GUEST_ROLE);
-	window.monkshu_env.onRouterLoadPage = []; 
 }
 
 async function main() {

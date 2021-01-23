@@ -70,9 +70,7 @@ async function interceptPageLoadData() {
         }
     }
 
-    window.monkshu_env.onRouterLoadPage.push(async (data, url) =>{         
-        if (url.indexOf("main.html") == -1) return; // not for us
-
+    window.monkshu_env.pageload_funcs[`${APP_CONSTANTS.APP_PATH}/main.html`] = async data => {
         // select current dashboard icon on page load
         const dashboardsRaw = await (await fetch(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`)).json();
         const allDashIcons = document.querySelectorAll("div#leftheader > img.dashicon");
@@ -82,7 +80,7 @@ async function interceptPageLoadData() {
         // load initial charts and set the refresh interval
         timeRangeUpdated(false);    // load initial charts they will get the dates from HTML
         if (data.refresh) {session.set(REFRESH_INTERVAL, data.refresh); _startRefresh()};
-    });
+    }
 }
 
 async function changePassword(_element) {
