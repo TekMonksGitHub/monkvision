@@ -6,10 +6,10 @@
  */
 import {utils} from "./utils.mjs";
 
-async function interceptPageLoad() {
-    window.monkshu_env.pageload_funcs[`${APP_CONSTANTS.APP_PATH}/register.html`] = async data =>
+async function interceptPageLoadData() {
+    window.monkshu_env.pagedata_funcs[`${APP_CONSTANTS.APP_PATH}/register.html`] = async data =>
          // add in css, theme and html data to the page data object
          await utils.addThemeDataAndCSS(data, "register");
 }
 
-export const main = {interceptPageLoad};
+export const main = {interceptPageLoadData};
