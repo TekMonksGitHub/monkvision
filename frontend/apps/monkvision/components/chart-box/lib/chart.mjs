@@ -49,17 +49,20 @@ async function drawBargraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAt
  * @param gridColor The grid color
  * @param singleAxis Use single Y axis?
  */
-async function drawLinegraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor, singleAxis) {
-    return await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor, singleAxis, "line", 0.5, 2);
+async function drawLinegraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor, singleAxis, threshold, thresholdColor, thresholdLineWidth) {
+    return await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor, singleAxis, "line", 0.5, 2, threshold, thresholdColor, thresholdLineWidth);
 }
 
-async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor, singleAxis, type, pointWidth, lineWidth) {
+async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor, singleAxis, type, pointWidth, lineWidth, threshold=false, thresholdColor, thresholdLineWidth) {
     await _init(); const ctx = canvas.getContext("2d"); 
 
     const datasets = []; for (const [i,ys] of contents.ys.entries()) datasets.push({ data: ys, 
         backgroundColor: bgColors[i], borderColor: brColors[i], borderWidth: lineWidth, pointRadius: pointWidth,
         yAxisID: singleAxis?"yaxis0":`yaxis${i}` });
 
+    if(threshold) datasets.push({data: new Array(contents.length).fill(threshold), type:"line", pointHitRadius: 0, pointStyle:"line",
+        lineTension: 0, borderWidth: thresholdLineWidth || 1, borderColor: thresholdColor || "rgba(227,16,16,10)", pointRadius: 0, fill: false });
+    
     const data = {labels: contents.x, datasets}
 
     const yAxes = []; for (let i = 0; i < (singleAxis?1:contents.ys.length); i++) yAxes.push({ 

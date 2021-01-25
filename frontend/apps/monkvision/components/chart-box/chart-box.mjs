@@ -131,12 +131,18 @@ async function _refreshData(element, force) {
 				(element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"));
 		}
 
-		if (type == "linegraph") memory.chart = await chart.drawLinegraph(contentDiv.querySelector("canvas#canvas"), 
+		if (type == "linegraph") {
+			const threshold	= element.getAttribute("threshold") || false;
+			const thresholdColor = element.getAttribute("thresholdColor");
+			const thresholdLineWidth = element.getAttribute("thresholdLineWidth");
+			memory.chart = await chart.drawLinegraph(contentDiv.querySelector("canvas#canvas"), 
 			content.contents, element.getAttribute("maxticks"), _isTrue(element.getAttribute("gridLines")), 
 			element.getAttribute("xAtZero"), _makeArray(element.getAttribute("yAtZeros")), 
 			_makeArray(element.getAttribute("ysteps")), labels, _makeArray(element.getAttribute("ymaxs")), 
 			_makeArray(element.getAttribute("fillColors")),_makeArray(element.getAttribute("borderColors")), 
-			labelColor, gridColor, (element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"));
+			labelColor, gridColor, (element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"),
+			threshold, thresholdColor, thresholdLineWidth);
+		}
 		
 		return;
 	}
