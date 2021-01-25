@@ -113,6 +113,13 @@ async function _refreshData(element, force) {
 		const labels = _getLabels(_makeArray(element.getAttribute("ylabels")));
 		const labelColor = element.getAttribute("labelColor") || "black";
 		const gridColor = element.getAttribute("gridColor") || "darkgrey";
+		const threshold	= element.getAttribute("threshold") || false;
+		const thresholdColor = element.getAttribute("thresholdColor") || "rgba(227,16,16,10)";
+		const thresholdLineWidth = element.getAttribute("thresholdLineWidth") || 1;
+		const annotation = threshold ? {
+			annotations: [{
+				type: 'line', mode: 'horizontal', scaleID: 'yaxis0', value: threshold, borderColor: thresholdColor, borderWidth: thresholdLineWidth,
+				label: { enabled: false } }] } : false
 
 		if (type == "bargraph") {
 			const colorHash = _getColorHash(_makeArray(element.getAttribute("ycolors")));
@@ -128,21 +135,15 @@ async function _refreshData(element, force) {
 				element.getAttribute("xAtZero"), _makeArray(element.getAttribute("yAtZeros")), 
 				_makeArray(element.getAttribute("ysteps")), labels, _makeArray(element.getAttribute("ymaxs")), 
 				bgColors, brColors, labelColor, gridColor, 
-				(element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"));
+				(element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"), annotation);
 		}
 
-		if (type == "linegraph") {
-			const threshold	= element.getAttribute("threshold") || false;
-			const thresholdColor = element.getAttribute("thresholdColor");
-			const thresholdLineWidth = element.getAttribute("thresholdLineWidth");
-			memory.chart = await chart.drawLinegraph(contentDiv.querySelector("canvas#canvas"), 
+		if (type == "linegraph") memory.chart = await chart.drawLinegraph(contentDiv.querySelector("canvas#canvas"), 
 			content.contents, element.getAttribute("maxticks"), _isTrue(element.getAttribute("gridLines")), 
 			element.getAttribute("xAtZero"), _makeArray(element.getAttribute("yAtZeros")), 
 			_makeArray(element.getAttribute("ysteps")), labels, _makeArray(element.getAttribute("ymaxs")), 
 			_makeArray(element.getAttribute("fillColors")),_makeArray(element.getAttribute("borderColors")), 
-			labelColor, gridColor, (element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"),
-			threshold, thresholdColor, thresholdLineWidth);
-		}
+			labelColor, gridColor, (element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"), annotation);
 		
 		return;
 	}
