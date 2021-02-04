@@ -24,9 +24,10 @@ exports.doService = async jsonReq => {
     
     const x = _getRandomTimes(jsonReq.timeRange, jsonReq.numentries, jsonReq.notUTC), 
         ys = _getRandomYs(jsonReq.numys, jsonReq.numentries, jsonReq.yrange), 
-        infos = _getRandomInfos(jsonReq.numys, jsonReq.numentries);
+        infos = _getRandomInfos(jsonReq.numys, jsonReq.numentries), legendArray = [];
+    for (let node of infos) legendArray.push(node[0]);
 
-    const result = {result: true, type: "bargraph", contents: {length:x.length,x,ys,infos}}; 
+    const result = {result: true, type: "bargraph", contents: {length:x.length,x,ys,infos, legend: legendArray}}; 
     if (jsonReq.title) result.contents.title = jsonReq.title; return result;
 }
 

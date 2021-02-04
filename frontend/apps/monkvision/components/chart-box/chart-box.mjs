@@ -119,7 +119,11 @@ async function _refreshData(element, force) {
 		const annotation = threshold ? {
 			annotations: [{
 				type: 'line', mode: 'horizontal', scaleID: 'yaxis0', value: threshold, borderColor: thresholdColor, borderWidth: thresholdLineWidth,
-				label: { enabled: false } }] } : false
+				label: { enabled: false } }] } : false;
+		const legendFontColor = element.getAttribute("legendFontColor") || labelColor;
+		const position = _makeArray(element.getAttribute("legendPosition"));
+		const legendPosition = position ? position[0] : "bottom";
+		const legend = content.contents.legend ? { display: true, position: legendPosition, labels: {fontColor: legendFontColor} } : {display: false};
 
 		if (type == "bargraph") {
 			const colorHash = _getColorHash(_makeArray(element.getAttribute("ycolors")));
@@ -135,7 +139,7 @@ async function _refreshData(element, force) {
 				element.getAttribute("xAtZero"), _makeArray(element.getAttribute("yAtZeros")), 
 				_makeArray(element.getAttribute("ysteps")), labels, _makeArray(element.getAttribute("ymaxs")), 
 				bgColors, brColors, labelColor, gridColor, 
-				(element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"), annotation);
+				(element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"), annotation, legend);
 		}
 
 		if (type == "linegraph") memory.chart = await chart.drawLinegraph(contentDiv.querySelector("canvas#canvas"), 
@@ -143,7 +147,7 @@ async function _refreshData(element, force) {
 			element.getAttribute("xAtZero"), _makeArray(element.getAttribute("yAtZeros")), 
 			_makeArray(element.getAttribute("ysteps")), labels, _makeArray(element.getAttribute("ymaxs")), 
 			_makeArray(element.getAttribute("fillColors")),_makeArray(element.getAttribute("borderColors")), 
-			labelColor, gridColor, (element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"), annotation);
+			labelColor, gridColor, (element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"), annotation, legend);
 		
 		return;
 	}
