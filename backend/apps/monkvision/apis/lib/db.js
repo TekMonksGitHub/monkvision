@@ -78,7 +78,7 @@ async function _initDB() {
 function _openDB() {
     return new Promise(resolve => {
 		if (!dbInstance) dbInstance = new sqlite3.Database(DB_PATH, sqlite3.OPEN_READWRITE|sqlite3.OPEN_CREATE, err => {
-            if (err) {LOG.ERROR(`Error opening DB, ${err}`, true); resolve(false);} 
+            if (err) {LOG.error(`Error opening DB, ${err}`, true); resolve(false);} 
             else {
                 dbRunAsync = util.promisify(dbInstance.run.bind(dbInstance)); 
                 dbAllAsync = util.promisify(dbInstance.all.bind(dbInstance)); 
