@@ -2,8 +2,8 @@
  * (C) 2015 TekMonks. All rights reserved.
  * License: MIT - see enclosed license.txt file.
  */
-const FRONTEND = "http://localhost:8080";
-const BACKEND = "http://localhost:9090";
+const FRONTEND = `http://${location.hostname}:8080`;
+const BACKEND = `http://${location.hostname}:9090`;
 const APP_NAME = "monkvision";
 const APP_PATH = `${FRONTEND}/apps/${APP_NAME}`;
 const API_PATH = `${BACKEND}/apps/${APP_NAME}`;
