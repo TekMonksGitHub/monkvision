@@ -60,7 +60,7 @@ function _getRandomInfosAndLegends(numys, numentries) {
     for (let i = 0; i < numys; i++) {
         const col = [];
         for (j = 0; j < numentries; j++) col.push(_getRandomText());
-        infos.push(col); legends.push(col[0]);
+        infos.push(col); legends.push(`Data ${i+1}`);
     }
 
     return {infos, legends};
