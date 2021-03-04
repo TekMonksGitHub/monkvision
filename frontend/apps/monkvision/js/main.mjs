@@ -33,9 +33,10 @@ function playPauseCharts(img, force) {
 }
 
 async function interceptPageLoadData() {
-    window.monkshu_env.pagedata_funcs[`${APP_CONSTANTS.APP_PATH}/main.html`] = async data => {
-         // add in css, theme and html data to the page data object
-         await utils.addThemeDataAndCSS(data, "main");
+
+    const pagedata_func = async data => {
+        // add in css, theme and html data to the page data object
+        await utils.addThemeDataAndCSS(data, "main");
 
         // load dashboards config and build the data object
         const dashboardsRaw = await (await fetch(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`)).json();
@@ -43,18 +44,18 @@ async function interceptPageLoadData() {
         for (const key of Object.keys(dashboardsRaw)) {
             const file = dashboardsRaw[key].split(",")[0], refresh = parseInt(dashboardsRaw[key].split(",")[1].split(":")[1]),
                 name = await i18n.get(`name_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)), title = await i18n.get(`title_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID));
-            data.dashboards.push({name, file, refresh, title, id: key} );
+            data.dashboards.push({ name, file, refresh, title, id: key });
         }
 
         // add in dashboard path, and page title to the page data object
         const currentURL = new URL(router.getCurrentURL());
         if (!currentURL.searchParams.get("dash")) { // load first dashboard if none was provided in the incoming URL
-            data.title = data.dashboards[0].title; 
-            data.dash = `./dashboards/${data.dashboards[0].file}`; 
+            data.title = data.dashboards[0].title;
+            data.dash = `./dashboards/${data.dashboards[0].file}`;
             data.refresh = data.dashboards[0].refresh;
             data.pageTitle = `${await i18n.get("title", session.get($$.MONKSHU_CONSTANTS.LANG_ID))} - ${data.dashboards[0].name}`;
         } else {                                                // else get dashboard path and title from the URL
-            data.title = currentURL.searchParams.get("title"); 
+            data.title = currentURL.searchParams.get("title");
             data.dash = currentURL.searchParams.get("dash");
             data.refresh = currentURL.searchParams.get("refresh");
             data.pageTitle = `${await i18n.get("title", session.get($$.MONKSHU_CONSTANTS.LANG_ID))} - ${currentURL.searchParams.get("name")}`;
@@ -70,7 +71,7 @@ async function interceptPageLoadData() {
         }
     }
 
-    window.monkshu_env.pageload_funcs[`${APP_CONSTANTS.APP_PATH}/main.html`] = async data => {
+    const pageload_func = async data => {
         // select current dashboard icon on page load
         const dashboardsRaw = await (await fetch(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`)).json();
         const allDashIcons = document.querySelectorAll("div#leftheader > img.dashicon");
@@ -81,6 +82,9 @@ async function interceptPageLoadData() {
         timeRangeUpdated(false);    // load initial charts they will get the dates from HTML
         if (data.refresh) {session.set(REFRESH_INTERVAL, data.refresh); _startRefresh()};
     }
+
+    router.addOnLoadPageData(`${APP_CONSTANTS.APP_PATH}/main.html`, pagedata_func);
+    router.addOnLoadPage(`${APP_CONSTANTS.APP_PATH}/main.html`, pageload_func);
 }
 
 async function changePassword(_element) {
