@@ -61,7 +61,7 @@ async function drawLinegraph(canvas, contents, maxXTicks, gridLines, xAtZero, yA
 async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor, singleAxis, type, pointWidth, lineWidth, annotation, legend) {
     await _init(); const ctx = canvas.getContext("2d"); 
 
-    const datasets = []; for (const [i,ys] of contents.ys.entries()) datasets.push({ data: ys, ...contents.legend && { label: contents.legend[i] },
+    const datasets = []; for (const [i,ys] of contents.ys.entries()) datasets.push({ data: ys, ...contents.legends && { label: contents.legends[i] },     /* Add label property iff legends present in contents */
         backgroundColor: bgColors[i], borderColor: brColors[i], borderWidth: lineWidth, pointRadius: pointWidth,
         yAxisID: singleAxis?"yaxis0":`yaxis${i}` });
     
@@ -75,7 +75,7 @@ async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZe
 
     const options = {
         maintainAspectRatio: false, 
-        responsive: true, legend: legend,
+        responsive: true, legend,
         tooltips: {callbacks: {label: item => contents.infos[item.datasetIndex][item.index].split("\n")}, displayColors:false},
         animation: {animateScale:true},
         scales: { xAxes: [{ gridLines: {drawOnChartArea: gridLines, drawTicks: false, color: gridColor}, 

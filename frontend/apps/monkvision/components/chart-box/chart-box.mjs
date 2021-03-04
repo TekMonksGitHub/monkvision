@@ -120,10 +120,13 @@ async function _refreshData(element, force) {
 			annotations: [{
 				type: 'line', mode: 'horizontal', scaleID: 'yaxis0', value: threshold, borderColor: thresholdColor, borderWidth: thresholdLineWidth,
 				label: { enabled: false } }] } : false;
-		const legendFontColor = element.getAttribute("legendFontColor") || labelColor;
-		const position = _makeArray(element.getAttribute("legendPosition"));
-		const legendPosition = position ? position[0] : "bottom";
-		const legend = content.contents.legend ? { display: true, position: legendPosition, labels: {fontColor: legendFontColor} } : {display: false};
+
+		const legendHash = {}, legendParams = element.getAttribute("legend");
+		if(legendParams) for (const legendParam of legendParams.split(",")) {
+			const tuples = legendParam.split(":");
+			legendHash[tuples[0].trim()] = tuples[1].trim();
+		};
+		const legend = content.contents.legends ? { display: true, position: legendHash["position"] || "bottom", labels: {fontColor: legendHash["fontColor"] || "black"} } : {display: false};
 
 		if (type == "bargraph") {
 			const colorHash = _getColorHash(_makeArray(element.getAttribute("ycolors")));
