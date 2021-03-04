@@ -83,8 +83,8 @@ async function interceptPageLoadData() {
         if (data.refresh) {session.set(REFRESH_INTERVAL, data.refresh); _startRefresh()};
     }
 
-    window.monkshu_env.pagedata_funcs[`${APP_CONSTANTS.APP_PATH}/main.html`] = [pagedata_func];
-    window.monkshu_env.pageload_funcs[`${APP_CONSTANTS.APP_PATH}/main.html`] = [pageload_func];
+    router.addOnLoadPageData(`${APP_CONSTANTS.APP_PATH}/main.html`, pagedata_func);
+    router.addOnLoadPage(`${APP_CONSTANTS.APP_PATH}/main.html`, pageload_func);
 }
 
 async function changePassword(_element) {
