@@ -24,9 +24,9 @@ exports.doService = async jsonReq => {
     
     const x = _getRandomTimes(jsonReq.timeRange, jsonReq.numentries, jsonReq.notUTC), 
         ys = _getRandomYs(jsonReq.numys, jsonReq.numentries, jsonReq.yrange), 
-        infos = _getRandomInfos(jsonReq.numys, jsonReq.numentries);
+        {infos, legends} = _getRandomInfosAndLegends(jsonReq.numys, jsonReq.numentries);
 
-    const result = {result: true, type: "bargraph", contents: {length:x.length,x,ys,infos}}; 
+    const result = {result: true, type: "bargraph", contents: {length:x.length,x,ys,infos,legends}}; 
     if (jsonReq.title) result.contents.title = jsonReq.title; return result;
 }
 
@@ -55,15 +55,15 @@ function _getRandomYs(numys, numentries, yrange) {
     return ys;
 }
 
-function _getRandomInfos(numys, numentries) {
-    const infos = [];
+function _getRandomInfosAndLegends(numys, numentries) {
+    const infos = [], legends = [];
     for (let i = 0; i < numys; i++) {
         const col = [];
         for (j = 0; j < numentries; j++) col.push(_getRandomText());
-        infos.push(col);
+        infos.push(col); legends.push(`Data ${i+1}`);
     }
 
-    return infos;
+    return {infos, legends};
 }
 
 function _getRandomText(wordCount=4) {
