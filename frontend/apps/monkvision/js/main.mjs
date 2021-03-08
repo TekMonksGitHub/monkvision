@@ -39,7 +39,7 @@ async function interceptPageLoadData() {
         await utils.addThemeDataAndCSS(data, "main");
 
         // load dashboards config and build the data object
-        const dashboardsRaw = await (await fetch(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`)).json();
+        const dashboardsRaw = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`);
         data.dashboards = [];
         for (const key of Object.keys(dashboardsRaw)) {
             const file = dashboardsRaw[key].split(",")[0], refresh = parseInt(dashboardsRaw[key].split(",")[1].split(":")[1]),
@@ -73,7 +73,7 @@ async function interceptPageLoadData() {
 
     const pageload_func = async data => {
         // select current dashboard icon on page load
-        const dashboardsRaw = await (await fetch(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`)).json();
+        const dashboardsRaw = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`);
         const allDashIcons = document.querySelectorAll("div#leftheader > img.dashicon");
         for (const dashIcon of allDashIcons) if (data.dash.endsWith(dashboardsRaw[dashIcon.id].split(",")[0]))
             dashIcon.classList.add("selected"); else dashIcon.classList.remove("selected");
