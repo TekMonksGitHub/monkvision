@@ -11,7 +11,7 @@ import {apimanager as apiman} from "/framework/js/apimanager.mjs";
 const init = async _ => {
 	window.APP_CONSTANTS = (await import ("./constants.mjs")).APP_CONSTANTS;
 	window.LOG = (await import ("/framework/js/log.mjs")).LOG;
-	window.APP_THEME = await (await fetch(`${APP_CONSTANTS.APP_PATH}/conf/theme.json`)).json();
+	window.APP_THEME = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/theme.json`);
 	if (!session.get($$.MONKSHU_CONSTANTS.LANG_ID)) session.set($$.MONKSHU_CONSTANTS.LANG_ID, "en");
 	securityguard.setPermissionsMap(APP_CONSTANTS.PERMISSIONS_MAP);
 	securityguard.setCurrentRole(securityguard.getCurrentRole() || APP_CONSTANTS.GUEST_ROLE);
@@ -29,7 +29,7 @@ async function main() {
 }
 
 async function _addPageDataInterceptors() {
-	const interceptors = await(await fetch(`${APP_CONSTANTS.APP_PATH}/conf/pageDataInterceptors.json`)).json();
+	const interceptors = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/pageDataInterceptors.json`);
 	for (const interceptor of interceptors) {
 		const modulePath = interceptor.module, functionName = interceptor.function;
 		let module = await import(`${APP_CONSTANTS.APP_PATH}/${modulePath}`); module = module[Object.keys(module)[0]];
