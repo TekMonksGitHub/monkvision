@@ -7,6 +7,7 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 
 body{
     margin: 10px 10px 10px 10px; 
@@ -163,6 +164,12 @@ canvas#canvas {
     </table>
     {{/table}}
 
+    {{#chartMenuEnabled}}           <!-- Handles menu on chart -->
+        <span-with-menu id="btn_{{elementId}}" styleBody='div.menuitem{color: rgba(80,80,80,0.9);cursor: pointer;} div.menuitem:hover{background: rgba(80,80,80,0.9) !important; color: rgba(250,250,250,0.95) !important;} span#content > i:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -131px;border-radius: 8px 0px 8px 8px;margin-top:10px;}' style="float:right; padding-right:10px;">
+            <i class="fa fa-ellipsis-v fa-2x" aria-hidden="true" data-value={{elementId}} style='position:absolute; cursor: pointer;'></i>
+            <menu-item onclick="chart_box.exportCSV('{{elementId}}')">Export CSV</menu-item>
+        </span-with-menu>
+    {{/chartMenuEnabled}}
     <canvas id="canvas"></canvas>   <!-- Handles chartjs content -->
 </div>
 </div>
