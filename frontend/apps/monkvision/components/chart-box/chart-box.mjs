@@ -50,7 +50,8 @@ async function _refreshData(element, force) {
 		const canvasNode = shadowRoot.querySelector("canvas#canvas"), canvasParent = canvasNode.parentNode, canvasClone = canvasNode.cloneNode();
 		canvasNode.remove(); canvasParent.appendChild(canvasClone); }
 	const createData = _ => {return {title: content&&content.contents? content.contents.title || element.getAttribute("title"):element.getAttribute("title"), 
-		styleBody: element.getAttribute("styleBody")?`<style>${element.getAttribute("styleBody")}</style>`:null}};
+		styleBody: element.getAttribute("styleBody")?`<style>${element.getAttribute("styleBody")}</style>`:null,
+		chartMenuEnabled: element.getAttribute("chartMenu")?element.getAttribute("chartMenu"):false }};
 	const clone = object => object?JSON.parse(JSON.stringify(object)):null;
 
 	if (!force && content && !content.contents) {	// clear everything if data is empty and changed
@@ -108,6 +109,7 @@ async function _refreshData(element, force) {
 	clearChart(shadowRoot);	// destroy the old chart if it exists as we will now refresh charts.
 
 	if (type == "bargraph" || type == "linegraph") {
+		data.elementId = element.id;
 		await bindData(data, id); if (!content || !content.contents) return;
 
 		const labels = _getLabels(_makeArray(element.getAttribute("ylabels")));
@@ -156,6 +158,7 @@ async function _refreshData(element, force) {
 	}
 
 	if (type == "piegraph" || type == "donutgraph" || type == "polargraph") {
+		data.elementId = element.id;
 		await bindData(data, id); if (!content || !content.contents) return;
 
 		const infos = clone(content.contents.infos); delete content.contents.infos;
@@ -223,5 +226,18 @@ async function _getContent(api, params) {
 
 const _isTrue = string => string?string.toLowerCase() == "true":false;
 
-export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange}
+async function exportCSV(elementId) {
+	const element = document.querySelector("#maincontent > page-generator").shadowRoot.querySelector(`#${elementId}`);
+	const csvParams = element.getAttribute("params");
+	const content =  await _getContent("exportcsv", csvParams);
+
+	let hiddenElement = document.createElement('a'), selectedDates = getTimeRange();
+	hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(content.contents.csvData); hiddenElement.target = '_blank';
+
+	//provide the name for the CSV file to be downloaded
+	hiddenElement.download = `${document.querySelector(".dashicon.selected").nextElementSibling.textContent}-${element.getAttribute("title")}-${selectedDates.from}-${selectedDates.to}.csv`;
+	hiddenElement.click();
+}
+
+export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange, exportCSV}
 monkshu_component.register("chart-box", `${APP_CONSTANTS.APP_PATH}/components/chart-box/chart-box.html`, chart_box);
