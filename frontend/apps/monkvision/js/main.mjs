@@ -11,7 +11,7 @@ import {loginmanager} from "./loginmanager.mjs";
 import {session} from "/framework/js/session.mjs";
 import {chart_box} from "../components/chart-box/chart-box.mjs";
 
-const SELECTED_DATES = "__monkvision_selecteddates", DASHBOARD_TIMER = "__monkvision_dashtimer", REFRESH_INTERVAL = "__monkvision_refresh";
+const SELECTED_DATES = "__monkvision_selecteddates", DASHBOARD_TIMER = "__monkvision_dashtimer", REFRESH_INTERVAL = "__monkvision_refresh", SHOW_REFRESH_TIMER = "__monkvision_show_refresh_timer";
 
 const dateAsHTMLDateValue = date => new Date(date.toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
 
@@ -61,6 +61,8 @@ async function interceptPageLoadData() {
             data.pageTitle = `${await i18n.get("title", session.get($$.MONKSHU_CONSTANTS.LANG_ID))} - ${currentURL.searchParams.get("name")}`;
         }
 
+        data.showTimer = _showTimerFormat(data.refresh/1000);
+
         // set the dates data
         if (!session.get(SELECTED_DATES)) {
             const dateToday = new Date(), dateWeekAgo = new Date(); dateWeekAgo.setDate(dateToday.getDate() - 7);
@@ -96,15 +98,26 @@ async function changePassword(_element) {
     });
 }
 
-const _stopRefresh = _ => {if (session.get(DASHBOARD_TIMER)) clearInterval(session.get(DASHBOARD_TIMER));}
+const _stopRefresh = _ => { if (session.get(DASHBOARD_TIMER) || session.get(SHOW_REFRESH_TIMER)) { clearInterval(session.get(DASHBOARD_TIMER)); clearInterval(session.get(SHOW_REFRESH_TIMER));} }
 
 function _startRefresh() {
     _stopRefresh(); if (!session.get(REFRESH_INTERVAL)) return;
-
+    let totalSeconds = (session.get(REFRESH_INTERVAL)/1000)-1;
+    session.set(SHOW_REFRESH_TIMER, setInterval(_=>{
+        document.getElementById('showtimer').innerText = _showTimerFormat(totalSeconds);
+        totalSeconds--; if (totalSeconds == 0) { totalSeconds = session.get(REFRESH_INTERVAL)/1000 }
+    }, 1000));
     session.set(DASHBOARD_TIMER, setInterval(_=>{timeRangeUpdated(false, 
         {from: document.querySelector("input#datetimepickerfrom").value, to: dateAsHTMLDateValue(new Date())});
     }, session.get(REFRESH_INTERVAL)));
-    loginmanager.addLogoutListener(_=>clearInterval(session.get(DASHBOARD_TIMER)));
+    loginmanager.addLogoutListener(_=>{ clearInterval(session.get(DASHBOARD_TIMER)); clearInterval(session.get(SHOW_REFRESH_TIMER)); });
+}
+
+// Timer format minutes : seconds
+function _showTimerFormat(totalSeconds) {
+    let minutes = parseInt(totalSeconds / 60, 10), seconds = parseInt(totalSeconds % 60, 10);
+    minutes = minutes < 10 ? "0" + minutes : minutes; seconds = seconds < 10 ? "0" + seconds : seconds;
+    return(minutes + ":" + seconds);
 }
 
 export const main = {changePassword, interceptPageLoadData, timeRangeUpdated, playPauseCharts};

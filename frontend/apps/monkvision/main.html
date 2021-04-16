@@ -127,6 +127,7 @@ span#header > img#playpause:hover {
 		<input id="datetimepickerfrom" type="datetime-local" value="{{{dateTimeWeekAgo}}}" onchange="main.timeRangeUpdated(true)">
 		<input id="datetimepickerto" type="datetime-local" value="{{{dateTimeNow}}}" onchange="main.timeRangeUpdated(true)">
 		<img id="playpause" src="./img/pause.svg" onclick="main.playPauseCharts(this)">
+		<span id="showtimer">{{showTimer}}</span>
 		<span-with-menu id="gear" {{{htmlData.span-with-menu#gear}}}><img src="./img/settings.svg" {{{htmlData.span-with-menu#gear>img}}}>
 			<menu-item onclick="main.changePassword(this)">{{i18n.ChangePassword}}</menu-item>
 		</span-with-menu>
