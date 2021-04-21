@@ -50,7 +50,8 @@ async function _refreshData(element, force) {
 		const canvasNode = shadowRoot.querySelector("canvas#canvas"), canvasParent = canvasNode.parentNode, canvasClone = canvasNode.cloneNode();
 		canvasNode.remove(); canvasParent.appendChild(canvasClone); }
 	const createData = _ => {return {title: content&&content.contents? content.contents.title || element.getAttribute("title"):element.getAttribute("title"), 
-		styleBody: element.getAttribute("styleBody")?`<style>${element.getAttribute("styleBody")}</style>`:null}};
+		styleBody: element.getAttribute("styleBody")?`<style>${element.getAttribute("styleBody")}</style>`:null, 
+		chartMenuEnabled: element.getAttribute("chartMenu")?_chartMenuHash(_makeArray(element.getAttribute("chartMenu"))):false }};
 	const clone = object => object?JSON.parse(JSON.stringify(object)):null;
 
 	if (!force && content && !content.contents) {	// clear everything if data is empty and changed
@@ -108,6 +109,7 @@ async function _refreshData(element, force) {
 	clearChart(shadowRoot);	// destroy the old chart if it exists as we will now refresh charts.
 
 	if (type == "bargraph" || type == "linegraph") {
+		data.elementId = element.id;	// pass elementId for dynamic ID mapping with respective charts 
 		await bindData(data, id); if (!content || !content.contents) return;
 
 		const labels = _getLabels(_makeArray(element.getAttribute("ylabels")));
@@ -127,6 +129,12 @@ async function _refreshData(element, force) {
 			legendHash[tuples[0].trim()] = tuples[1].trim();
 		};
 		const legend = content.contents.legends ? { display: true, position: legendHash["position"] || "bottom", labels: {fontColor: legendHash["fontColor"] || "black"} } : {display: false};
+
+		if(element.getAttribute("chartMenu")) {
+			const parentNode = element.shadowRoot.querySelector(`#content`);
+			const link = document.createElement("a"); link.setAttribute("id", `${element.id}_exportcsv_href`); link.style.display="none";
+			parentNode.appendChild(link); _storeBufferDataForExportCSV(content.contents, element.id);
+		};
 
 		if (type == "bargraph") {
 			const colorHash = _getColorHash(_makeArray(element.getAttribute("ycolors")));
@@ -191,6 +199,11 @@ const _makeArray = string => {
 	return arrayVals;
 }
 
+const _chartMenuHash = array => {
+	if(!array.length) return false;
+	const chartMenuHash = {}; array.map(element => chartMenuHash[element]=true); return chartMenuHash;
+}
+
 function _getColorHash(ycolors) {
 	const colorHash = []; for ( const ycolorSet of ycolors ) {
 		const colorHashThis = {}; 
@@ -221,7 +234,35 @@ async function _getContent(api, params) {
 	return resp;
 }
 
+const _storeBufferDataForExportCSV = (contentData, elementId) => {
+	if(!chart_box.contentIn) chart_box.contentIn = {};
+	chart_box.contentIn[elementId] = contentData;
+}
+
+const exportCSV = async (elementId) => {
+	const element = document.querySelector("#maincontent > page-generator").shadowRoot.querySelector(`#${elementId}`), selectedDates = getTimeRange();
+	const link = element.shadowRoot.querySelector("#content > a");
+	if(!link.href && !link.download){
+		const name = `${document.querySelector(".dashicon.selected").nextElementSibling.textContent}-${element.getAttribute("title")}-${selectedDates.from}-${selectedDates.to}.csv`;
+		const downloadLink = 'data:text/csv;charset=utf-8,'+ encodeURI(_generateCSV(chart_box.contentIn[elementId])); 
+		delete chart_box.contentIn[elementId]; link.download = name; link.href = downloadLink;
+	}
+	const downloadFile = element.shadowRoot.querySelector(`#${elementId}_exportcsv_href`); downloadFile.click();
+}
+
+const _generateCSV = (contents) => {
+	let headers = ["Timestamp"]; if (!contents.legends) return false;
+	headers = headers.concat(contents.legends);
+	const rows = []; for (let i = 0; i < contents.length; i++) {
+		const rowContent = [contents.x[i]]; for (let j = 0; j < contents.ys.length; j++) {
+			const contentY = contents.ys[j][i]; rowContent.push(contentY); 
+		}
+		rows.push(rowContent);
+	}
+	return headers+"\n"+rows.join("\n");
+}
+
 const _isTrue = string => string?string.toLowerCase() == "true":false;
 
-export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange}
+export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange, exportCSV}
 monkshu_component.register("chart-box", `${APP_CONSTANTS.APP_PATH}/components/chart-box/chart-box.html`, chart_box);

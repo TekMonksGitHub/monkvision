@@ -163,6 +163,12 @@ canvas#canvas {
     </table>
     {{/table}}
 
+    {{#chartMenuEnabled}}           <!-- Handles menu on chart -->
+        <span-with-menu id="{{elementId}}_menu" styleBody='div.menuitem{color: rgba(80,80,80,0.9);cursor: pointer;} div.menuitem:hover{background: rgba(80,80,80,0.9) !important; color: rgba(250,250,250,0.95) !important;} span#content > i:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -121px;border-radius: 8px 0px 8px 8px;margin-top:10px;}' style="float:right; padding-right:27px;">
+            <img src="./img/hamburger_icon.svg" alt="menu icon" style="position:absolute; cursor: pointer; height: 30px;width: 30px;vertical-align: middle;">
+            {{#exportCSV}}<menu-item onclick="chart_box.exportCSV('{{elementId}}')">Export CSV</menu-item>{{/exportCSV}}
+        </span-with-menu>
+    {{/chartMenuEnabled}}
     <canvas id="canvas"></canvas>   <!-- Handles chartjs content -->
 </div>
 </div>
