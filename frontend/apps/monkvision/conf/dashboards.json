@@ -1,4 +1,4 @@
 {
-    "dash1":"dashboard1.page,refresh:5000",
-    "dash2":"dashboard2.page,refresh:5000"
+    "dash1":"dashboard1_light.page,refresh:5000",
+    "dash2":"dashboard2_light.page,refresh:5000"
 }
