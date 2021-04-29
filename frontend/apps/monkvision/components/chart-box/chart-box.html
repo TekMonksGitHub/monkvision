@@ -129,6 +129,14 @@ canvas#canvas {
     display: none;
     max-height: inherit;
 }
+
+.csv-icon{
+    position:absolute; 
+    cursor: pointer; 
+    height: 30px; 
+    width: 30px;
+}
+
 </style>
 
 {{{styleBody}}}
@@ -163,6 +171,9 @@ canvas#canvas {
     </table>
     {{/table}}
 
+    <div style="float: right; padding-right: 20px;">
+        <img src="./img/csv_icon.svg" alt="menu icon" class="csv-icon" onclick="chart_box.exportCSV('{{elementId}}')">
+    </div>
     <canvas id="canvas"></canvas>   <!-- Handles chartjs content -->
 </div>
 </div>

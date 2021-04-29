@@ -108,6 +108,7 @@ async function _refreshData(element, force) {
 	clearChart(shadowRoot);	// destroy the old chart if it exists as we will now refresh charts.
 
 	if (type == "bargraph" || type == "linegraph") {
+		data.elementId = element.id;	// pass elementId for dynamic ID mapping with respective charts 
 		await bindData(data, id); if (!content || !content.contents) return;
 
 		const labels = _getLabels(_makeArray(element.getAttribute("ylabels")));
@@ -221,7 +222,32 @@ async function _getContent(api, params) {
 	return resp;
 }
 
+const exportCSV = (elementId) => {
+	const element = document.querySelector("#maincontent > page-generator").shadowRoot.querySelector(`#${elementId}`), selectedDates = getTimeRange();
+	let link = element.shadowRoot.querySelector("#content > a");
+	if(!link){
+		const parentNode = element.shadowRoot.querySelector(`#content`);
+		link = document.createElement("a"); link.setAttribute("id", `${element.id}_exportcsv_href`); link.style.display="none"; parentNode.appendChild(link);
+		const name = `${document.querySelector(".dashicon.selected").nextElementSibling.textContent}-${element.getAttribute("title")}-${selectedDates.from}-${selectedDates.to}.csv`;
+		const downloadLink = 'data:text/csv;charset=utf-8,'+ encodeURI(_generateCSV(chart_box.getMemory("randomline").contents)); 
+		link.download = name; link.href = downloadLink;
+	}
+	const downloadFile = element.shadowRoot.querySelector(`#${elementId}_exportcsv_href`); downloadFile.click();
+}
+
+const _generateCSV = (contents) => {
+	let headers = ["Timestamp"]; if (!contents.legends) return false;
+	headers = headers.concat(contents.legends);
+	const rows = []; for (let i = 0; i < contents.length; i++) {
+		const rowContent = [contents.x[i]]; for (let j = 0; j < contents.ys.length; j++) {
+			const contentY = contents.ys[j][i]; rowContent.push(contentY); 
+		}
+		rows.push(rowContent);
+	}
+	return headers+"\n"+rows.join("\n");
+}
+
 const _isTrue = string => string?string.toLowerCase() == "true":false;
 
-export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange}
+export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange, exportCSV}
 monkshu_component.register("chart-box", `${APP_CONSTANTS.APP_PATH}/components/chart-box/chart-box.html`, chart_box);
