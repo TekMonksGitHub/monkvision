@@ -133,8 +133,10 @@ canvas#canvas {
 .csv-icon{
     position:absolute; 
     cursor: pointer; 
-    height: 30px; 
-    width: 30px;
+    height: 25px; 
+    width: 25px;
+    z-index: 3;
+    padding-top: 5px;
 }
 
 </style>
@@ -159,6 +161,12 @@ canvas#canvas {
     </div></div>
     {{/metrictext}}
 
+    {{#exportCSV}}
+    <div style="float: right; padding-right: 30px;">
+        <img src="./img/download_icon.svg" alt="export csv icon" class="csv-icon" onclick="chart_box.exportCSV(this)" title="Export CSV">
+    </div>
+    {{/exportCSV}}
+
     {{#table}}                      <!-- Handles table content -->
     <table>
         <thead><tr>{{#headers}}<th>{{.}}</th>{{/headers}}</tr></thead>
@@ -171,9 +179,6 @@ canvas#canvas {
     </table>
     {{/table}}
 
-    <div style="float: right; padding-right: 20px;">
-        <img src="./img/csv_icon.svg" alt="menu icon" class="csv-icon" onclick="chart_box.exportCSV('{{elementId}}')">
-    </div>
     <canvas id="canvas"></canvas>   <!-- Handles chartjs content -->
 </div>
 </div>

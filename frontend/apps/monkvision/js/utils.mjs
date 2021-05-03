@@ -30,4 +30,10 @@ async function addThemeDataAndCSS(pageData, pageName) {
     return pageData;
 }
 
-export const utils = {addThemeDataAndCSS};
+const downloadFile = (data, filename) => {
+    const link = document.createElement("a"); 
+    link.download = filename; link.href = data; link.style.display="none"; 
+    link.click();
+}
+
+export const utils = {addThemeDataAndCSS, downloadFile};

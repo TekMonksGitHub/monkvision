@@ -7,6 +7,7 @@
 import {chart} from "./lib/chart.mjs";
 import {apimanager as apiman} from "/framework/js/apimanager.mjs";
 import {monkshu_component} from "/framework/js/monkshu_component.mjs";
+import {utils} from "../../js/utils.mjs";
 
 async function elementRendered(element) {
 	await $$.require(`${APP_CONSTANTS.COMPONENTS_PATH}/chart-box/3p/xregexp-4.3.0-all-min.js`);	// load xregexp which is needed
@@ -100,6 +101,8 @@ async function _refreshData(element, force) {
 			}
 			data.table = {headers, rows};
 		}
+		data.exportCSV = _isTrue(element.getAttribute("exportCSV"));
+		if(data.exportCSV) element.setAttribute("data-export-csv", JSON.stringify(content.contents));
 		await bindData(data, id);
 		contentDiv.scrollTop = contentDiv.scrollHeight; 
 		return;
@@ -108,7 +111,7 @@ async function _refreshData(element, force) {
 	clearChart(shadowRoot);	// destroy the old chart if it exists as we will now refresh charts.
 
 	if (type == "bargraph" || type == "linegraph") {
-		data.elementId = element.id;	// pass elementId for dynamic ID mapping with respective charts 
+		data.exportCSV = _isTrue(element.getAttribute("exportCSV"));
 		await bindData(data, id); if (!content || !content.contents) return;
 
 		const labels = _getLabels(_makeArray(element.getAttribute("ylabels")));
@@ -128,7 +131,8 @@ async function _refreshData(element, force) {
 			legendHash[tuples[0].trim()] = tuples[1].trim();
 		};
 		const legend = content.contents.legends ? { display: true, position: legendHash["position"] || "bottom", labels: {fontColor: legendHash["fontColor"] || "black"} } : {display: false};
-
+		if(data.exportCSV) element.setAttribute("data-export-csv", JSON.stringify(content.contents));
+		
 		if (type == "bargraph") {
 			const colorHash = _getColorHash(_makeArray(element.getAttribute("ycolors")));
 			const bgColors = [], brColors = []; for (const [i,ys] of content.contents.ys.entries()) {
@@ -222,22 +226,15 @@ async function _getContent(api, params) {
 	return resp;
 }
 
-const exportCSV = (elementId) => {
-	const element = document.querySelector("#maincontent > page-generator").shadowRoot.querySelector(`#${elementId}`), selectedDates = getTimeRange();
-	let link = element.shadowRoot.querySelector("#content > a");
-	if(!link){
-		const parentNode = element.shadowRoot.querySelector(`#content`);
-		link = document.createElement("a"); link.setAttribute("id", `${element.id}_exportcsv_href`); link.style.display="none"; parentNode.appendChild(link);
-		const name = `${document.querySelector(".dashicon.selected").nextElementSibling.textContent}-${element.getAttribute("title")}-${selectedDates.from}-${selectedDates.to}.csv`;
-		const downloadLink = 'data:text/csv;charset=utf-8,'+ encodeURI(_generateCSV(chart_box.getMemory("randomline").contents)); 
-		link.download = name; link.href = downloadLink;
-	}
-	const downloadFile = element.shadowRoot.querySelector(`#${elementId}_exportcsv_href`); downloadFile.click();
+const exportCSV = element => {
+	const selectedDates = getTimeRange(), hostElement = element.getRootNode().host, contents = JSON.parse(hostElement.getAttribute("data-export-csv")),
+		filename = `${document.querySelector(".dashicon.selected").nextElementSibling.innerText}-${hostElement.getAttribute("title")}-${selectedDates.from}-${selectedDates.to}.csv`,
+		data = `data:text/csv;charset=utf-8,${encodeURI(_generateCSV(contents))}`;
+	utils.downloadFile(data, filename);
 }
 
-const _generateCSV = (contents) => {
-	let headers = ["Timestamp"]; if (!contents.legends) return false;
-	headers = headers.concat(contents.legends);
+const _generateCSV = contents => {
+	let headers = ["Timestamp"]; headers = headers.concat(contents.legends || "");
 	const rows = []; for (let i = 0; i < contents.length; i++) {
 		const rowContent = [contents.x[i]]; for (let j = 0; j < contents.ys.length; j++) {
 			const contentY = contents.ys[j][i]; rowContent.push(contentY); 
