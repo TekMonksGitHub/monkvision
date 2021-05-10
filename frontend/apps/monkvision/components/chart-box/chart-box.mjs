@@ -5,6 +5,7 @@
  * License: See enclosed license.txt file.
  */
 import {chart} from "./lib/chart.mjs";
+import {utils} from "./lib/utils.mjs";
 import {apimanager as apiman} from "/framework/js/apimanager.mjs";
 import {monkshu_component} from "/framework/js/monkshu_component.mjs";
 
@@ -29,6 +30,12 @@ function getTimeRange() {
 function setTimeRange(timeRange) {
 	chart_box.timeRange = timeRange; 
 	for (const element of chart_box.getAllElementInstances()) _refreshData(element);
+}
+
+const exportCSV = element => {
+	const selectedDates = getTimeRange(), hostElement = chart_box.getHostElement(element),
+		filename = `${document.querySelector(".dashicon.selected").nextElementSibling.innerText}-${hostElement.getAttribute("title")}-${selectedDates.from}-${selectedDates.to}.csv`;
+	utils.exportCSV(chart_box.getMemory(hostElement.id).contents, filename);
 }
 
 function _escapeHTML(text) {
@@ -100,6 +107,7 @@ async function _refreshData(element, force) {
 			}
 			data.table = {headers, rows};
 		}
+		data.exportCSV = _isTrue(element.getAttribute("exportCSV"));
 		await bindData(data, id);
 		contentDiv.scrollTop = contentDiv.scrollHeight; 
 		return;
@@ -108,6 +116,7 @@ async function _refreshData(element, force) {
 	clearChart(shadowRoot);	// destroy the old chart if it exists as we will now refresh charts.
 
 	if (type == "bargraph" || type == "linegraph") {
+		data.exportCSV = _isTrue(element.getAttribute("exportCSV"));
 		await bindData(data, id); if (!content || !content.contents) return;
 
 		const labels = _getLabels(_makeArray(element.getAttribute("ylabels")));
@@ -223,5 +232,5 @@ async function _getContent(api, params) {
 
 const _isTrue = string => string?string.toLowerCase() == "true":false;
 
-export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange}
+export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange, exportCSV}
 monkshu_component.register("chart-box", `${APP_CONSTANTS.APP_PATH}/components/chart-box/chart-box.html`, chart_box);
