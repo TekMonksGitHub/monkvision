@@ -20,7 +20,7 @@ SCHEMA
     "randomline": {"html":"chart-box", "id":"rline", "title":"Random Data Lines", "api":"randomgraph", "type":"linegraph", 
         "maxticks":3, "ysteps":"[1],[1]", "ylabels":"[1:1,5:5,10:10,else:],[1:1,5:5,10:10,else:]", "ymaxs":"[10],[10]",
         "fillColors":"[#40D59D4C],[#D43F3F4C]", "borderColors":"[#0e8f7e],[#af3234]", "yAtZeros":"[true],[true]", 
-        "gridLines":"true", "labelColor":"rgba(72,72,72,0.98)", "gridColor": "rgba(120,120,120,0.20)", 
+        "gridLines":"true", "labelColor":"rgba(72,72,72,0.98)", "gridColor": "rgba(120,120,120,0.20)", "exportCSV":"true",
         "singleAxis":"true", "threshold":7, "legend": "position:top,fontColor:#000000", "params":"numentries=10&numys=2&yrange=1-10"}
 }
 ======
