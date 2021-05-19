@@ -43,7 +43,7 @@ async function interceptPageLoadData() {
         data.dashboards = [];
         for (const key of Object.keys(dashboardsRaw)) {
             // const fn =  dashboardsRaw[key].split(",")[0];
-            const file = _replaceCurrentTheme(dashboardsRaw[key].split(",")[0]), refresh = parseInt(dashboardsRaw[key].split(",")[1].split(":")[1]),
+            const file = _replaceCurrentThemeForDash(dashboardsRaw[key].split(",")[0]), refresh = parseInt(dashboardsRaw[key].split(",")[1].split(":")[1]),
                 name = await i18n.get(`name_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)), title = await i18n.get(`title_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID));
             data.dashboards.push({ name, file, refresh, title, id: key });
         }
@@ -78,7 +78,7 @@ async function interceptPageLoadData() {
         // select current dashboard icon on page load
         const dashboardsRaw = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`);
         const allDashIcons = document.querySelectorAll("div#leftheader > img.dashicon");
-        for (const dashIcon of allDashIcons) if (data.dash.endsWith(_replaceCurrentTheme(dashboardsRaw[dashIcon.id].split(",")[0])))
+        for (const dashIcon of allDashIcons) if (data.dash.endsWith(_replaceCurrentThemeForDash(dashboardsRaw[dashIcon.id].split(",")[0])))
             dashIcon.classList.add("selected"); else dashIcon.classList.remove("selected");
         
         // load initial charts and set the refresh interval
@@ -120,7 +120,7 @@ async function toggleTheme() {
     
     if(session.get($$.MONKSHU_CONSTANTS.PAGE_URL).native.includes("?")){
         let reloadRouterLink = session.get($$.MONKSHU_CONSTANTS.PAGE_URL).native;
-        reloadRouterLink = _replaceCurrentTheme(reloadRouterLink); session.set($$.MONKSHU_CONSTANTS.PAGE_URL, reloadRouterLink);
+        reloadRouterLink = _replaceCurrentThemeForDash(reloadRouterLink); session.set($$.MONKSHU_CONSTANTS.PAGE_URL, reloadRouterLink);
     }
     router.reload();
 }
@@ -130,6 +130,6 @@ function _toggleThemeBtnState() {
     return main.toggleThemeBtnState;
 }
 
-const _replaceCurrentTheme = str => { return str.replace(str.slice(str.lastIndexOf("_"), str.indexOf(".page")),`_${main.theme}`); }
+const _replaceCurrentThemeForDash = str => { return str.replace(str.slice(str.lastIndexOf("_"), str.indexOf(".page")),`_${main.theme}`); }
 
 export const main = {changePassword, interceptPageLoadData, timeRangeUpdated, playPauseCharts, toggleTheme};
