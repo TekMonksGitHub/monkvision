@@ -63,13 +63,12 @@ exports.exists = exports.getPermission = roleID => {
 	return new Promise(async resolve => {
 		await initDB();
 		const placeholders = roleID.map(() => "?").join(",");
-		usersDB.all(`SELECT * FROM roles WHERE roleID IN (${placeholders}) COLLATE NOCASE;`, roleID, (err, rows) => {
+		usersDB.all(`SELECT * FROM roles WHERE roleID IN (${placeholders}) `, roleID, (err, rows) => {
 			if (err || !rows.length ) resolve({result: false});
 			else {
 				let permission=[];
-				for(let row of rows){
+				for(let row of rows)
 					permission.push(row.permission);
-				}
 				resolve({result: true, permission});
 			}
 		})
