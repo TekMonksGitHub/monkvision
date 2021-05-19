@@ -7,7 +7,7 @@
  */
 
 const _init = async _ => {
-    await $$.require(`${APP_CONSTANTS.COMPONENTS_PATH}/chart-box/3p/chartjs2.9.3.min.js`);
+    await $$.require(`${APP_CONSTANTS.COMPONENTS_PATH}/chart-box/3p/chartjs2.9.4.min.js`);
     await $$.require(`${APP_CONSTANTS.COMPONENTS_PATH}/chart-box/3p/chartjs-plugin-annotation.min.js`);
 } 
 
