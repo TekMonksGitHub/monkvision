@@ -222,6 +222,5 @@ async function _getContent(api, params) {
 }
 
 const _isTrue = string => string?string.toLowerCase() == "true":false;
-
-export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange}
+export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange, _getContent}
 monkshu_component.register("chart-box", `${APP_CONSTANTS.APP_PATH}/components/chart-box/chart-box.html`, chart_box);

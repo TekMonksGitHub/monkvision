@@ -38,13 +38,15 @@ async function interceptPageLoadData() {
         // add in css, theme and html data to the page data object
         await utils.addThemeDataAndCSS(data, "main");
 
-        // load dashboards config and build the data object
-        const dashboardsRaw = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`);
         data.dashboards = [];
+        const response_permission = await monkshu_env.components['chart-box']._getContent("dashboardPermission","userId="+JSON.stringify(session.get("userid")));
+        let dashboardsRaw={};
+        if(response_permission.result)
+            dashboardsRaw=response_permission.dashboard;
         for (const key of Object.keys(dashboardsRaw)) {
             const file = dashboardsRaw[key].split(",")[0], refresh = parseInt(dashboardsRaw[key].split(",")[1].split(":")[1]),
                 name = await i18n.get(`name_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)), title = await i18n.get(`title_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID));
-            data.dashboards.push({ name, file, refresh, title, id: key });
+            data.dashboards.push({ name, file, refresh, title, id: key});
         }
 
         // add in dashboard path, and page title to the page data object
@@ -73,7 +75,11 @@ async function interceptPageLoadData() {
 
     const pageload_func = async data => {
         // select current dashboard icon on page load
-        const dashboardsRaw = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`);
+        const response_permission = await monkshu_env.components['chart-box']._getContent("dashboardPermission","userId="+JSON.stringify(session.get("userid")));
+        let dashboardsRaw={};
+        if(response_permission.result)
+            dashboardsRaw=response_permission.dashboard;
+
         const allDashIcons = document.querySelectorAll("div#leftheader > img.dashicon");
         for (const dashIcon of allDashIcons) if (data.dash.endsWith(dashboardsRaw[dashIcon.id].split(",")[0]))
             dashIcon.classList.add("selected"); else dashIcon.classList.remove("selected");

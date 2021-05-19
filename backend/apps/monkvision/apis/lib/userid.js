@@ -48,6 +48,34 @@ exports.exists = exports.login = pwph => {
 	});
 }
 
+exports.exists = exports.getRoleId = userId => {
+	return new Promise(async resolve => {
+		await initDB();
+		usersDB.all(`SELECT * FROM users WHERE id = ? COLLATE NOCASE;`, [userId], (err, rows) => {
+		if (err || !rows.length || !rows[0].approved) resolve({result: false});
+		else resolve({result: true, roleID: rows[0].roleID});
+	})
+	});
+}
+
+
+exports.exists = exports.getPermission = roleID => {
+	return new Promise(async resolve => {
+		await initDB();
+		const placeholders = roleID.map(() => "?").join(",");
+		usersDB.all(`SELECT * FROM roles WHERE roleID IN (${placeholders}) COLLATE NOCASE;`, roleID, (err, rows) => {
+			if (err || !rows.length ) resolve({result: false});
+			else {
+				let permission=[];
+				for(let row of rows){
+					permission.push(row.permission);
+				}
+				resolve({result: true, permission});
+			}
+		})
+	});
+}
+
 exports.existsID = id => {
 	return new Promise(async resolve => {
 		await initDB();
