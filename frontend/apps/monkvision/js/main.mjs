@@ -42,14 +42,11 @@ async function interceptPageLoadData() {
         const dashboardsRaw = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`);
         data.dashboards = [];
         for (const key of Object.keys(dashboardsRaw)) {
-            const fn =  dashboardsRaw[key].split(",")[0];
-            const file = fn.replace(fn.slice(fn.lastIndexOf("_"), fn.indexOf(".page")),`_${main.theme}`), refresh = parseInt(dashboardsRaw[key].split(",")[1].split(":")[1]),
+            // const fn =  dashboardsRaw[key].split(",")[0];
+            const file = _replaceCurrentTheme(dashboardsRaw[key].split(",")[0]), refresh = parseInt(dashboardsRaw[key].split(",")[1].split(":")[1]),
                 name = await i18n.get(`name_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)), title = await i18n.get(`title_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID));
             data.dashboards.push({ name, file, refresh, title, id: key });
         }
-        console.log("BBT: ",data.dashboards);
-        // if(main.theme && router.getCurrentURL().includes("?")) data.dashboards = data.dashboards.map(ele => ele["file"].replace(ele["file"].slice(ele["file"].lastIndexOf("_"), ele["file"].indexOf(".page")),`_${main.theme}`))
-        // console.log("AT: ",data.dashboards);
         
         // add in dashboard path, and page title to the page data object
         const currentURL = new URL(router.getCurrentURL());
@@ -65,8 +62,6 @@ async function interceptPageLoadData() {
             data.refresh = currentURL.searchParams.get("refresh");
             data.toggleThemeBtnState = _toggleThemeBtnState() ? "checked" : "";
             data.pageTitle = `${await i18n.get("title", session.get($$.MONKSHU_CONSTANTS.LANG_ID))} - ${currentURL.searchParams.get("name")}`;
-            console.log(data.dash);
-            console.log("URL: ",currentURL);
         }
 
         // set the dates data
@@ -81,13 +76,10 @@ async function interceptPageLoadData() {
 
     const pageload_func = async data => {
         // select current dashboard icon on page load
-        console.log("DATA: ", data);
         const dashboardsRaw = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`);
         const allDashIcons = document.querySelectorAll("div#leftheader > img.dashicon");
-        for (const dashIcon of allDashIcons) if (data.dash.endsWith(dashboardsRaw[dashIcon.id].split(",")[0]))
+        for (const dashIcon of allDashIcons) if (data.dash.endsWith(_replaceCurrentTheme(dashboardsRaw[dashIcon.id].split(",")[0])))
             dashIcon.classList.add("selected"); else dashIcon.classList.remove("selected");
-
-        // if (data.toggleThemeBtnState) document.querySelector("#toggleTheme").checked = true;
         
         // load initial charts and set the refresh interval
         timeRangeUpdated(false);    // load initial charts they will get the dates from HTML
@@ -118,36 +110,26 @@ function _startRefresh() {
     loginmanager.addLogoutListener(_=>clearInterval(session.get(DASHBOARD_TIMER)));
 }
 
-const toggleTheme = async _ =>{
+async function toggleTheme() {
     main.toggleThemeBtnState = document.querySelector("#toggleTheme").checked ? true : false;
     if (main.toggleThemeBtnState) {
         window.APP_THEME = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/theme_dark.json`); main.theme = "dark";
     } else {
         window.APP_THEME = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/theme_light.json`); main.theme = "light";
     }
-    const allDashIcons = document.querySelectorAll("div#leftheader > img.dashicon");
-    for(const dash of allDashIcons){
-        let routerLink = dash.getAttribute("onclick"); 
-        routerLink = routerLink.replace(routerLink.slice(routerLink.lastIndexOf("_"), routerLink.indexOf(".page")),`_${main.theme}`);
-        dash.setAttribute("onclick", routerLink);
-    }
+    
     if(session.get($$.MONKSHU_CONSTANTS.PAGE_URL).native.includes("?")){
         let reloadRouterLink = session.get($$.MONKSHU_CONSTANTS.PAGE_URL).native;
-        reloadRouterLink = reloadRouterLink.replace(reloadRouterLink.slice(reloadRouterLink.lastIndexOf("_"), reloadRouterLink.indexOf(".page")),`_${main.theme}`);
-        session.set($$.MONKSHU_CONSTANTS.PAGE_URL, reloadRouterLink);
+        reloadRouterLink = _replaceCurrentTheme(reloadRouterLink); session.set($$.MONKSHU_CONSTANTS.PAGE_URL, reloadRouterLink);
     }
-    // window.APP_THEME = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/theme_dark.json`);
-    // main.theme = "dark";
-    // interceptPageLoadData();
     router.reload();
 }
 
 function _toggleThemeBtnState() {
-    if(!main.toggleThemeBtnState){
-        main.toggleThemeBtnState = false;    // set default theme and checked
-    }
-    console.log(main.toggleThemeBtnState);
+    if(!main.toggleThemeBtnState) main.toggleThemeBtnState = false;    // set default theme and checked
     return main.toggleThemeBtnState;
 }
+
+const _replaceCurrentTheme = str => { return str.replace(str.slice(str.lastIndexOf("_"), str.indexOf(".page")),`_${main.theme}`); }
 
 export const main = {changePassword, interceptPageLoadData, timeRangeUpdated, playPauseCharts, toggleTheme};
