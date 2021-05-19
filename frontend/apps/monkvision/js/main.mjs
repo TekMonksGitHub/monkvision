@@ -38,6 +38,7 @@ async function interceptPageLoadData() {
         // add in css, theme and html data to the page data object
         await utils.addThemeDataAndCSS(data, "main");
 
+        // add dashboards config from the backend API response and build the data object from 
         data.dashboards = [];
         const response_permission = await monkshu_env.components['chart-box']._getContent("dashboardPermission","userId="+JSON.stringify(session.get("userid")));
         let dashboardsRaw={};
@@ -46,7 +47,7 @@ async function interceptPageLoadData() {
         for (const key of Object.keys(dashboardsRaw)) {
             const file = dashboardsRaw[key].split(",")[0], refresh = parseInt(dashboardsRaw[key].split(",")[1].split(":")[1]),
                 name = await i18n.get(`name_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)), title = await i18n.get(`title_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID));
-            data.dashboards.push({ name, file, refresh, title, id: key});
+            data.dashboards.push({ name, file, refresh, title, id: key });
         }
 
         // add in dashboard path, and page title to the page data object
@@ -79,7 +80,6 @@ async function interceptPageLoadData() {
         let dashboardsRaw={};
         if(response_permission.result)
             dashboardsRaw=response_permission.dashboard;
-
         const allDashIcons = document.querySelectorAll("div#leftheader > img.dashicon");
         for (const dashIcon of allDashIcons) if (data.dash.endsWith(dashboardsRaw[dashIcon.id].split(",")[0]))
             dashIcon.classList.add("selected"); else dashIcon.classList.remove("selected");
