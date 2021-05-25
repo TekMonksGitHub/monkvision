@@ -17,7 +17,7 @@ const _init = async _ => {
 
 async function exportCSV(contents, filename) {
     await _init();
-    let headers = ["Timestamp's, date\n"]; headers = headers.concat(contents.legends || "");
+    let headers = ["Timestamp"]; headers = headers.concat(contents.legends || "");
     const rows = []; for (let i = 0; i < contents.length; i++) {
         const rowContent = [contents.x[i]]; for (let j = 0; j < contents.ys.length; j++) rowContent.push(contents.ys[j][i]);
         rows.push(rowContent);
