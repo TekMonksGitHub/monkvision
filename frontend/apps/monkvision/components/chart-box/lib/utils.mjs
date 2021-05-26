@@ -11,9 +11,7 @@
  * @param {string} filename The file name of csv
  */
 
-const _init = async _ => {
-    await $$.require(`${APP_CONSTANTS.COMPONENTS_PATH}/chart-box/3p/papaparse-v5.3.0.min.js`);
-}
+const _init = async _ => { if (!window.Papa || !window.Papa.unparse) await $$.require(`${APP_CONSTANTS.COMPONENTS_PATH}/chart-box/3p/papaparse-v5.3.0.min.js`); }
 
 async function exportCSV(contents, filename) {
     await _init();
