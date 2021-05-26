@@ -4,24 +4,24 @@ SCHEMA
     "randombar": {"html":"chart-box", "id":"rbar", "title":"Random Data Bars", "api":"randomgraph", "type":"bargraph", 
         "maxticks":3, "ysteps":"[1],[1]", "ylabels":"[1:1,5:5,10:10,else:],[1:1,5:5,10:10,else:]", "ymaxs":"[10],[10]",
         "ycolors":"[else:#40D59D4C:#0e8f7e],[else:#D43F3F4C:#af3234]", "yAtZeros":"[true],[true]", "gridLines":"true",
-        "labelColor":"rgba(120,120,120,0.2)", "gridColor": "rgba(120,120,120,0.20)", 
+        "labelColor":"rgba(72,72,72,0.98)", "gridColor": "rgba(120,120,120,0.20)", "thresholds":"[3:#8B0000:1],[7:#00008B:1]", 
         "params":"numentries=10&numys=2&yrange=1-10"},
 
     "randompie": {"html":"chart-box", "id":"rpie", "title":"Data Pie", "api":"randomaggregator", "type":"piegraph", 
-        "labels":"2:Data 3,1:Data 2,0:Data 1", "labelsShowPercentage": "true", "labelColor":"rgba(120,120,120,0.2)",
+        "labels":"2:Data 3,1:Data 2,0:Data 1", "labelsShowPercentage": "true", "labelColor":"rgba(72,72,72,0.98)",
         "colors":"0:#D43F3F4C:#af3234,1:#40D59D4C:#0e8f7e,2:#F7DC6F4C:#d4ac0d", 
         "params":"numys=3&title=Randon Data Pie"},
 
     "randompolar": {"html":"chart-box", "id":"rpolar", "title":"Random Data Polar", "api":"randomaggregator", 
         "type":"polargraph", "labels":"2:Data 3,1:Data 2,0:Data 1", "labelsShowPercentage": "true",
-        "gridLines":"true", "gridColor": "rgba(120,120,120,0.20)", "labelColor":"rgba(120,120,120,0.2)",
+        "gridLines":"true", "gridColor": "rgba(120,120,120,0.20)", "labelColor":"rgba(72,72,72,0.98)",
         "colors":"0:#D43F3F4C:#af3234,1:#40D59D4C:#0e8f7e,2:#F7DC6F4C:#d4ac0d", "params":"numys=3"},
     
     "randomline": {"html":"chart-box", "id":"rline", "title":"Random Data Lines", "api":"randomgraph", "type":"linegraph", 
         "maxticks":3, "ysteps":"[1],[1]", "ylabels":"[1:1,5:5,10:10,else:],[1:1,5:5,10:10,else:]", "ymaxs":"[10],[10]",
         "fillColors":"[#40D59D4C],[#D43F3F4C]", "borderColors":"[#0e8f7e],[#af3234]", "yAtZeros":"[true],[true]", 
-        "gridLines":"true", "labelColor":"rgba(120,120,120,0.2)", "gridColor": "rgba(120,120,120,0.20)", 
-        "singleAxis":"true", "params":"numentries=10&numys=2&yrange=1-10"}
+        "gridLines":"true", "labelColor":"rgba(72,72,72,0.98)", "gridColor": "rgba(120,120,120,0.20)", 
+        "singleAxis":"true", "legend": "position:top,fontColor:#484848", "params":"numentries=10&numys=2&yrange=1-10"}
 }
 ======
 

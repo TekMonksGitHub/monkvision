@@ -15,7 +15,7 @@ const _init = async _ => {
  * Renders given data as a bar graph. 
  * 
  * @param canvas    The hosting canvas element
- * @param content   {x: x labels, ys:[[y values]], infos:[[info for each y, rendered as tooltips]]}
+ * @param contents  {x: x labels, ys:[[y values]], infos:[[info for each y, rendered as tooltips]]}
  * @param maxXTicks The maximum x-axis ticks allowed
  * @param gridLines Draw gridlines or not
  * @param xAtZero   Start X at zero
@@ -28,6 +28,8 @@ const _init = async _ => {
  * @param labelColor The label color
  * @param gridColor The grid color
  * @param singleAxis Use single Y axis?
+ * @param annotation The annotation data
+ * @param legend     The legend
  */
 async function drawBargraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor, singleAxis, annotation, legend) {
     return await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor, singleAxis, "bar", 0, 1, annotation, legend);
@@ -38,7 +40,7 @@ async function drawBargraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAt
  * support multi-axis graphs.
  * 
  * @param canvas    The hosting canvas element
- * @param content   {x: x labels, ys:[[y values]], infos:[[info for each y, rendered as tooltips]]}
+ * @param contents  {x: x labels, ys:[[y values]], infos:[[info for each y, rendered as tooltips]]}
  * @param maxXTicks The maximum x-axis ticks allowed
  * @param gridLines Draw gridlines or not
  * @param xAtZero   Start X at zero
@@ -58,7 +60,7 @@ async function drawLinegraph(canvas, contents, maxXTicks, gridLines, xAtZero, yA
     return await _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor, singleAxis, "line", 0.5, 2, annotation, legend);
 }
 
-async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor, singleAxis, type, pointWidth, lineWidth, annotation, legend) {
+async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZero, yAtZeros, ysteps, ylabels, ymaxs, bgColors, brColors, labelColor, gridColor, singleAxis, type, pointWidth, lineWidth, annotations, legend) {
     await _init(); const ctx = canvas.getContext("2d"); 
 
     const datasets = []; for (const [i,ys] of contents.ys.entries()) datasets.push({ data: ys, ...contents.legends && { label: contents.legends[i] },     /* Add label property if legends present in contents */
@@ -73,6 +75,10 @@ async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZe
             callback:label => ylabels[i][label] ? ylabels[i][label] : (ylabels[i]["else"]||ylabels[i]["else"]=="" ? ylabels[i]["else"]:label),
             fontColor: labelColor, suggestedMax: ymaxs&&ymaxs[i]?ymaxs[i]:null} });
 
+    const annotationArray = []; for (const [i,annotation] of annotations.entries()) annotationArray.push({
+        type: "line", mode: "horizontal", scaleID: `yaxis${i}`, value: annotation.value, borderColor: annotation.color, 
+        borderWidth: annotation.width})
+
     const options = {
         maintainAspectRatio: false, 
         responsive: true, legend,
@@ -81,14 +87,14 @@ async function _drawLineOrBarGraph(canvas, contents, maxXTicks, gridLines, xAtZe
         scales: { xAxes: [{ gridLines: {drawOnChartArea: gridLines, drawTicks: false, color: gridColor}, 
                 ticks: {padding:5, beginAtZero: xAtZero?xAtZero.toLowerCase() == "true":false, autoSkip: true,
                 maxTicksLimit: maxXTicks, maxRotation: 0, fontColor: labelColor} }], yAxes },
-        annotation: annotation
+        annotation: {drawTime: "afterDatasetsDraw",annotations:annotationArray}
     }
 
     return new Chart(ctx, {type, data, options});
 }
 
 /**
- * Renders given data as a line graph. Makes the assumption that 
+ * Renders given data as a pie graph. Makes the assumption that 
  * API data format is x, y and info where info is additional info.
  * 
  * @param canvas    The hosting canvas element

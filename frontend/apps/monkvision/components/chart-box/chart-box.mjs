@@ -113,13 +113,10 @@ async function _refreshData(element, force) {
 		const labels = _getLabels(_makeArray(element.getAttribute("ylabels")));
 		const labelColor = element.getAttribute("labelColor") || "black";
 		const gridColor = element.getAttribute("gridColor") || "darkgrey";
-		const threshold	= element.getAttribute("threshold") || false;
-		const thresholdColor = element.getAttribute("thresholdColor") || "rgba(227,16,16,10)";
-		const thresholdLineWidth = element.getAttribute("thresholdLineWidth") || 1;
-		const annotation = threshold ? {
-			annotations: [{
-				type: 'line', mode: 'horizontal', scaleID: 'yaxis0', value: threshold, borderColor: thresholdColor, borderWidth: thresholdLineWidth,
-				label: { enabled: false } }] } : false;
+		const thresholds = []; if (element.getAttribute("thresholds")) for (const threshold of _makeArray(element.getAttribute("thresholds"))) {
+			const thriple = threshold.split(":"); 
+			thresholds.push({value: thriple[0].trim(), color: thriple[1]?thriple[1].trim():"#8B0000", width: thriple[2]?thriple[2].trim():1})
+		}
 
 		const legendHash = {}, legendParams = element.getAttribute("legend");
 		if(legendParams) for (const legendParam of legendParams.split(",")) {
@@ -142,7 +139,7 @@ async function _refreshData(element, force) {
 				element.getAttribute("xAtZero"), _makeArray(element.getAttribute("yAtZeros")), 
 				_makeArray(element.getAttribute("ysteps")), labels, _makeArray(element.getAttribute("ymaxs")), 
 				bgColors, brColors, labelColor, gridColor, 
-				(element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"), annotation, legend);
+				(element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"), thresholds, legend);
 		}
 
 		if (type == "linegraph") memory.chart = await chart.drawLinegraph(contentDiv.querySelector("canvas#canvas"), 
@@ -150,7 +147,7 @@ async function _refreshData(element, force) {
 			element.getAttribute("xAtZero"), _makeArray(element.getAttribute("yAtZeros")), 
 			_makeArray(element.getAttribute("ysteps")), labels, _makeArray(element.getAttribute("ymaxs")), 
 			_makeArray(element.getAttribute("fillColors")),_makeArray(element.getAttribute("borderColors")), 
-			labelColor, gridColor, (element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"), annotation, legend);
+			labelColor, gridColor, (element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"), thresholds, legend);
 		
 		return;
 	}

@@ -4,7 +4,7 @@ SCHEMA
     "randombar": {"html":"chart-box", "id":"rbar", "title":"Random Data Bars", "api":"randomgraph", "type":"bargraph", 
         "maxticks":3, "ysteps":"[1],[1]", "ylabels":"[1:1,5:5,10:10,else:],[1:1,5:5,10:10,else:]", "ymaxs":"[10],[10]",
         "ycolors":"[else:#40D59D4C:#0e8f7e],[else:#D43F3F4C:#af3234]", "yAtZeros":"[true],[true]", "gridLines":"true",
-        "labelColor":"rgba(250,250,250,0.95)", "gridColor": "rgba(250,250,250,0.20)", 
+        "labelColor":"rgba(250,250,250,0.95)", "gridColor": "rgba(250,250,250,0.20)", "thresholds":"[3:#8B0000:1],[7:#00008B:1]", 
         "params":"numentries=10&numys=2&yrange=1-10"},
 
     "randompie": {"html":"chart-box", "id":"rpie", "title":"Data Pie", "api":"randomaggregator", "type":"piegraph", 
