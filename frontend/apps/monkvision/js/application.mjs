@@ -29,7 +29,7 @@ async function main() {
 }
 
 async function _addPageDataInterceptors() {
-	const interceptors = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/pageDataInterceptors.json`);
+	const interceptors = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/pageInterceptors.json`);
 	for (const interceptor of interceptors) {
 		const modulePath = interceptor.module, functionName = interceptor.function;
 		let module = await import(`${APP_CONSTANTS.APP_PATH}/${modulePath}`); module = module[Object.keys(module)[0]];

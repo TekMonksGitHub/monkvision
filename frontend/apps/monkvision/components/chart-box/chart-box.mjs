@@ -5,8 +5,10 @@
  * License: See enclosed license.txt file.
  */
 import {chart} from "./lib/chart.mjs";
+import {utils as chartUtils} from "./lib/utils.mjs";
 import {apimanager as apiman} from "/framework/js/apimanager.mjs";
 import {monkshu_component} from "/framework/js/monkshu_component.mjs";
+import {util as frameworkUtils} from "/framework/js/util.mjs";
 
 async function elementRendered(element) {
 	await $$.require(`${APP_CONSTANTS.COMPONENTS_PATH}/chart-box/3p/xregexp-4.3.0-all-min.js`);	// load xregexp which is needed
@@ -29,6 +31,12 @@ function getTimeRange() {
 function setTimeRange(timeRange) {
 	chart_box.timeRange = timeRange; 
 	for (const element of chart_box.getAllElementInstances()) _refreshData(element);
+}
+
+async function exportCSV(element) {
+	const selectedDates = getTimeRange(), hostElement = chart_box.getHostElement(element),
+		filename = `${hostElement.getAttribute("title")}-${selectedDates.from}-${selectedDates.to}.csv`;
+	await chartUtils.exportCSV(chart_box.getMemory(hostElement.id).contents, filename);
 }
 
 function _escapeHTML(text) {
@@ -100,6 +108,7 @@ async function _refreshData(element, force) {
 			}
 			data.table = {headers, rows};
 		}
+		data.exportCSV = frameworkUtils.parseBoolean(element.getAttribute("exportCSV"));
 		await bindData(data, id);
 		contentDiv.scrollTop = contentDiv.scrollHeight; 
 		return;
@@ -108,18 +117,16 @@ async function _refreshData(element, force) {
 	clearChart(shadowRoot);	// destroy the old chart if it exists as we will now refresh charts.
 
 	if (type == "bargraph" || type == "linegraph") {
+		data.exportCSV = frameworkUtils.parseBoolean(element.getAttribute("exportCSV"));
 		await bindData(data, id); if (!content || !content.contents) return;
 
 		const labels = _getLabels(_makeArray(element.getAttribute("ylabels")));
 		const labelColor = element.getAttribute("labelColor") || "black";
 		const gridColor = element.getAttribute("gridColor") || "darkgrey";
-		const threshold	= element.getAttribute("threshold") || false;
-		const thresholdColor = element.getAttribute("thresholdColor") || "rgba(227,16,16,10)";
-		const thresholdLineWidth = element.getAttribute("thresholdLineWidth") || 1;
-		const annotation = threshold ? {
-			annotations: [{
-				type: 'line', mode: 'horizontal', scaleID: 'yaxis0', value: threshold, borderColor: thresholdColor, borderWidth: thresholdLineWidth,
-				label: { enabled: false } }] } : false;
+		const thresholds = []; if (element.getAttribute("thresholds")) for (const threshold of _makeArray(element.getAttribute("thresholds"))) {
+			const thriple = threshold.split(":"); 
+			thresholds.push({value: thriple[0].trim(), color: thriple[1]?thriple[1].trim():"#8B0000", width: thriple[2]?thriple[2].trim():1})
+		}
 
 		const legendHash = {}, legendParams = element.getAttribute("legend");
 		if(legendParams) for (const legendParam of legendParams.split(",")) {
@@ -138,19 +145,19 @@ async function _refreshData(element, force) {
 			}
 
 			memory.chart = await chart.drawBargraph(contentDiv.querySelector("canvas#canvas"), content.contents, 
-				element.getAttribute("maxticks"), _isTrue(element.getAttribute("gridLines")), 
+				element.getAttribute("maxticks"), frameworkUtils.parseBoolean(element.getAttribute("gridLines")), 
 				element.getAttribute("xAtZero"), _makeArray(element.getAttribute("yAtZeros")), 
 				_makeArray(element.getAttribute("ysteps")), labels, _makeArray(element.getAttribute("ymaxs")), 
 				bgColors, brColors, labelColor, gridColor, 
-				(element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"), annotation, legend);
+				(element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"), thresholds, legend);
 		}
 
 		if (type == "linegraph") memory.chart = await chart.drawLinegraph(contentDiv.querySelector("canvas#canvas"), 
-			content.contents, element.getAttribute("maxticks"), _isTrue(element.getAttribute("gridLines")), 
+			content.contents, element.getAttribute("maxticks"), frameworkUtils.parseBoolean(element.getAttribute("gridLines")), 
 			element.getAttribute("xAtZero"), _makeArray(element.getAttribute("yAtZeros")), 
 			_makeArray(element.getAttribute("ysteps")), labels, _makeArray(element.getAttribute("ymaxs")), 
 			_makeArray(element.getAttribute("fillColors")),_makeArray(element.getAttribute("borderColors")), 
-			labelColor, gridColor, (element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"), annotation, legend);
+			labelColor, gridColor, (element.getAttribute("singleAxis") && element.getAttribute("singleAxis").toLowerCase() == "true"), thresholds, legend);
 		
 		return;
 	}
@@ -178,7 +185,7 @@ async function _refreshData(element, force) {
 		
 		let kind = "pie"; if (type == "donutgraph") kind = "doughnut"; if (type == "polargraph") kind = "polarArea";
 		memory.chart = await chart.drawPiegraph(contentDiv.querySelector("canvas#canvas"), {data:content.contents, 
-			labels: labelHash, colors: colorHash, infos}, labelColor, _isTrue(element.getAttribute("gridLines")), 
+			labels: labelHash, colors: colorHash, infos}, labelColor, frameworkUtils.parseBoolean(element.getAttribute("gridLines")), 
 			element.getAttribute("gridColor") || "darkgrey", kind);
 
 		return;
@@ -221,6 +228,5 @@ async function _getContent(api, params) {
 	return resp;
 }
 
-const _isTrue = string => string?string.toLowerCase() == "true":false;
-export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange, _getContent}
+export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange, exportCSV, _getContent}
 monkshu_component.register("chart-box", `${APP_CONSTANTS.APP_PATH}/components/chart-box/chart-box.html`, chart_box);
