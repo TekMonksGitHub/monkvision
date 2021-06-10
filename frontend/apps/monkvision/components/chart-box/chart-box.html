@@ -129,6 +129,15 @@ canvas#canvas {
     display: none;
     max-height: inherit;
 }
+
+.csv-icon{
+    position:absolute;
+    cursor: pointer;
+    height: 25px;
+    width: 25px;
+    z-index: 3;
+    padding-top: 5px;
+}
 </style>
 
 {{{styleBody}}}
@@ -150,6 +159,12 @@ canvas#canvas {
     <span id="metrictextexplanation">{{textexplanation}}</span>
     </div></div>
     {{/metrictext}}
+
+    {{#exportCSV}}
+    <div style="float: right; padding-right: 30px;">
+        <img src="{{{htmlData.exportIcon}}}" alt="export csv icon" class="csv-icon" onclick="chart_box.exportCSV(this)" title="Export CSV">
+    </div>
+    {{/exportCSV}}
 
     {{#table}}                      <!-- Handles table content -->
     <table>

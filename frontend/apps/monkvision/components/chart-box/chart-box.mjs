@@ -5,8 +5,10 @@
  * License: See enclosed license.txt file.
  */
 import {chart} from "./lib/chart.mjs";
+import {utils as chartUtils} from "./lib/utils.mjs";
 import {apimanager as apiman} from "/framework/js/apimanager.mjs";
 import {monkshu_component} from "/framework/js/monkshu_component.mjs";
+import {util as frameworkUtils} from "/framework/js/util.mjs";
 
 async function elementRendered(element) {
 	await $$.require(`${APP_CONSTANTS.COMPONENTS_PATH}/chart-box/3p/xregexp-4.3.0-all-min.js`);	// load xregexp which is needed
@@ -31,6 +33,12 @@ function setTimeRange(timeRange) {
 	for (const element of chart_box.getAllElementInstances()) _refreshData(element);
 }
 
+async function exportCSV(element) {
+	const selectedDates = getTimeRange(), hostElement = chart_box.getHostElement(element),
+		filename = `${hostElement.getAttribute("title")}-${selectedDates.from}-${selectedDates.to}.csv`;
+	await chartUtils.exportCSV(chart_box.getMemory(hostElement.id).contents, filename);
+}
+
 function _escapeHTML(text) {
 	const textNode = document.createTextNode(text);
 	const p = document.createElement("p");
@@ -50,7 +58,7 @@ async function _refreshData(element, force) {
 		const canvasNode = shadowRoot.querySelector("canvas#canvas"), canvasParent = canvasNode.parentNode, canvasClone = canvasNode.cloneNode();
 		canvasNode.remove(); canvasParent.appendChild(canvasClone); }
 	const createData = _ => {return {title: content&&content.contents? content.contents.title || element.getAttribute("title"):element.getAttribute("title"), 
-		styleBody: element.getAttribute("styleBody")?`<style>${element.getAttribute("styleBody")}</style>`:null}};
+		styleBody: element.getAttribute("styleBody")?`<style>${element.getAttribute("styleBody")}</style>`:null, htmlData: APP_THEME["main_html_data"]}};
 	const clone = object => object?JSON.parse(JSON.stringify(object)):null;
 
 	if (!force && content && !content.contents) {	// clear everything if data is empty and changed
@@ -100,6 +108,7 @@ async function _refreshData(element, force) {
 			}
 			data.table = {headers, rows};
 		}
+		data.exportCSV = frameworkUtils.parseBoolean(element.getAttribute("exportCSV"));
 		await bindData(data, id);
 		contentDiv.scrollTop = contentDiv.scrollHeight; 
 		return;
@@ -108,6 +117,7 @@ async function _refreshData(element, force) {
 	clearChart(shadowRoot);	// destroy the old chart if it exists as we will now refresh charts.
 
 	if (type == "bargraph" || type == "linegraph") {
+		data.exportCSV = frameworkUtils.parseBoolean(element.getAttribute("exportCSV"));
 		await bindData(data, id); if (!content || !content.contents) return;
 
 		const labels = _getLabels(_makeArray(element.getAttribute("ylabels")));
@@ -135,7 +145,7 @@ async function _refreshData(element, force) {
 			}
 
 			memory.chart = await chart.drawBargraph(contentDiv.querySelector("canvas#canvas"), content.contents, 
-				element.getAttribute("maxticks"), _isTrue(element.getAttribute("gridLines")), 
+				element.getAttribute("maxticks"), frameworkUtils.parseBoolean(element.getAttribute("gridLines")),
 				element.getAttribute("xAtZero"), _makeArray(element.getAttribute("yAtZeros")), 
 				_makeArray(element.getAttribute("ysteps")), labels, _makeArray(element.getAttribute("ymaxs")), 
 				bgColors, brColors, labelColor, gridColor, 
@@ -143,7 +153,7 @@ async function _refreshData(element, force) {
 		}
 
 		if (type == "linegraph") memory.chart = await chart.drawLinegraph(contentDiv.querySelector("canvas#canvas"), 
-			content.contents, element.getAttribute("maxticks"), _isTrue(element.getAttribute("gridLines")), 
+			content.contents, element.getAttribute("maxticks"), frameworkUtils.parseBoolean(element.getAttribute("gridLines")),
 			element.getAttribute("xAtZero"), _makeArray(element.getAttribute("yAtZeros")), 
 			_makeArray(element.getAttribute("ysteps")), labels, _makeArray(element.getAttribute("ymaxs")), 
 			_makeArray(element.getAttribute("fillColors")),_makeArray(element.getAttribute("borderColors")), 
@@ -175,7 +185,7 @@ async function _refreshData(element, force) {
 		
 		let kind = "pie"; if (type == "donutgraph") kind = "doughnut"; if (type == "polargraph") kind = "polarArea";
 		memory.chart = await chart.drawPiegraph(contentDiv.querySelector("canvas#canvas"), {data:content.contents, 
-			labels: labelHash, colors: colorHash, infos}, labelColor, _isTrue(element.getAttribute("gridLines")), 
+			labels: labelHash, colors: colorHash, infos}, labelColor, frameworkUtils.parseBoolean(element.getAttribute("gridLines")),
 			element.getAttribute("gridColor") || "darkgrey", kind);
 
 		return;
@@ -218,7 +228,5 @@ async function _getContent(api, params) {
 	return resp;
 }
 
-const _isTrue = string => string?string.toLowerCase() == "true":false;
-
-export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange}
+export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange, exportCSV}
 monkshu_component.register("chart-box", `${APP_CONSTANTS.APP_PATH}/components/chart-box/chart-box.html`, chart_box);
