@@ -72,6 +72,7 @@ async function generatePageHTML(elementParent, schema, cssParsed, cssInternal, c
 	if (!elementParent.webscrolls_env) elementParent.webscrolls_env = {};
 	if (layoutObj.rowHeights.length < layoutObj.rows.length) layoutObj.rowHeights.push(Array(layoutObj.rows.length-layoutObj.rowHeights.length).fill("auto"));
 	if (layoutObj.colWidths.length < layoutObj.columns.length) layoutObj.colWidths.push(Array(layoutObj.columns.length-layoutObj.colWidths.length).fill("auto"));
+	const pagedata = elementParent.getAttribute("pagedata")?JSON.parse(elementParent.getAttribute("pagedata")):undefined;
 
 	let css = `${cssHref?`<link rel="stylesheet" type="text/css" href="${cssHref}">`:""}
 	<style>
@@ -92,11 +93,10 @@ async function generatePageHTML(elementParent, schema, cssParsed, cssInternal, c
 		}
 		`
 
-		let htmlElement = JSON.parse(schema)[element.element]; 
-		htmlElement.id = element.name || element.element; 
+		const htmlElement = JSON.parse(schema)[element.element]; htmlElement.id = element.name || element.element; 
 		html += `<div class="item${i}${cssParsed.itemClasses?" "+cssParsed.itemClasses:''}${cssParsed.perItemClass?` ${cssParsed.perItemClass}-${htmlElement.id}`:''}"><${htmlElement.html || "div"}`; 
 		delete htmlElement.html; let innerHTML = htmlElement.__org_monkshu_innerHTML||''; delete htmlElement.__org_monkshu_innerHTML;
-		for (const attr of Object.keys(htmlElement)) html += ` ${attr}="${await evalAttrValue(htmlElement[attr])}"`; html += `>${innerHTML}</${htmlElement.html}></div>
+		for (const attr of Object.keys(htmlElement)) html += ` ${attr}="${await evalAttrValue(htmlElement[attr], pagedata)}"`; html += `>${innerHTML}</${htmlElement.html}></div>
 		`
 	}
 
@@ -108,9 +108,9 @@ async function generatePageHTML(elementParent, schema, cssParsed, cssInternal, c
 	return finalHTML;
 }
 
-async function evalAttrValue(str) {
+async function evalAttrValue(str, pagedata) {
 	let val = (window[str] || str).toString();	// Mustache expects Strings only
-	val = await router.expandPageData(val, session.get($$.MONKSHU_CONSTANTS.PAGE_URL), {});
+	val = await router.expandPageData(val, session.get($$.MONKSHU_CONSTANTS.PAGE_URL), pagedata||{});
 	if (val.match(/url\(.+\)/)) {
 		try {
 			let testURL = router.decodeURL(val.trim().substring(4,val.length-1)); let response = await fetch(testURL); 

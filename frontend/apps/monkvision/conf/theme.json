@@ -85,8 +85,10 @@
             "title": "Monkvision Dashboards",
             "name_dash1": "Overview",
             "title_dash1": "Overview of the systems",
-            "name_dash2": "Examples",
-            "title_dash2": "Example Charts",
+            "name_dash2": "Details",
+            "title_dash2": "Detailed Charts",
+            "name_dash3": "Details2",
+            "title_dash3": "Detailed Charts Alternative",
             "Issue": "Problem",
             "Cancel": "Cancel",
             "InternalError": "Internal error",
@@ -98,6 +100,7 @@
             "status": "Status",
             "additionalinfo": "Additional Information",
             "none": "None",
+            "issues": "Attacks",
             "httpGooglePie":"HTTP Google Pie",
             "httpGoogle": "HTTP Google",
             "httpGoogleBar":"HTTP Google Bar"
@@ -107,6 +110,14 @@
         "span-with-menu#gear": "styleBody='div.menuitem:hover{background: #45d19e !important; color: white !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -120px;}'",
         "span-with-menu#gear>img": "style='height: 30px;width: 30px;vertical-align: middle;'",
         "textlogo": "./img/textlogo_light.png",
-        "dashicon": "./img/dashicon.svg"
+        "dashicon": "./img/dashicon.svg",
+        "AlertsBackground":"rgb(235, 250, 245)",
+        "BannerOKColors":"#ffffff,#45d19e",
+        "BannerElseColors": "#ffffff,#ff3f3fcc",
+        "BannerElseIcon": "./img/server_icon.svg",
+        "OKBarColors": "#40D59D4C:#0e8f7e",
+        "IssueBarColors": "#D43F3F4C:#af3234",
+        "GridColor": "rgba(120,120,120,0.20)",
+        "LabelColor": "rgba(72,72,72,0.98)"
     }
 }

@@ -68,6 +68,9 @@ async function interceptPageLoadAndPageLoadData() {
             data.dateTimeNow = session.get(SELECTED_DATES).to;
             data.dateTimeWeekAgo = session.get(SELECTED_DATES).from;
         }
+
+        // add in page data property so page generator can receive pass through data
+        data.pagedata = JSON.stringify(data.htmlData);
     });
 
     router.addOnLoadPage(`${APP_CONSTANTS.APP_PATH}/main.html`, async data => {

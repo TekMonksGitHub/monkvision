@@ -41,7 +41,7 @@ exports.doService = async jsonReq => {
             if (!infos[j]) infos.push([]); 
             let additional_status = row[`info${j}`];
 
-            additional_status = !additional_status || additional_status=="" ? 
+            additional_status = (!additional_status) || additional_status=="" ? 
                 (jsonReq.nullValue?jsonReq.nullValue:additional_status) : additional_status.split(",").join("\n");
 
             additional_status = _getValueTemplate(jsonReq, row[`y${j}`], additional_status);
