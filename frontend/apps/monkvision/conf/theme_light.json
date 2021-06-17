@@ -107,6 +107,7 @@
         "span-with-menu#gear": "styleBody='div.menuitem:hover{background: #45d19e !important; color: white !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -120px;}'",
         "span-with-menu#gear>img": "style='height: 30px;width: 30px;vertical-align: middle;'",
         "textlogo": "./img/textlogo_light.png",
-        "dashicon": "./img/dashicon.svg"
+        "dashicon": "./img/dashicon.svg",
+        "exportCSVIcon": "./components/chart-box/img/download_icon.svg"
     }
 }
