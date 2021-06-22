@@ -9,6 +9,7 @@ import {i18n} from "/framework/js/i18n.mjs";
 import {router} from "/framework/js/router.mjs";
 import {loginmanager} from "./loginmanager.mjs";
 import {session} from "/framework/js/session.mjs";
+import {securityguard} from "/framework/js/securityguard.mjs";
 import {chart_box} from "../components/chart-box/chart-box.mjs";
 
 const SELECTED_DATES = "__monkvision_selecteddates", DASHBOARD_TIMER = "__monkvision_dashtimer", REFRESH_INTERVAL = "__monkvision_refresh";
@@ -43,7 +44,9 @@ async function interceptPageLoadAndPageLoadData() {
         for (const key of Object.keys(dashboardsRaw)) {
             const file = dashboardsRaw[key].split(",")[0], refresh = parseInt(dashboardsRaw[key].split(",")[1].split(":")[1]),
                 name = await i18n.get(`name_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)), title = await i18n.get(`title_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID));
-            data.dashboards.push({ name, file, refresh, title, id: key });
+            const showDash = securityguard.isAllowed(key)? true : false;
+
+            data.dashboards.push({ name, file, refresh, title, id: key ,showDash});
         }
 
         // add in dashboard path, and page title to the page data object
