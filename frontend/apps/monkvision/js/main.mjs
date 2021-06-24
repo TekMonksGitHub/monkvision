@@ -44,11 +44,11 @@ async function interceptPageLoadAndPageLoadData() {
         for (const key of Object.keys(dashboardsRaw)) {
             const file = dashboardsRaw[key].split(",")[0], refresh = parseInt(dashboardsRaw[key].split(",")[1].split(":")[1]),
                 name = await i18n.get(`name_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)), title = await i18n.get(`title_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID));
-            const showDash = securityguard.isAllowed(key)? true : false;
 
-            data.dashboards.push({ name, file, refresh, title, id: key ,showDash});
+            if(securityguard.isAllowed(key))
+                data.dashboards.push({ name, file, refresh, title, id: key });
         }
-
+        
         // add in dashboard path, and page title to the page data object
         const currentURL = new URL(router.getCurrentURL());
         if (!currentURL.searchParams.get("dash")) { // load first dashboard if none was provided in the incoming URL

@@ -117,9 +117,7 @@ span#header > img#playpause:hover {
 <body>
 <div id="leftheader">
 	{{#dashboards}}
-		{{#showDash}}
-			<img id="{{id}}" class="dashicon" src="{{{htmlData.dashicon}}}" alt="{{title}}" title="{{title}}" onclick="router.loadPage('./main.html?dash=./dashboards/{{file}}&title={{title}}&refresh={{refresh}}&name={{name}}');"><span>{{name}}</span>
-		{{/showDash}}
+		<img id="{{id}}" class="dashicon" src="{{{htmlData.dashicon}}}" alt="{{title}}" title="{{title}}" onclick="router.loadPage('./main.html?dash=./dashboards/{{file}}&title={{title}}&refresh={{refresh}}&name={{name}}');"><span>{{name}}</span>
 	{{/dashboards}}
 </div>
 <div id="container">
