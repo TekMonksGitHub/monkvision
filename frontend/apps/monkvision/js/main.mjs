@@ -45,8 +45,7 @@ async function interceptPageLoadAndPageLoadData() {
             const file = dashboardsRaw[key].split(",")[0], refresh = parseInt(dashboardsRaw[key].split(",")[1].split(":")[1]),
                 name = await i18n.get(`name_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)), title = await i18n.get(`title_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID));
 
-            if(securityguard.isAllowed(key))
-                data.dashboards.push({ name, file, refresh, title, id: key });
+            if (securityguard.isAllowed(key)) data.dashboards.push({ name, file, refresh, title, id: key });
         }
         
         // add in dashboard path, and page title to the page data object

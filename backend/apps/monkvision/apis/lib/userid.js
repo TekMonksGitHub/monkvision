@@ -41,7 +41,7 @@ exports.exists = exports.login = pwph => {
 		.then(pwph => {
 			usersDB.all(`SELECT * FROM users INNER JOIN roles ON users.roleID = roles.roleID WHERE pwph = ? COLLATE NOCASE;`, [pwph], (err, rows) => {
 				if (err || !rows.length || !rows[0].approved) resolve({result: false});
-				else resolve({result: true, name: rows[0].name, org: rows[0].org, id: rows[0].id, totpsec: rows[0].totpsec, approved: rows[0].approved, role:rows[0].role});
+				else resolve({result: true, name: rows[0].name, org: rows[0].org, id: rows[0].id, totpsec: rows[0].totpsec, approved: rows[0].approved, role: rows[0].role});
 			})
 		})
 		.catch(_ => resolve({result: false}));
