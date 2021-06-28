@@ -109,7 +109,7 @@ async function _refreshData(element, force) {
 			data.table = {headers, rows};
 		}
 		data.exportCSV = frameworkUtils.parseBoolean(element.getAttribute("exportCSV"));
-		if(data.exportCSV) data.exportCSVIcon = element.getAttribute("exportCSVIcon") || "./components/chart-box/img/download_icon.svg";
+		if (data.exportCSV) data.exportCSVIcon = element.getAttribute("exportCSVIcon") || "./components/chart-box/img/download_icon.svg";
 		await bindData(data, id);
 		contentDiv.scrollTop = contentDiv.scrollHeight; 
 		return;
@@ -119,7 +119,7 @@ async function _refreshData(element, force) {
 
 	if (type == "bargraph" || type == "linegraph") {
 		data.exportCSV = frameworkUtils.parseBoolean(element.getAttribute("exportCSV"));
-		if(data.exportCSV) data.exportCSVIcon = element.getAttribute("exportCSVIcon") || "./components/chart-box/img/download_icon.svg";
+		if (data.exportCSV) data.exportCSVIcon = element.getAttribute("exportCSVIcon") || "./components/chart-box/img/download_icon.svg";
 		await bindData(data, id); if (!content || !content.contents) return;
 
 		const labels = _getLabels(_makeArray(element.getAttribute("ylabels")));
