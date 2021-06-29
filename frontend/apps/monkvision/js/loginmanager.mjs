@@ -23,7 +23,7 @@ async function signin(id, pass) {
                 session.set(APP_CONSTANTS.USERID, resp.id); 
                 session.set(APP_CONSTANTS.USERNAME, resp.name);
                 session.set(APP_CONSTANTS.USERORG, resp.org);
-                securityguard.setCurrentRole(APP_CONSTANTS.USER_ROLE);
+                securityguard.setCurrentRole(resp.role);
                 startAutoLogoutTimer();
                 resolve(true);
             } else {LOG.error(`Login failed for ${id}`); resolve(false);}

@@ -16,7 +16,7 @@ exports.doService = async jsonReq => {
 
 	if (result.result) LOG.info(`User logged in: ${result.name}`); else LOG.error(`Bad login for pwph: ${jsonReq.pwph}`);
 
-	return {result: result.result, name: result.name, id: result.id, org: result.org};
+	return {result: result.result, name: result.name, id: result.id, org: result.org, role: result.role};
 }
 
 const validateRequest = jsonReq => (jsonReq && jsonReq.pwph);
