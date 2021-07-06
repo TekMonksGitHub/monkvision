@@ -97,6 +97,11 @@ async function changePassword(_element) {
     });
 }
 
+async function toggleTheme(element) {
+    APP_THEME = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/theme_${element.textContent.toLowerCase()}.json`);
+    router.loadPage(router.getCurrentURL());
+}
+
 const _stopRefresh = _ => {if (session.get(DASHBOARD_TIMER)) clearInterval(session.get(DASHBOARD_TIMER));}
 
 function _startRefresh() {
@@ -108,4 +113,4 @@ function _startRefresh() {
     loginmanager.addLogoutListener(_=>clearInterval(session.get(DASHBOARD_TIMER)));
 }
 
-export const main = {changePassword, interceptPageLoadAndPageLoadData, timeRangeUpdated, playPauseCharts};
+export const main = {changePassword, interceptPageLoadAndPageLoadData, timeRangeUpdated, playPauseCharts, toggleTheme};
