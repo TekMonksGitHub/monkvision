@@ -57,8 +57,8 @@ body {margin: 0; height: calc(100vh - 65px);}
     box-shadow:  0 0 1px rgba(34, 25, 25, 0.4);
     border-radius: 10px;
     margin: 5px;
-    background-color: {{gridItemBackground}};
-    color: {{gridItemColor}};
-    border: {{gridItemBorder}};
+    background-color: var(--grid-item-background);
+    color: var(--grid-item-color);
+    border: var(--grid-item-border);
 }
 =======

@@ -78,7 +78,8 @@
         "span#header > span#title": "width: 300px; font-size: 0.85em; font-weight: bold; background-color: white; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); border-radius: 5px; padding: 5px; color: rgba(0,0,0,0.75);",
         "input#datetimepickerfrom, input#datetimepickerfrom:active, input#datetimepickerto, input#datetimepickerto:active":
             "font-size: 0.8em; font-family: sans-serif; color: rgba(0,0,0,0.75);border-radius: 4px; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); padding: 2px; border-style: none;",
-        "span#header > img#playpause": "height: 30px; width: 30px;"
+        "span#header > img#playpause": "height: 30px; width: 30px;",
+        ":root": "--grid-item-background: white; --grid-item-color: rgb(72,72,72); --grid-item-border: 0.1px solid rgba(250,250,250,0)"
     },
     "main_i18n": {
         "en": {
@@ -128,9 +129,6 @@
         "thBackground" : "#45d19e",
         "thBoxShadowColor" : "rgb(69, 209, 158, 0.4)",
         "trBackground" : "rgb(235, 250, 245)",
-        "gridItemBackground": "white",
-        "gridItemColor": "rgb(72,72,72)",
-        "gridItemBorder": "0.1px solid rgba(250,250,250,0)",
         "themeIcon": "./img/theme_icon.svg"
     }
 }

@@ -100,7 +100,7 @@ async function generatePageHTML(elementParent, schema, cssParsed, cssInternal, c
 		`
 	}
 
-	css += await evalAttrValue(cssInternal, pagedata);
+	css += cssInternal;
 	css += "</style>"; html += "</div>";
 
 	let finalHTML = css+html;
