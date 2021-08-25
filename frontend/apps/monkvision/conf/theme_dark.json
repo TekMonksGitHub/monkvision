@@ -78,7 +78,11 @@
         "span#header > span#title": "width: 300px; font-size: 0.85em; font-weight: bold; background-color: rgb(80,80,80); box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); border-radius: 5px; padding: 5px; color: rgba(250,250,250,0.95);",
         "input#datetimepickerfrom, input#datetimepickerfrom:active, input#datetimepickerto, input#datetimepickerto:active":
             "font-size: 0.8em; font-family: sans-serif; background-color: rgb(80,80,80); color: rgba(250,250,250,0.95); border-radius: 4px; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); padding: 2px; border-style: none;",
-        "span#header > img#playpause": "height: 30px; width: 30px;"
+        "span#header > img#playpause": "height: 30px; width: 30px;",
+        "span#pdf-preview-header > img#playpause": "height: 30px; width: 30px;",
+        "span#pdf-preview-header > img#textlogo": "height: 30px; width: 160px;",
+        "div#pdf-preview-maincontent": "top: 120px; width: calc(95vw - 100px); height: calc(100vh - 120px); left: 100px;",
+        "@media print": "div#pdf-preview-container {display: none;} div#pdf-preview-maincontent{top:unset; width:100vw; height:100vh; left: unset;}"
     },
     "main_i18n": {
         "en": {
@@ -108,6 +112,7 @@
         "span-with-menu#gear>img": "style='height: 30px;width: 30px;vertical-align: middle;'",
         "textlogo": "./img/textlogo_dark.png",
         "dashicon": "./img/dashicon.svg",
-        "exportCSVIcon": "./img/download_icon.svg"
+        "exportCSVIcon": "./img/download_icon.svg",
+        "pdfReportURL": "main.html?dash=./dashboards/dashboard_pdf_report.page&title=Analytics Reports&refresh=300000&name=Analytics Reports&generatePDFReport=true"
     }
 }

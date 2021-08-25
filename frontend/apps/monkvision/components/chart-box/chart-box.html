@@ -138,6 +138,40 @@ canvas#canvas {
     z-index: 3;
     padding-top: 5px;
 }
+span#header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+span#header > img#textlogo{
+    height: 20px;
+}
+span#header > span#title{
+    font-size: xx-large;
+    font-weight: bolder;
+}
+div#content > span#header-calendar{
+    float: right;
+}
+
+input#datetimepickerfrom, input#datetimepickerfrom:active, input#datetimepickerto, input#datetimepickerto:active {
+    font-size: 0.8em;
+    font-family: sans-serif;
+    color: rgba(0,0,0,0.75);
+    border-radius: 4px;
+    box-shadow: 0 0 1px rgba(34, 25, 25, 0.4);
+    padding: 2px;
+    border-style: none;
+}
+
+input#datetimepickerfrom{
+    margin-right: 20px;
+}
+@media print {
+    div#content{
+        overflow-y: hidden;
+    }
+}
 </style>
 
 {{{styleBody}}}
@@ -150,6 +184,18 @@ canvas#canvas {
     <span id="text"><p>{{{.}}}</p></span>
     </div>
     {{/textcontent}}
+
+    {{#headerSection}}
+    <span id="header">
+        <img id="textlogo" src="./img/textlogo_light.png">
+        <span id="title">Analytics Reports</span>
+    </span>
+    <hr style="border: 2px solid black;">
+    <span id="header-calendar">
+        <input id="datetimepickerfrom" type="datetime-local" value="{{{dateTimeWeekAgo}}}">
+        <input id="datetimepickerto" type="datetime-local" value="{{{dateTimeNow}}}">
+    </span>
+    {{/headerSection}}
 
     {{#exportCSV}}
     <div style="float: right; padding-right: 30px;">

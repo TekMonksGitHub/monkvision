@@ -192,6 +192,14 @@ async function _refreshData(element, force) {
 
 		return;
 	}
+
+	if(type == "header-section"){
+		data.headerSection = true;
+		data.dateTimeWeekAgo = chart_box.timeRange.from;
+		data.dateTimeNow = chart_box.timeRange.to;
+		await bindData(data, id);
+		return;
+	}
 }
 
 const _makeArray = string => {
