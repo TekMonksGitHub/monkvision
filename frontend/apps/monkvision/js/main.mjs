@@ -72,7 +72,7 @@ async function interceptPageLoadAndPageLoadData() {
         }
 
         // add in page data property so page generator can receive pass through data
-        data.pagedata = JSON.stringify(data.htmlData);
+        data.pagedata = encodeURIComponent(JSON.stringify(data.htmlData));
     });
 
     router.addOnLoadPage(`${APP_CONSTANTS.APP_PATH}/main.html`, async data => {
@@ -97,10 +97,7 @@ async function changePassword(_element) {
     });
 }
 
-async function toggleTheme(element) {
-    APP_THEME = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/theme_${element.textContent.toLowerCase()}.json`);
-    router.loadPage(router.getCurrentURL());
-}
+const toggleTheme = async element => router.loadPage(router.getCurrentURL(), {theme: await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/theme_${element.textContent.toLowerCase()}.json`)});
 
 const _stopRefresh = _ => {if (session.get(DASHBOARD_TIMER)) clearInterval(session.get(DASHBOARD_TIMER));}
 

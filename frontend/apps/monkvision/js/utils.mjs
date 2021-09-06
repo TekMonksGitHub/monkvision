@@ -13,19 +13,22 @@ import {i18n} from "/framework/js/i18n.mjs";
  * @param {string} pageName The page name
  */
 async function addThemeDataAndCSS(pageData, pageName) {
+    // add theme
+    if (pageData?.theme) monkshu_env.app_theme = pageData.theme;
+
     // add css
-    let css = ""; for (const key of Object.keys(APP_THEME[`${pageName}_css`]))
-        css += key=="*"?`${APP_THEME[`${pageName}_css`][key]}\n`:`${key}{${APP_THEME[`${pageName}_css`][key]}}\n`;
+    let css = ""; for (const key of Object.keys(monkshu_env.app_theme[`${pageName}_css`]))
+        css += key=="*"?`${monkshu_env.app_theme[`${pageName}_css`][key]}\n`:`${key}{${monkshu_env.app_theme[`${pageName}_css`][key]}}\n`;
     pageData.css = `<style>${css}</style>`;
 
     // merge i18n 
-    for (const key of Object.keys(APP_THEME[`${pageName}_i18n`])) {
+    for (const key of Object.keys(monkshu_env.app_theme[`${pageName}_i18n`])) {
         const i18nThis = await i18n.getI18NObject(key);
-        Object.assign(i18nThis, APP_THEME[`${pageName}_i18n`][key]);
+        Object.assign(i18nThis, monkshu_env.app_theme[`${pageName}_i18n`][key]);
     }
 
     // add HTML data
-    pageData.htmlData = APP_THEME[`${pageName}_html_data`];
+    pageData.htmlData = monkshu_env.app_theme[`${pageName}_html_data`];
     
     return pageData;
 }
