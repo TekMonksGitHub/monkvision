@@ -11,7 +11,6 @@ import {apimanager as apiman} from "/framework/js/apimanager.mjs";
 const init = async _ => {
 	window.APP_CONSTANTS = (await import ("./constants.mjs")).APP_CONSTANTS;
 	window.LOG = (await import ("/framework/js/log.mjs")).LOG;
-	monkshu_env.app_theme = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/theme.json`);
 	if (!session.get($$.MONKSHU_CONSTANTS.LANG_ID)) session.set($$.MONKSHU_CONSTANTS.LANG_ID, "en");
 	securityguard.setPermissionsMap(APP_CONSTANTS.PERMISSIONS_MAP);
 	securityguard.setCurrentRole(securityguard.getCurrentRole() || APP_CONSTANTS.GUEST_ROLE);
