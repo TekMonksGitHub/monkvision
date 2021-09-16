@@ -11,6 +11,7 @@ import {loginmanager} from "./loginmanager.mjs";
 import {session} from "/framework/js/session.mjs";
 import {securityguard} from "/framework/js/securityguard.mjs";
 import {chart_box} from "../components/chart-box/chart-box.mjs";
+import {util as frameworkUtils} from "/framework/js/util.mjs";
 
 const SELECTED_DATES = "__monkvision_selecteddates", DASHBOARD_TIMER = "__monkvision_dashtimer", REFRESH_INTERVAL = "__monkvision_refresh";
 
@@ -36,6 +37,7 @@ function playPauseCharts(img, force) {
 async function interceptPageLoadAndPageLoadData() {
     router.addOnLoadPageData(`${APP_CONSTANTS.APP_PATH}/main.html`, async data => {
         // add in css, theme and html data to the page data object
+        data.themeMode = new URL(router.getCurrentURL()).searchParams.get("themeMode") || "light";
         await utils.addThemeDataAndCSS(data, "main");
 
         // load dashboards config and build the data object
@@ -74,7 +76,7 @@ async function interceptPageLoadAndPageLoadData() {
         }
 
         // add in page data property so page generator can receive pass through data
-        data.pagedata = JSON.stringify(data.htmlData);
+        data.pagedata = encodeURIComponent(JSON.stringify(data.htmlData));
     });
 
     router.addOnLoadPage(`${APP_CONSTANTS.APP_PATH}/main.html`, async data => {
@@ -99,7 +101,7 @@ async function changePassword(_element) {
     });
 }
 
-const loadPDFReport = async _ => window.open(await router.encodeURL(APP_THEME["main_html_data"]["pdfReportURL"]), "_blank");
+const loadPDFReport = async _ => window.open(await router.encodeURL("main.html?dash=./dashboards/dashboard_pdf_report.page&title=Analytics Reports&refresh=300000&name=Analytics Reports&generatePDFReport=true"), "_blank");
 
 const beforePrintHandler = _ => {for (const id in Chart.instances) Chart.instances[id].canvas.style.width = "100%";}
 
@@ -109,6 +111,8 @@ if (window.matchMedia) {
     let mediaQueryList = window.matchMedia('print');
     mediaQueryList.addEventListener("change", _ => beforePrintHandler())
 }
+
+const toggleTheme = async element => router.loadPage(frameworkUtils.replaceURLParamValue(router.getCurrentURL(), "themeMode", element.textContent.toLowerCase()));
 
 const _stopRefresh = _ => {if (session.get(DASHBOARD_TIMER)) clearInterval(session.get(DASHBOARD_TIMER));}
 
@@ -121,4 +125,4 @@ function _startRefresh() {
     loginmanager.addLogoutListener(_=>clearInterval(session.get(DASHBOARD_TIMER)));
 }
 
-export const main = {changePassword, interceptPageLoadAndPageLoadData, timeRangeUpdated, playPauseCharts, loadPDFReport, generatePDFReport};
+export const main = {changePassword, interceptPageLoadAndPageLoadData, timeRangeUpdated, playPauseCharts, toggleTheme, loadPDFReport, generatePDFReport};

@@ -17,7 +17,7 @@ SCHEMA
     "clientBar": {"html":"chart-box", "id":"clientBar", "title":"Overall Status", "api":"loggraphquery", 
         "type":"bargraph", "maxticks":5, "ysteps":"[10]", "ylabels":"[100:{{i18n.OK}},0:{{i18n.Issue}},else:]", 
         "ymaxs":"[100]", "ycolors":"[else:{{IssueBarColors}},100:{{OKBarColors}}]", "yAtZeros":"[true]", 
-        "gridLines":"true", "labelColor":"{{LabelColor}}", "gridColor": "{{GridColor}}",
+        "gridLines":"true", "labelColor":"{{LabelColor}}", "gridColor":"{{GridColor}}",
         "styleBody": "div#content{overflow-y: hidden}", 
         "params":"id=overallBars&$qp_zeroReplacement=5&$qp_timeStep=60&nullValue={{i18n.none}}&valueTemplate=Value: $$yvalue$$%\nAttack information follows\n$$value$$"}
 }
@@ -33,7 +33,7 @@ LAYOUT
 --------------------------------------------
 
 =================
-Row Heights = 40%,60%
+Row Heights = calc(40vh - 40px),calc(60vh - 60px)
 Col Widths = 30%,35%,35%
 =================
 
@@ -53,8 +53,8 @@ body {margin: 0;}
     box-shadow:  0 0 1px rgba(34, 25, 25, 0.4);
     border-radius: 10px;
     margin: 5px;
-    background-color: white;
-    color: rgb(72,72,72);
-    border: 0.1px solid rgba(250,250,250,0);
+    background-color: {{GridItemBackground}};
+    color: {{GridItemColor}};
+    border: {{GridItemBorder}};
 }
 =======

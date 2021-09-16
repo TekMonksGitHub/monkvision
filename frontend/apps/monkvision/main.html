@@ -146,7 +146,7 @@ div#pdf-preview-maincontent {
 	import {dialog_box} from "./components/dialog-box/dialog-box.mjs";
 	import {span_with_menu} from "./components/span-with-menu/span-with-menu.mjs";
 	import {chart_box} from "./components/chart-box/chart-box.mjs"; window.chart_box = chart_box;
-	import {page_generator} from "./components/page-generator/page-generator.mjs";
+	import {page_generator} from "/framework/components/page-generator/page-generator.mjs";
 	import {loginmanager} from "./js/loginmanager.mjs"; window.loginmanager = loginmanager;
 	import {router} from "/framework/js/router.mjs"; window.router = router;
 	</script>
@@ -159,7 +159,7 @@ div#pdf-preview-maincontent {
 {{^generatePDFReport}}
 <div id="leftheader">
 	{{#dashboards}}
-	<img id="{{id}}" class="dashicon" src="{{{htmlData.dashicon}}}" alt="{{title}}" title="{{title}}" onclick="router.loadPage('./main.html?dash=./dashboards/{{file}}&title={{title}}&refresh={{refresh}}&name={{name}}');"><span>{{name}}</span>
+	<img id="{{id}}" class="dashicon" src="{{{htmlData.dashicon}}}" alt="{{title}}" title="{{title}}" onclick="router.loadPage('./main.html?dash=./dashboards/{{file}}&title={{title}}&refresh={{refresh}}&name={{name}}&themeMode={{themeMode}}');"><span>{{name}}</span>
 	{{/dashboards}}
 </div>
 <div id="container">
@@ -169,6 +169,10 @@ div#pdf-preview-maincontent {
 		<input id="datetimepickerfrom" type="datetime-local" value="{{{dateTimeWeekAgo}}}" onchange="main.timeRangeUpdated(true)">
 		<input id="datetimepickerto" type="datetime-local" value="{{{dateTimeNow}}}" onchange="main.timeRangeUpdated(true)">
 		<img id="playpause" src="./img/pause.svg" onclick="main.playPauseCharts(this)">
+		<span-with-menu id="toggle-theme" {{{htmlData.span-with-menu#toggle-theme}}}><img src="{{{htmlData.themeIcon}}}" {{{htmlData.span-with-menu#toggle-theme>img}}}>
+			<menu-item onclick="main.toggleTheme(this)">Dark</menu-item>
+			<menu-item onclick="main.toggleTheme(this)">Light</menu-item>
+		</span-with-menu>
 		<span-with-menu id="gear" {{{htmlData.span-with-menu#gear}}}><img src="./img/settings.svg" {{{htmlData.span-with-menu#gear>img}}}>
 			<menu-item onclick="main.changePassword(this)">{{i18n.ChangePassword}}</menu-item>
 			<menu-item onclick="main.loadPDFReport()">PDF Report</menu-item>
