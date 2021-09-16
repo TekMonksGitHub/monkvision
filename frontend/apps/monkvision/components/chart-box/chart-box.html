@@ -124,13 +124,12 @@ td:hover:before {
     z-index: 99;
 }
 
-
 canvas#canvas {
     display: none;
     max-height: inherit;
 }
 
-.csv-icon{
+.csv-icon {
     position:absolute;
     cursor: pointer;
     height: 25px;
@@ -138,20 +137,21 @@ canvas#canvas {
     z-index: 3;
     padding-top: 5px;
 }
-span#header{
+span#header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-span#header > img#textlogo{
+span#header > img#textlogo {
     height: 20px;
 }
-span#header > span#title{
+span#header > span#title {
     font-size: xx-large;
     font-weight: bolder;
 }
-div#content > span#header-calendar{
+div#content > span#header-calendar {
     float: right;
+    pointer-events: none;
 }
 
 input#datetimepickerfrom, input#datetimepickerfrom:active, input#datetimepickerto, input#datetimepickerto:active {
@@ -163,10 +163,13 @@ input#datetimepickerfrom, input#datetimepickerfrom:active, input#datetimepickert
     padding: 2px;
     border-style: none;
 }
-
-input#datetimepickerfrom{
+input#datetimepickerfrom {
     margin-right: 20px;
 }
+div#container > p {
+    margin: unset;
+}
+
 @media print {
     div#content{
         overflow-y: hidden;
@@ -177,7 +180,7 @@ input#datetimepickerfrom{
 {{{styleBody}}}
 
 <div id="container">
-    {{{title}}}
+    <p id=title>{{{title}}}</p>
 <div id="content">
     {{#textcontent}}                <!-- Handles simple text content -->
     <div id="textcontent">
@@ -187,8 +190,8 @@ input#datetimepickerfrom{
 
     {{#headerSection}}
     <span id="header">
-        <img id="textlogo" src="./img/textlogo_light.png">
-        <span id="title">Analytics Reports</span>
+        <img id="textlogo" src="{{headerLogo}}">
+        <span id="title">{{headerTitle}}</span>
     </span>
     <hr style="border: 2px solid black;">
     <span id="header-calendar">

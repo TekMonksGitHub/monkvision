@@ -194,9 +194,8 @@ async function _refreshData(element, force) {
 	}
 
 	if(type == "header-section"){
-		data.headerSection = true;
-		data.dateTimeWeekAgo = chart_box.timeRange.from;
-		data.dateTimeNow = chart_box.timeRange.to;
+		data.headerSection = true; data.headerTitle = "Analytics Reports"; data.headerLogo = "./img/textlogo_light.png";
+		data.dateTimeWeekAgo = chart_box.timeRange.from; data.dateTimeNow = chart_box.timeRange.to;
 		await bindData(data, id);
 		return;
 	}
