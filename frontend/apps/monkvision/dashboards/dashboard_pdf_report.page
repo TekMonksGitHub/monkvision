@@ -1,10 +1,8 @@
 SCHEMA
 ======
 {
-    "headerSection": {"html":"chart-box", "id":"headerSection", "api":"loggraph", "type":"header-section", 
-        "labels":"x:{{i18n.time}},ys0:{{i18n.status}}", 
-        "params":"id=ssh_mon_login_attack&statusAsBoolean=true&nullValue={{i18n.none}}", 
-        "styleBody":"div#content{max-height: calc(33vh - 64px) !important;}"},
+    "pdfHeader": {"html":"html-fragment", "htmlcontent":"encodeURIComponent(url(./templates/pdf-report/pdf_report_header.html))", "id": "pdfHeader",
+        "data": "encodeURIComponent({\"title\":\"{{title}}\",\"textlogo\":\"{{textlogo}}\",\"dateTimeWeekAgo\":\"{{dateTimeWeekAgo}}\",\"dateTimeNow\":\"{{dateTimeNow}}\"})"},
 
     "loginAttacks": {"html":"chart-box", "id":"loginAttacks", "api":"loggraph", "type":"table", 
         "labels":"x:{{i18n.time}},ys0:{{i18n.status}}", 
@@ -31,7 +29,7 @@ SCHEMA
 LAYOUT
 =================
 -----------------------------------------
-|            headerSection              |
+|            pdfHeader                  |
 |---------------------------------------|
 |            loginAttacks               |
 |---------------------------------------|

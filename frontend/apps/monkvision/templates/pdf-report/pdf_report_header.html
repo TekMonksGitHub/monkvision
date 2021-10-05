@@ -1,0 +1,96 @@
+<style>
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');
+
+body{
+    margin: 10px 10px 10px 10px; 
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+    height: 100%;
+}
+
+/* width */
+::-webkit-scrollbar {width: 8px; height: 8px;}
+/* Track */
+::-webkit-scrollbar-track {border-radius: 10px; margin: 10px;}
+/* Handle */
+::-webkit-scrollbar-thumb {background: lightgrey; border-radius: 10px;}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {background: rgb(124, 128, 133);}
+
+div#container {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+    margin-bottom: 5px;
+    text-align: center;
+    font-weight: 500;
+    height: calc(100% - 10px);
+}
+
+div#content {
+    height: 100%;
+    font-weight: normal;
+    text-align: left;
+    overflow-x: hidden;
+    max-width: 100%;
+    overflow-y: auto;
+}
+
+div#content{max-height: calc(33vh - 64px) !important;}
+
+span#header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+span#header > img#textlogo {
+    height: 20px;
+}
+span#header > span#title {
+    font-size: xx-large;
+    font-weight: bolder;
+}
+div#content > span#header-calendar {
+    float: right;
+    pointer-events: none;
+}
+
+input#datetimepickerfrom, input#datetimepickerfrom:active, input#datetimepickerto, input#datetimepickerto:active {
+    font-size: 0.8em;
+    font-family: sans-serif;
+    color: rgba(0,0,0,0.75);
+    border-radius: 4px;
+    box-shadow: 0 0 1px rgba(34, 25, 25, 0.4);
+    padding: 2px;
+    border-style: none;
+}
+input#datetimepickerfrom {
+    margin-right: 20px;
+}
+
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+</head>
+<body>
+    <div id="container">
+        <div id="content">
+            <span id="header">
+                <img id="textlogo" src="{{{textlogo}}}">
+                <span id="title">{{title}}</span>
+            </span>
+            <hr style="border: 2px solid black;">
+            <span id="header-calendar">
+                <input id="datetimepickerfrom" type="datetime-local" value="{{{dateTimeWeekAgo}}}">
+                <input id="datetimepickerto" type="datetime-local" value="{{{dateTimeNow}}}">
+            </span>
+        </div>
+    </div>
+</body>
+</html>

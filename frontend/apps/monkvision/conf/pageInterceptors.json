@@ -1,5 +1,6 @@
 [
     {"module": "js/main.mjs", "function":"interceptPageLoadAndPageLoadData"},
     {"module": "js/login.mjs", "function":"interceptPageLoadData"},
-    {"module": "js/register.mjs", "function":"interceptPageLoadData"}
+    {"module": "js/register.mjs", "function":"interceptPageLoadData"},
+    {"module": "js/pdf_report.mjs", "function":"interceptPageLoadData"}
 ]

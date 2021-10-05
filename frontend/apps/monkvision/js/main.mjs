@@ -64,8 +64,6 @@ async function interceptPageLoadAndPageLoadData() {
             data.pageTitle = `${await i18n.get("title", session.get($$.MONKSHU_CONSTANTS.LANG_ID))} - ${currentURL.searchParams.get("name")}`;
         }
 
-        if (currentURL.searchParams.get("generatePDFReport")) data.generatePDFReport = currentURL.searchParams.get("generatePDFReport");
-
         // set the dates data
         if (!session.get(SELECTED_DATES)) {
             const dateToday = new Date(), dateWeekAgo = new Date(); dateWeekAgo.setDate(dateToday.getDate() - 7);
@@ -101,16 +99,7 @@ async function changePassword(_element) {
     });
 }
 
-const loadPDFReport = async _ => window.open(await router.encodeURL("main.html?dash=./dashboards/dashboard_pdf_report.page&title=Analytics Reports&refresh=300000&name=Analytics Reports&generatePDFReport=true"), "_blank");
-
-const beforePrintHandler = _ => {for (const id in Chart.instances) Chart.instances[id].canvas.style.width = "100%";}
-
-const generatePDFReport = _ => {window.print(); window.close();}
-
-if (window.matchMedia) {
-    let mediaQueryList = window.matchMedia('print');
-    mediaQueryList.addEventListener("change", _ => beforePrintHandler())
-}
+const loadPDFReport = async _ => window.open(await router.encodeURL("pdf_report.html?dash=./dashboards/dashboard_pdf_report.page&name=PDF Report"), "_blank");
 
 const toggleTheme = async element => router.loadPage(frameworkUtils.replaceURLParamValue(router.getCurrentURL(), "themeMode", element.textContent.toLowerCase()));
 
@@ -125,4 +114,4 @@ function _startRefresh() {
     loginmanager.addLogoutListener(_=>clearInterval(session.get(DASHBOARD_TIMER)));
 }
 
-export const main = {changePassword, interceptPageLoadAndPageLoadData, timeRangeUpdated, playPauseCharts, toggleTheme, loadPDFReport, generatePDFReport};
+export const main = {changePassword, interceptPageLoadAndPageLoadData, timeRangeUpdated, playPauseCharts, toggleTheme, loadPDFReport};

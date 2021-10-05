@@ -9,7 +9,6 @@ body {
 	min-height: 600px;
 	z-index: -10;
 	overflow: hidden;
-	overflow-y: auto;
 }
 
 div#container {
@@ -90,46 +89,6 @@ span#header > img#playpause:hover {
 	filter: brightness(70%);
 	transition: all 1s ease;
 }
-
-
-/* Forcing browsers to enable background graphics while using print()  */
-* {
-    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari */
-    color-adjust: exact !important;                 /* Firefox */
-}
-
-div#pdf-preview-container{
-	background-color: white;
-	border: 2px solid white;
-	height: 120px;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-span#pdf-preview-header{
-	display: flex;
-	flex-wrap: wrap;
-	flex-direction: row;
-	justify-content: space-between;
-	margin-top: 40px;
-	padding: 0px 40px;
-}
-
-div#pdf-preview-maincontent {
-	position: absolute;
-	background-color: white;
-}
-
-/* width */
-::-webkit-scrollbar {width: 8px; height: 8px;}
-/* Track */
-::-webkit-scrollbar-track {border-radius: 10px; margin: 10px;}
-/* Handle */
-::-webkit-scrollbar-thumb {background: lightgrey; border-radius: 10px;}
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {background: rgb(124, 128, 133);}
-
 </style>
 
 <!doctype html>
@@ -156,7 +115,6 @@ div#pdf-preview-maincontent {
 </head>
 
 <body>
-{{^generatePDFReport}}
 <div id="leftheader">
 	{{#dashboards}}
 	<img id="{{id}}" class="dashicon" src="{{{htmlData.dashicon}}}" alt="{{title}}" title="{{title}}" onclick="router.loadPage('./main.html?dash=./dashboards/{{file}}&title={{title}}&refresh={{refresh}}&name={{name}}&themeMode={{themeMode}}');"><span>{{name}}</span>
@@ -186,19 +144,5 @@ div#pdf-preview-maincontent {
 
 	<dialog-box id="dialog"></dialog-box>
 </div>
-{{/generatePDFReport}}
-{{#generatePDFReport}}
-	<div id="pdf-preview-container">
-		<span id="pdf-preview-header">
-			<img id="textlogo" src="{{{htmlData.textlogo}}}">
-			<input id="datetimepickerfrom" type="datetime-local" value="{{{dateTimeWeekAgo}}}" onchange="main.timeRangeUpdated(true)">
-			<input id="datetimepickerto" type="datetime-local" value="{{{dateTimeNow}}}" onchange="main.timeRangeUpdated(true)">
-			<img id="playpause" src="./img/download_icon.svg" onclick="main.generatePDFReport()">
-		</span>
-	</div>
-	<div id="pdf-preview-maincontent">
-		<page-generator file="{{{dash}}}" pagedata='{{pagedata}}'></page-generator>
-	</div>
-{{/generatePDFReport}}
 </body>
 </html>

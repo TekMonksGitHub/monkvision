@@ -1,0 +1,87 @@
+<!-- 
+(C) 2020 TekMonks. All rights reserved.
+-->
+<style>
+/* Most of these are overridden or coming from theme.json */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 600px;
+    z-index: -10;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+/* Forcing browsers to enable background graphics while using print()  */
+* {
+    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari */
+    color-adjust: exact !important;                 /* Firefox */
+}
+
+div#pdf-preview-container{
+    background-color: white;
+    border: 2px solid white;
+    height: 120px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+span#pdf-preview-header{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 0px 40px;
+}
+
+div#pdf-preview-maincontent {
+    position: absolute;
+    background-color: white;
+}
+
+/* width */
+::-webkit-scrollbar {width: 8px; height: 8px;}
+/* Track */
+::-webkit-scrollbar-track {border-radius: 10px; margin: 10px;}
+/* Handle */
+::-webkit-scrollbar-thumb {background: lightgrey; border-radius: 10px;}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {background: rgb(124, 128, 133);}
+
+</style>
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+
+    <link href="./img/favicon.png" rel="icon" type="image/x-icon">
+
+    <script type="module">
+        import {pdf_report} from "./js/pdf_report.mjs"; window.pdf_report = pdf_report;
+        import {page_generator} from "/framework/components/page-generator/page-generator.mjs";
+        import {html_fragment} from "./components/html-fragment/html-fragment.mjs";
+    </script>
+        
+    <title>{{pageTitle}}</title>
+    {{{css}}}
+</head>
+
+<body>
+    <div id="pdf-preview-container">
+        <span id="pdf-preview-header">
+            <img id="textlogo" src="{{{htmlData.textlogo}}}">
+            <input id="datetimepickerfrom" type="datetime-local" value="{{{htmlData.dateTimeWeekAgo}}}">
+            <input id="datetimepickerto" type="datetime-local" value="{{{htmlData.dateTimeNow}}}">
+            <img id="download-icon" src="./img/download_icon.svg" onclick="pdf_report.generatePDFReport()">
+        </span>
+    </div>
+    <div id="pdf-preview-maincontent">
+        <page-generator file="{{{dash}}}" pagedata='{{pagedata}}'></page-generator>
+    </div>
+</body>
+</html>
