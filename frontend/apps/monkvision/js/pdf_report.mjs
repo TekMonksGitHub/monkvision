@@ -1,7 +1,7 @@
 /**
- * Login page handler
+ * PDF Report layout page for Monkvision
  *  
- * (C) 2020 TekMonks. All rights reserved.
+ * (C) 2021 TekMonks. All rights reserved.
  * License: See enclosed license.txt file.
  */
 import {utils} from "./utils.mjs";
