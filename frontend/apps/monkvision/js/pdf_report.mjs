@@ -38,7 +38,7 @@ const generatePDFReport = _ => {window.print(); window.close();}
 
 if (window.matchMedia) {
     let mediaQueryList = window.matchMedia('print');
-    mediaQueryList.addEventListener("change", _ => beforePrintHandler())
+    mediaQueryList.addEventListener("change", _ => beforePrintHandler());
 }
 
 export const pdf_report = {interceptPageLoadData, generatePDFReport};
