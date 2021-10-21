@@ -133,6 +133,7 @@ span#header > img#playpause:hover {
 		</span-with-menu>
 		<span-with-menu id="gear" {{{htmlData.span-with-menu#gear}}}><img src="./img/settings.svg" {{{htmlData.span-with-menu#gear>img}}}>
 			<menu-item onclick="main.changePassword(this)">{{i18n.ChangePassword}}</menu-item>
+			<menu-item onclick="main.loadPDFReport()">PDF Report</menu-item>
 		</span-with-menu>
 		<span id="signoff"><img src="./img/poweroff.svg" onclick="loginmanager.logout()"></span>
 	</span>

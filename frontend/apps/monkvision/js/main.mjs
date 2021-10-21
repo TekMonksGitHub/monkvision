@@ -99,6 +99,8 @@ async function changePassword(_element) {
     });
 }
 
+const loadPDFReport = async _ => window.open(await router.encodeURL("pdf_report.html?dash=./dashboards/dashboard_pdf_report.page&name=PDF Report"), "_blank");
+
 const toggleTheme = async element => router.loadPage(frameworkUtils.replaceURLParamValue(router.getCurrentURL(), "themeMode", element.textContent.toLowerCase()));
 
 const _stopRefresh = _ => {if (session.get(DASHBOARD_TIMER)) clearInterval(session.get(DASHBOARD_TIMER));}
@@ -112,4 +114,4 @@ function _startRefresh() {
     loginmanager.addLogoutListener(_=>clearInterval(session.get(DASHBOARD_TIMER)));
 }
 
-export const main = {changePassword, interceptPageLoadAndPageLoadData, timeRangeUpdated, playPauseCharts, toggleTheme};
+export const main = {changePassword, interceptPageLoadAndPageLoadData, timeRangeUpdated, playPauseCharts, toggleTheme, loadPDFReport};

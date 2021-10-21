@@ -124,13 +124,12 @@ td:hover:before {
     z-index: 99;
 }
 
-
 canvas#canvas {
     display: none;
     max-height: inherit;
 }
 
-.csv-icon{
+.csv-icon {
     position:absolute;
     cursor: pointer;
     height: 25px;
@@ -138,12 +137,20 @@ canvas#canvas {
     z-index: 3;
     padding-top: 5px;
 }
+div#container > p {
+    margin: unset;
+}
+@media print {
+    div#content{
+        overflow-y: hidden;
+    }
+}
 </style>
 
 {{{styleBody}}}
 
 <div id="container">
-    {{{title}}}
+    <p id=title>{{{title}}}</p>
 <div id="content">
     {{#textcontent}}                <!-- Handles simple text content -->
     <div id="textcontent">
