@@ -1,0 +1,134 @@
+[
+    {
+        "text": "{{commonWords.metrics.metric1}}",
+        "intent": "{{metrics.0}}"
+    },
+    {
+        "text": "{{commonWords.metrics.metric2}}",
+        "intent": "{{metrics.1}}"
+    },
+    {
+        "text": "{{commonWords.metrics.metric3}}",
+        "intent": "{{metrics.2}}"
+    },
+    {
+        "text": "{{commonWords.metrics.metric1_alias1}}",
+        "intent": "{{metrics.0}}"
+    },
+    {
+        "text": "{{commonWords.metrics.metric2_alias1}}",
+        "intent": "{{metrics.1}}"
+    },
+    {
+        "text": "{{commonWords.metrics.metric3_alias1}}",
+        "intent": "{{metrics.2}}"
+    },
+    {
+        "text": "{{commonWords.metrics.metric1_alias2}}",
+        "intent": "{{metrics.0}}"
+    },
+    {
+        "text": "{{commonWords.metrics.metric2_alias2}}",
+        "intent": "{{metrics.1}}"
+    },
+    {
+        "text": "{{commonWords.metrics.metric3_alias2}}",
+        "intent": "{{metrics.2}}"
+    },
+    {
+        "text": "{{commonWords.metrics.metric1_alias3}}",
+        "intent": "{{metrics.0}}"
+    },
+    {
+        "text": "{{commonWords.metrics.metric2_alias3}}",
+        "intent": "{{metrics.1}}"
+    },
+    {
+        "text": "{{commonWords.metrics.metric3_alias3}}",
+        "intent": "{{metrics.2}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias2}} for past 2 hours",
+        "intent": "{{metrics.0}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias2}} for past 2 hours",
+        "intent": "{{metrics.1}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias2}} for past 2 hours",
+        "intent": "{{metrics.2}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past 3 weeks",
+        "intent": "{{metrics.0}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past 3 weeks",
+        "intent": "{{metrics.1}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past 3 weeks",
+        "intent": "{{metrics.2}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias1}} usage for last hour",
+        "intent": "{{metrics.0}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias1}} usage for last hour",
+        "intent": "{{metrics.1}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias1}} usage for last hour",
+        "intent": "{{metrics.2}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past 3 weeks for cluster {{commonWords.resources.resource1_alias1}}",
+        "intent": "{{metrics.0}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past 3 weeks for cluster {{commonWords.resources.resource2_alias1}}",
+        "intent": "{{metrics.1}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past 3 weeks for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "{{metrics.2}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past 3 weeks for cluster {{commonWords.resources.resource4_alias1}}",
+        "intent": "{{metrics.0}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past 6 hours for cluster {{commonWords.resources.resource1_alias1}}",
+        "intent": "{{metrics.0}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past 6 hours for cluster {{commonWords.resources.resource2_alias1}}",
+        "intent": "{{metrics.1}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past 6 hours for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "{{metrics.2}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past 6 hours for cluster {{commonWords.resources.resource4_alias1}}",
+        "intent": "{{metrics.0}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past 2 days for cluster {{commonWords.resources.resource1_alias1}}",
+        "intent": "{{metrics.0}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past 2 days for cluster {{commonWords.resources.resource2_alias1}}",
+        "intent": "{{metrics.1}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past 2 days for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "{{metrics.2}}"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past 2 days for cluster {{commonWords.resources.resource4_alias1}}",
+        "intent": "{{metrics.0}}"
+    }
+]

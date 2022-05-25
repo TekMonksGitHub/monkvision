@@ -18,5 +18,6 @@
     
     "/apps/monkvision/statusbannerquery" : "/apis/statusbannerquery.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true",
 
-    "/apps/monkvision/statusaggregatorquery" : "/apis/statusaggregatorquery.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true"
+    "/apps/monkvision/statusaggregatorquery" : "/apis/statusaggregatorquery.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true",
+    "/apps/monkvision/nlpsearch" : "/apis/nlpsearch.js?get=true&key=fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389&needsToken=true"
 }

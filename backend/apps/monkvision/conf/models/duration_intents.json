@@ -1,0 +1,610 @@
+[
+    {
+        "text": "hours",
+        "intent": "hours"
+    },
+    {
+        "text": "minutes",
+        "intent": "minutes"
+    },
+    {
+        "text": "seconds",
+        "intent": "seconds"
+    },
+    {
+        "text": "days",
+        "intent": "days"
+    },
+    {
+        "text": "weeks",
+        "intent": "weeks"
+    },
+    {
+        "text": "months",
+        "intent": "months"
+    },
+    {
+        "text": "years",
+        "intent": "years"
+    },
+    {
+        "text": "hour",
+        "intent": "hours"
+    },
+    {
+        "text": "minute",
+        "intent": "minutes"
+    },
+    {
+        "text": "second",
+        "intent": "seconds"
+    },
+    {
+        "text": "day",
+        "intent": "days"
+    },
+    {
+        "text": "week",
+        "intent": "weeks"
+    },
+    {
+        "text": "month",
+        "intent": "months"
+    },
+    {
+        "text": "year",
+        "intent": "years"
+    },
+    {
+        "text": "hrs",
+        "intent": "hours"
+    },
+    {
+        "text": "mins",
+        "intent": "minutes"
+    },
+    {
+        "text": "min",
+        "intent": "minutes"
+    },
+    {
+        "text": "yr",
+        "intent": "years"
+    },
+    {
+        "text": "yrs",
+        "intent": "years"
+    },
+    {
+        "text": "past 30 hours",
+        "intent": "hours"
+    },
+    {
+        "text": "past 15 minutes",
+        "intent": "minutes"
+    },
+    {
+        "text": "past 90 seconds",
+        "intent": "seconds"
+    },
+    {
+        "text": "past 2 days",
+        "intent": "days"
+    },
+    {
+        "text": "past one week",
+        "intent": "weeks"
+    },
+    {
+        "text": "past 2 months",
+        "intent": "months"
+    },
+    {
+        "text": "past 1 year",
+        "intent": "years"
+    },
+    {
+        "text": "last 30 hours",
+        "intent": "hours"
+    },
+    {
+        "text": "last 15 minutes",
+        "intent": "minutes"
+    },
+    {
+        "text": "last 90 seconds",
+        "intent": "seconds"
+    },
+    {
+        "text": "last 2 days",
+        "intent": "days"
+    },
+    {
+        "text": "last one week",
+        "intent": "weeks"
+    },
+    {
+        "text": "last 2 months",
+        "intent": "months"
+    },
+    {
+        "text": "last 1 year",
+        "intent": "years"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past 3 hours",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past 5 weeks",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past 3 months",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past 3 minutes",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past 2 years",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past 2 days",
+        "intent": "days" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past 90 seconds",
+        "intent": "seconds" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past 3 hours",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past 5 weeks",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past 3 months",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past 3 minutes",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past 3 years",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past 2 days",
+        "intent": "days" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past 90 seconds",
+        "intent": "seconds" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past 3 hours",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past 5 weeks",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past 3 months",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past 3 minutes",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past 2 years",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past 2 days",
+        "intent": "days" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past 90 seconds",
+        "intent": "seconds" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias2}} for past 3 hours",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias2}} for past 5 weeks",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias2}} for past 3 months",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias2}} for past 3 minutes",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias2}} for past 3 years",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias2}} for past 3 days",
+        "intent": "days" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias2}} for past 90 seconds",
+        "intent": "seconds" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias2}} for past three hours",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias2}} for past two weeks",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias2}} for past three months",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias2}} for past fifty minutes",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias2}} for past one years",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias2}} for past one day",
+        "intent": "days" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias2}} for past seventy seconds",
+        "intent": "seconds" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias2}} for past twenty seven hours",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias2}} for past thirty three weeks",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias2}} for past forty one months",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias2}} for past ninty one minutes",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias2}} for past twenty five years",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias2}} for past twenty five days",
+        "intent": "days" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias2}} for past seventy one seconds",
+        "intent": "seconds" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias2}} for past one hundred and twenty seven hours",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias2}} for past one hundred and thirty three weeks",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias2}} for past one hundred and forty one months",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias2}} for past one hundred and ninty one minutes",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias2}} for past one hundred and twenty five years",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias2}} for past one hundred and twenty five days",
+        "intent": "days" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias2}} for past one hundred and seventy one seconds",
+        "intent": "seconds" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past one hundred and twenty seven hours for cluster {{commonWords.resources.resource1_alias1}}",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past one hundred and thirty three weeks for cluster {{commonWords.resources.resource1_alias1}}",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and forty one months for cluster {{commonWords.resources.resource1_alias1}}",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past one hundred and ninty one minutes for cluster {{commonWords.resources.resource1_alias1}}",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and twenty five years for cluster {{commonWords.resources.resource1_alias1}}",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and twenty five days for cluster {{commonWords.resources.resource1_alias1}}",
+        "intent": "days" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past one hundred and seventy one seconds for cluster {{commonWords.resources.resource1_alias1}}",
+        "intent": "seconds" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past one hundred and twenty seven hours for cluster {{commonWords.resources.resource2_alias1}}",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past one hundred and thirty three weeks for cluster {{commonWords.resources.resource2_alias1}}",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and forty one months for cluster {{commonWords.resources.resource2_alias1}}",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past one hundred and ninty one minutes for cluster {{commonWords.resources.resource2_alias1}}",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and twenty five years for cluster {{commonWords.resources.resource2_alias1}} ",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and twenty five days for cluster {{commonWords.resources.resource2_alias1}} ",
+        "intent": "days" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past one hundred and seventy one seconds for cluster {{commonWords.resources.resource2_alias1}} ",
+        "intent": "seconds" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past one hundred and twenty seven hours for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past one hundred and thirty three weeks for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and forty one months for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past one hundred and ninty one minutes for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and twenty five years for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and twenty five days for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "days"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past one hundred and seventy one seconds for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "seconds" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past one hundred and twenty seven hours for cluster {{commonWords.resources.resource4}}",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past one hundred and thirty three weeks for cluster {{commonWords.resources.resource4}}",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and forty one months for cluster {{commonWords.resources.resource4}}",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past one hundred and ninty one minutes for cluster {{commonWords.resources.resource4}}",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and twenty five years for cluster {{commonWords.resources.resource4}}",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and twenty five days for cluster {{commonWords.resources.resource4}}",
+        "intent": "days" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past one hundred and seventy one seconds for cluster {{commonWords.resources.resource4}}",
+        "intent": "seconds" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past one hundred and twenty seven hours for cluster {{commonWords.resources.resource1_alias1}}",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past one hundred and thirty three weeks for cluster {{commonWords.resources.resource1_alias1}}",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and forty one months for cluster {{commonWords.resources.resource1_alias1}}",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past one hundred and ninty one minutes for cluster {{commonWords.resources.resource1_alias1}}",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and twenty five years for cluster {{commonWords.resources.resource1_alias1}} ",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and twenty five days for cluster {{commonWords.resources.resource1_alias1}} ",
+        "intent": "days" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past one hundred and seventy one seconds for cluster {{commonWords.resources.resource1_alias1}} ",
+        "intent": "seconds" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past one hundred and twenty seven hours for cluster {{commonWords.resources.resource2_alias1}}",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past one hundred and thirty three weeks for cluster {{commonWords.resources.resource2_alias1}}",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and forty one months for cluster {{commonWords.resources.resource2_alias1}}",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past one hundred and ninty one minutes for cluster {{commonWords.resources.resource2_alias1}}",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and twenty five years for cluster {{commonWords.resources.resource2_alias1}} ",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and twenty five days for cluster {{commonWords.resources.resource2_alias1}} ",
+        "intent": "days" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past one hundred and seventy one seconds for cluster {{commonWords.resources.resource2_alias1}} ",
+        "intent": "seconds" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past one hundred and twenty seven hours for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past one hundred and thirty three weeks for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and forty one months for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past one hundred and ninty one minutes for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and twenty five years for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past one hundred and twenty five days for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "days"
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past one hundred and seventy one seconds for cluster {{commonWords.resources.resource3_alias1}}",
+        "intent": "seconds" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past 10 hours for cluster {{commonWords.resources.resource4}}",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past 3 weeks for cluster {{commonWords.resources.resource4}}",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past 2 months for cluster {{commonWords.resources.resource4}}",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past 90 minutes for cluster {{commonWords.resources.resource4}}",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past 2 years for cluster {{commonWords.resources.resource4}}",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past 3 days for cluster {{commonWords.resources.resource4}}",
+        "intent": "days" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past 300 seconds for cluster {{commonWords.resources.resource4}}",
+        "intent": "seconds" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past seven hours for cluster {{commonWords.resources.resource4}}",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past three weeks for cluster {{commonWords.resources.resource4}}",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past two months for cluster {{commonWords.resources.resource4}}",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past seventy minutes for cluster {{commonWords.resources.resource4}}",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past two years for cluster {{commonWords.resources.resource4}}",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past five days for cluster {{commonWords.resources.resource4}}",
+        "intent": "days" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past ninty seconds for cluster {{commonWords.resources.resource4}}",
+        "intent": "seconds" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past one hundred and twenty two hours for cluster {{commonWords.resources.resource4}}",
+        "intent": "hours" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past forty two weeks for cluster {{commonWords.resources.resource4}}",
+        "intent": "weeks" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past twenty four months for cluster {{commonWords.resources.resource4}}",
+        "intent": "months" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric1_alias3}} for past three hundred and forty minutes for cluster {{commonWords.resources.resource4}}",
+        "intent": "minutes" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past thirty two years for cluster {{commonWords.resources.resource4}}",
+        "intent": "years" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric3_alias3}} for past sixty seven days for cluster {{commonWords.resources.resource4}}",
+        "intent": "days" 
+    },
+    {
+        "text": "Show me the {{commonWords.metrics.metric2_alias3}} for past one hundred and twenty seconds for cluster {{commonWords.resources.resource4}}",
+        "intent": "seconds" 
+    }
+]
