@@ -5,12 +5,12 @@
  * License: See enclosed license.txt file.
  */
 
+require('@tensorflow/tfjs-node');
 const fs = require("fs");
 const Mustache = require("mustache");
-const utils = require(`${APP_CONSTANTS.LIB_DIR}/nlp/utils.js`);
 const tf = require("@tensorflow/tfjs");
-const use = require("@tensorflow-models/universal-sentence-encoder");
-require('@tensorflow/tfjs-node');
+const sentenceEncoder = require("@tensorflow-models/universal-sentence-encoder");
+const utils = require(`${APP_CONSTANTS.LIB_DIR}/nlp/utils.js`);
 
 // Load the englishModel
 const englishModel = require(`${APP_CONSTANTS.CONF_DIR}/englishModel.json`);
@@ -19,18 +19,23 @@ const englishModel = require(`${APP_CONSTANTS.CONF_DIR}/englishModel.json`);
 const MODELS = {}, TENSORS = {}, INTENTS = {}, METRICS = Object.assign({}, englishModel.metrics), 
     DURATIONS = Object.assign({}, englishModel.durations), RESOURCES = Object.assign({}, englishModel.resources);
 
-// Train Model (JSON)
-INTENTS["metrics"] = JSON.parse(Mustache.render(fs.readFileSync(`${APP_CONSTANTS.CONF_DIR}/models/metric_intents.json`, "utf8"), englishModel));
-INTENTS["durations"] = JSON.parse(Mustache.render(fs.readFileSync(`${APP_CONSTANTS.CONF_DIR}/models/duration_intents.json`, "utf8"), englishModel));
-INTENTS["resources"] = JSON.parse(Mustache.render(fs.readFileSync(`${APP_CONSTANTS.CONF_DIR}/models/resource_intents.json`, "utf8"), englishModel));
+/**
+ * Parse and load the JSON file 
+ * @param {string} jsonPath - file path
+ */
+const _parseAndLoadJSON = jsonPath => JSON.parse(Mustache.render(fs.readFileSync(jsonPath, "utf8"), englishModel));
 
-exports.init = async () => {
-    MODELS["encoder"] = use.load();
-    _setInputTensor();      // Set input tensors for all the intents
+function initSync() {
+    // Train Model (JSON)
+    INTENTS["metrics"] = _parseAndLoadJSON(`${APP_CONSTANTS.CONF_DIR}/models/metric_intents.json`);
+    INTENTS["durations"] = _parseAndLoadJSON(`${APP_CONSTANTS.CONF_DIR}/models/duration_intents.json`);
+    INTENTS["resources"] = _parseAndLoadJSON(`${APP_CONSTANTS.CONF_DIR}/models/resource_intents.json`);
 
-    _createModelAndItsLayer("metrics", 3, englishModel.metrics.length, 200, _trainModel);
-    _createModelAndItsLayer("durations", 3, englishModel.durations.length, 250, _trainModel);
-    _createModelAndItsLayer("resources", 3, englishModel.resources.length, 200, _trainModel);
+    // Set input tensors for all the intents
+    _setInputTensor();
+
+    // Load and train the models with the intents
+    _loadAndTrainModel();
 }
 
 /** 
@@ -41,7 +46,7 @@ exports.init = async () => {
  * @param {number} iterationCount - Model dataset training based on iteration count
  * @param {function} callback - After Create and Train the model with Intents(json)
  */
-function _createModelAndItsLayer(modelName, layersCount, inputShape, iterationCount, callback) {
+async function _createModelAndItsLayer(modelName, layersCount, inputShape, iterationCount) {
     MODELS[modelName] = tf.sequential();
     for (let layer = 1; layer <= layersCount; layer++) {
         MODELS[modelName].add(tf.layers.dense({
@@ -55,22 +60,19 @@ function _createModelAndItsLayer(modelName, layersCount, inputShape, iterationCo
         loss: 'meanSquaredError',
         optimizer: tf.train.adam(.06), // This is a standard compile config
     });
-    if (callback) callback(modelName, iterationCount);
+
+    await _trainModel(modelName, iterationCount);
 }
 
 /**
  * Encode sentence to tensor (string -> vector)
- * @param {array} data - training data
+ * @param {Object} data - training data
  * @returns - encoded data
  */
-const encodeData = data => {
-    const sentences = data.map(comment => comment.text.toLowerCase());
-    const trainingData = MODELS["encoder"].then(model => {
-        return model.embed(sentences)
-            .then(embeddings => { return embeddings; });
-    })
-        .catch(err => console.error('Fit Error:', err));
-    return trainingData
+async function _encodeData(data) {
+    const sentences = data.map(comment => comment.text.toLowerCase()),
+        embeddings = await MODELS["encoder"].embed(sentences);
+    return embeddings;
 };
 
 /**
@@ -78,13 +80,31 @@ const encodeData = data => {
  */
 function _setInputTensor() {
     // metrics - cpu, ram, disk
-    TENSORS["metrics"] = tf.tensor2d(INTENTS["metrics"].map(metric => englishModel.metrics.map(intent => metric.intent === intent ? 1 : 0)));
+    TENSORS["metrics"] = _mapIntentsWithTensor2d("metrics");
 
     // duration - hours, minutes, seconds, days, weeks, months, years
-    TENSORS["durations"] = tf.tensor2d(INTENTS["durations"].map(duration => englishModel.durations.map(intent => duration.intent === intent ? 1 : 0)));
+    TENSORS["durations"] = _mapIntentsWithTensor2d("durations");
 
     // resources - primary_prod, secondary_prod, staging, dev
-    TENSORS["resources"] = tf.tensor2d(INTENTS["resources"].map(resource => englishModel.resources.map(intent => resource.intent === intent ? 1 : 0)));
+    TENSORS["resources"] = _mapIntentsWithTensor2d("resources");
+}
+
+/**
+ * Create Tensor 2d sets with the training intents
+ * @param {string} intentName - Name of the Intents
+ * @returns 
+ */
+const _mapIntentsWithTensor2d = intentName => tf.tensor2d(INTENTS[intentName].map(object => englishModel[intentName].map(intent => object.intent === intent ? 1 : 0)));
+
+/**
+ * Load and train the model once with the intents
+ */
+async function _loadAndTrainModel() {
+    MODELS["encoder"] = await sentenceEncoder.load();
+
+    _createModelAndItsLayer("metrics", 3, englishModel.metrics.length, 200, _trainModel);
+    _createModelAndItsLayer("durations", 3, englishModel.durations.length, 250, _trainModel);
+    _createModelAndItsLayer("resources", 3, englishModel.resources.length, 200, _trainModel);
 }
 
 /**
@@ -93,8 +113,8 @@ function _setInputTensor() {
  * @param {number} iteration - Model dataset training based on iteration count
  */
 async function _trainModel(modelName, iteration = 200) {
-    const trainingData = encodeData(INTENTS[modelName]).then((data) => { return data });
-    await MODELS[modelName].fit(await trainingData, TENSORS[modelName], { epochs: iteration });
+    const trainingData = await _encodeData(INTENTS[modelName]);
+    await MODELS[modelName].fit(trainingData, TENSORS[modelName], { epochs: iteration });
 }
 
 /**
@@ -102,11 +122,11 @@ async function _trainModel(modelName, iteration = 200) {
  * @param {object} query - Object contains the sentence to predict the intents
  * @returns - returns predict intents as an Object
  */
-exports.predictIntents = async (query) => {
+async function predictIntents(query) {
     const sentence = query["text"],
-        merticsIntent = await getMetricsIntent(sentence),
-        durationIntent = await getDurationIntent(sentence),
-        resourceIntent = utils.resourceExists(sentence).length ? await getResourceIntent(sentence) : "null";
+        merticsIntent = await _getMetricsIntent(sentence),
+        durationIntent = await _getDurationIntent(sentence),
+        resourceIntent = utils.resourceExists(sentence).length ? await _getResourceIntent(sentence) : "null";
 
     return {
         metric: merticsIntent, duration: durationIntent.weight,
@@ -120,15 +140,15 @@ exports.predictIntents = async (query) => {
  * @param {Object} metrics - Push mactched intents from sentence
  * @returns - returns metrics intent
  */
-async function getMetricsIntent(query, metrics = []) {
-    const encodedQuery = encodeData([{ text: query }]).then((data) => { return data }),
-        metricPredictions = await MODELS["metrics"].predict(await encodedQuery).array(),
+async function _getMetricsIntent(query, metrics = []) {
+    const encodedQuery = await _encodeData([{ text: query }]),
+        metricPredictions = await MODELS["metrics"].predict(encodedQuery).array(),
         maxMetricPredict = METRICS[metricPredictions[0].indexOf(Math.max(...metricPredictions[0]))];
     
     if (!utils.intentExists(query, maxMetricPredict)) return metrics;
     query = query.replace(maxMetricPredict, "");
     metrics.push(maxMetricPredict);
-    return await getMetricsIntent(query, metrics);
+    return await _getMetricsIntent(query, metrics);
 }
 
 /**
@@ -137,9 +157,9 @@ async function getMetricsIntent(query, metrics = []) {
  * @param {Object} durations - Push mactched intents from sentence
  * @returns - returns durations intent
  */
-async function getDurationIntent(query, durations = {}) {
-    const encodedQuery = encodeData([{ text: query }]).then((data) => { return data }),
-        durationPredictions = await MODELS["durations"].predict(await encodedQuery).array(),
+async function _getDurationIntent(query, durations = {}) {
+    const encodedQuery = await _encodeData([{ text: query }]),
+        durationPredictions = await MODELS["durations"].predict(encodedQuery).array(),
         maxDurationPredict = DURATIONS[durationPredictions[0].indexOf(Math.max(...durationPredictions[0]))],
         strMatch = utils.getDurationUnit(query, maxDurationPredict);
 
@@ -158,7 +178,7 @@ async function getDurationIntent(query, durations = {}) {
         query = query.replace(durationWeight + " " + strMatch[0], "");
         durations[maxDurationPredict] = durationWeight;
     }
-    return await getDurationIntent(query, durations);
+    return await _getDurationIntent(query, durations);
 }
 
 /**
@@ -166,11 +186,11 @@ async function getDurationIntent(query, durations = {}) {
  * @param {string} query - Plain english sentence
  * @returns returns resources intent
  */
-async function getResourceIntent(query) {
-    const encodedQuery = encodeData([{ text: query }]).then((data) => { return data }),
-        resourcePredictions = await MODELS["resources"].predict(await encodedQuery).array();
+async function _getResourceIntent(query) {
+    const encodedQuery = await _encodeData([{ text: query }]),
+        resourcePredictions = await MODELS["resources"].predict(encodedQuery).array();
     
     return RESOURCES[resourcePredictions[0].indexOf(Math.max(...resourcePredictions[0]))];
 }
 
-exports.model = MODELS;
+module.exports = { initSync, predictIntents }

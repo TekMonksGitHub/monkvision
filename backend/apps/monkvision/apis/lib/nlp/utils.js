@@ -31,7 +31,7 @@ const resourceTerm = ["cluster", "server", "host", "resource"];
 function _wordsToNumbers(sentence) {
     const words = sentence.toString().split(/[\s-]+/);
     const position = { base: 0, digits: 0 }; 
-    words.forEach((word)=>{ _calculateNumeral(word, position) });
+    words.map((word)=>{ _calculateNumeral(word, position) });
     return position;
 }
 
@@ -61,26 +61,26 @@ function _calculateNumeral(word, position) {
  * @param {string} query - Plain english sentence
  * @param {string} durationIntent - Pedicted duration intent  
  */
-exports.getDurationUnit = (query, durationIntent) => durationUnits[durationIntent].filter(unit => exports.intentExists(query, unit)); 
+const getDurationUnit = (query, durationIntent) => durationUnits[durationIntent].filter(unit => intentExists(query, unit)); 
 
 /**
  * Extract resource from query
  * @param {string} query - Plain english sentence
  */
-exports.resourceExists = (query) => resourceTerm.filter(unit => exports.intentExists(query, unit)); 
+const resourceExists = query => resourceTerm.filter(unit => intentExists(query, unit)); 
 
 /**
  * Check intents are exists in the query
  * @param {string} query - Plain english sentence
  * @param {string} unit - Intent units
  */
-exports.intentExists = (query, unit) => query.split(" ").includes(unit);
+const intentExists = (query, unit) => query.split(" ").includes(unit);
 
 /**
  * Calculate durations in minutes
  * @param {object} durations - Predicted duration Intent weight and unit
  */
-exports.calculateDurationInMinutes = (durations) => {
+function calculateDurationInMinutes(durations){
     durations.weight = 0;
     durations.unit = "minutes";
     
@@ -100,10 +100,12 @@ exports.calculateDurationInMinutes = (durations) => {
  * @param {string} query - Plain english sentence
  * @param {string} durationIntent - Predicted duration Intent
  */
-exports.getDurationWeight = (query, durationIntent) => {
-    const durationUnit = exports.getDurationUnit(query, durationIntent);
+function getDurationWeight(query, durationIntent) {
+    const durationUnit = getDurationUnit(query, durationIntent);
     const queryArr = query.substring(0, query.indexOf(durationUnit[0])).trim().split(" ");
     const extractDurationWeight = queryArr[queryArr.length-1];
     if (isNaN(extractDurationWeight)) return _wordsToNumbers(queryArr.join(" "));
     else return Number(extractDurationWeight);
 }
+
+module.exports = { getDurationUnit, resourceExists, intentExists, calculateDurationInMinutes, getDurationWeight }
