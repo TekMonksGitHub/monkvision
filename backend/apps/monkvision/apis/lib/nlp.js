@@ -44,7 +44,6 @@ function initSync() {
  * @param {number} layersCount - Layers to be added to the current Model
  * @param {number} inputShape - Assign Input Shape to the Model
  * @param {number} iterationCount - Model dataset training based on iteration count
- * @param {function} callback - After Create and Train the model with Intents(json)
  */
 async function _createModelAndItsLayer(modelName, layersCount, inputShape, iterationCount) {
     MODELS[modelName] = tf.sequential();
@@ -102,9 +101,9 @@ const _mapIntentsWithTensor2d = intentName => tf.tensor2d(INTENTS[intentName].ma
 async function _loadAndTrainModel() {
     MODELS["encoder"] = await sentenceEncoder.load();
 
-    _createModelAndItsLayer("metrics", 3, englishModel.metrics.length, 200, _trainModel);
-    _createModelAndItsLayer("durations", 3, englishModel.durations.length, 250, _trainModel);
-    _createModelAndItsLayer("resources", 3, englishModel.resources.length, 200, _trainModel);
+    _createModelAndItsLayer("metrics", 3, englishModel.metrics.length, 200);
+    _createModelAndItsLayer("durations", 3, englishModel.durations.length, 250);
+    _createModelAndItsLayer("resources", 3, englishModel.resources.length, 200);
 }
 
 /**
