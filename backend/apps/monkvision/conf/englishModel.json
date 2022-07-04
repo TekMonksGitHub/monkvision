@@ -1,0 +1,41 @@
+{
+    "metrics": ["cpu", "ram", "disk"],
+    "durations": ["hours", "minutes", "seconds", "days", "weeks", "months", "years"],
+    "resources": ["primary_prod", "secondary_prod", "staging", "dev"],
+    "commonWords": {
+        "metrics": {
+            "metric1": "cpu",
+            "metric2": "ram",
+            "metric3": "disk",
+            "metric1_alias1": "central processing unit",
+            "metric1_alias2": "cpu utilization",
+            "metric1_alias3": "cpu usage",
+            "metric2_alias1": "random access memory",
+            "metric2_alias2": "ram utilization",
+            "metric2_alias3": "ram usage",
+            "metric3_alias1": "storage",
+            "metric3_alias2": "disk utilization",
+            "metric3_alias3": "disk usage"
+        },
+        "resources":{
+            "resource1": "primary",
+            "resource2": "secondary",
+            "resource3": "staging",
+            "resource4": "dev",
+            "resource1_alias1": "primary prod",
+            "resource1_alias2": "primary cluster",
+            "resource1_alias3": "primary prod cluster",
+            "resource1_alias4": "primary production",
+            "resource2_alias1": "secondary prod",
+            "resource2_alias2": "secondary cluster",
+            "resource2_alias3": "secondary prod cluster",
+            "resource2_alias4": "secondary production",
+            "resource3_alias1": "stage",
+            "resource3_alias2": "staging cluster",
+            "resource3_alias3": "stage cluster",
+            "resource4_alias1": "development",
+            "resource4_alias2": "dev cluster",
+            "resource4_alias3": "development cluster"
+        }
+    }
+}
