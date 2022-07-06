@@ -140,6 +140,31 @@ canvas#canvas {
 div#container > p {
     margin: unset;
 }
+
+input#datetimepickerfrom, input#datetimepickerto{
+    color: rgba(0,0,0,0.75);
+    height: 18px;
+    font-size: 0.8em;
+    font-family: sans-serif;
+    border-radius: 4px;
+    box-shadow: 0 0 1px rgb(34 25 25 / 40%);
+    border-style: none;
+    pointer-events: none;
+    background: #e5e5e585;
+}
+input#datetimepickerfrom::-webkit-calendar-picker-indicator, input#datetimepickerto::-webkit-calendar-picker-indicator{
+    margin-left: -15px;
+}
+
+span#calendar-ai{
+    float: right;
+    height: 1em;
+}
+span#ai-title{
+    font-size: 13px;
+    font-weight: bold;
+}
+
 @media print {
     div#content{
         overflow-y: hidden;
@@ -150,7 +175,18 @@ div#container > p {
 {{{styleBody}}}
 
 <div id="container">
+    {{#calendar}}
+    <p id=title style="text-align: left;">
+        <span id="ai-title">{{{title}}}</span>
+        <span id="calendar-ai">
+            <input id="datetimepickerfrom" type="datetime-local" value="{{{from}}}">
+            <input id="datetimepickerto" type="datetime-local" value="{{{to}}}">
+        </span>
+    </p>
+    {{/calendar}}
+    {{^calendar}}
     <p id=title>{{{title}}}</p>
+    {{/calendar}}
 <div id="content">
     {{#textcontent}}                <!-- Handles simple text content -->
     <div id="textcontent">

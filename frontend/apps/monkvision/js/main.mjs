@@ -41,13 +41,15 @@ async function interceptPageLoadAndPageLoadData() {
         await utils.addThemeDataAndCSS(data, "main");
 
         // load dashboards config and build the data object
-        const dashboardsRaw = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`);
+        const dashboardsRaw = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`, true);
         data.dashboards = [];
         for (const key of Object.keys(dashboardsRaw)) {
             const file = dashboardsRaw[key].split(",")[0], refresh = parseInt(dashboardsRaw[key].split(",")[1].split(":")[1]),
-                name = await i18n.get(`name_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)), title = await i18n.get(`title_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID));
+            name = await i18n.get(`name_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)) || dashboardsRaw[key].split(",")[2].split(":")[1], 
+            title = await i18n.get(`title_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)) || dashboardsRaw[key].split(",")[3].split(":")[1],
+            dashType = dashboardsRaw[key].split(",")[4] ? dashboardsRaw[key].split(",")[4].split(":")[1] : null;
 
-            if (securityguard.isAllowed(key)) data.dashboards.push({ name, file, refresh, title, id: key });
+        if (securityguard.isAllowed(key)) data.dashboards.push({ name, file, refresh, title, id: key, dashType });
         }
         
         // add in dashboard path, and page title to the page data object
@@ -57,11 +59,13 @@ async function interceptPageLoadAndPageLoadData() {
             data.dash = `./dashboards/${data.dashboards[0].file}`;
             data.refresh = data.dashboards[0].refresh;
             data.pageTitle = `${await i18n.get("title", session.get($$.MONKSHU_CONSTANTS.LANG_ID))} - ${data.dashboards[0].name}`;
+            data.showDateFilter = data.dashboards[0].dashType != "AI" ? true: false;
         } else {                                                // else get dashboard path and title from the URL
             data.title = currentURL.searchParams.get("title");
             data.dash = currentURL.searchParams.get("dash");
             data.refresh = currentURL.searchParams.get("refresh");
             data.pageTitle = `${await i18n.get("title", session.get($$.MONKSHU_CONSTANTS.LANG_ID))} - ${currentURL.searchParams.get("name")}`;
+            data.showDateFilter = currentURL.searchParams.get("dashType") != "AI" ? true: false;
         }
 
         // set the dates data
@@ -79,7 +83,7 @@ async function interceptPageLoadAndPageLoadData() {
 
     router.addOnLoadPage(`${APP_CONSTANTS.APP_PATH}/main.html`, async data => {
         // select current dashboard icon on page load
-        const dashboardsRaw = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`);
+        const dashboardsRaw = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`, true);
         const allDashIcons = document.querySelectorAll("div#leftheader > img.dashicon");
         for (const dashIcon of allDashIcons) if (data.dash.endsWith(dashboardsRaw[dashIcon.id].split(",")[0]))
             dashIcon.classList.add("selected"); else dashIcon.classList.remove("selected");
@@ -99,6 +103,25 @@ async function changePassword(_element) {
     });
 }
 
+async function showQueryResult(_element) {
+    const query = document.querySelector("input#searchbartext").value; if (!query) return;
+    const processedQueryData = await _processQueryResult(query);
+
+    monkshu_env.components['dialog-box'].showDialog(`${APP_CONSTANTS.DIALOGS_PATH}/nlp_search.html`, false, false, processedQueryData, "nlpsearch", ["dashboardname", "dashboardpath"], async result=>{
+        const paramObj = { filename: result["dashboardname"], filepath: result["dashboardpath"], metric: processedQueryData.htmlData.metric[0], duration: processedQueryData.htmlData.duration, role: processedQueryData.role, title: processedQueryData.htmlData.elementTitle, resourceName: processedQueryData.htmlData.resourceName };
+        const content = await utils.rest("createdashboard", paramObj);
+        const redirectDashPath = result["dashboardpath"] ? result["dashboardpath"] : `dashboard_${result["dashboardname"]}.page`;
+
+        if (!content) monkshu_env.components['dialog-box'].error("nlpsearch", 
+            await i18n.get("dashboardError", session.get($$.MONKSHU_CONSTANTS.LANG_ID)));
+        else {
+            if (content.contents && content.contents.dashkey) await securityguard.addPermission(content.contents.dashkey, processedQueryData.role);
+            monkshu_env.components['dialog-box'].hideDialog("nlpsearch");
+            router.loadPage(`./main.html?dash=./dashboards/${redirectDashPath}&title=NLP Queries&refresh=300000&name=${result.dashboardname}&dashType=AI&themeMode=${processedQueryData.themeMode}`);
+        }
+    });
+}
+
 const loadPDFReport = async _ => window.open(await router.encodeURL("pdf_report.html?dash=./dashboards/dashboard_pdf_report.page&name=PDF Report"), "_blank");
 
 const toggleTheme = async element => router.loadPage(frameworkUtils.replaceURLParamValue(router.getCurrentURL(), "themeMode", element.textContent.toLowerCase()));
@@ -114,4 +137,28 @@ function _startRefresh() {
     loginmanager.addLogoutListener(_=>clearInterval(session.get(DASHBOARD_TIMER)));
 }
 
-export const main = {changePassword, interceptPageLoadAndPageLoadData, timeRangeUpdated, playPauseCharts, toggleTheme, loadPDFReport};
+async function _processQueryResult(query) {
+    const content = await utils.rest("nlpsearch", `query=${query}`);    
+    const data = { dash: "./dashboards/dashboard_nlp_search_preview.page" };
+    await utils.addThemeDataAndCSS(data, "nlp_search");
+
+    const dashboardsRaw = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/dashboards.json`, true);
+    data.dashboards = [];
+    for (const key of Object.keys(dashboardsRaw)) {
+        const file = dashboardsRaw[key].split(",")[0], refresh = parseInt(dashboardsRaw[key].split(",")[1].split(":")[1]),
+        name = await i18n.get(`name_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)) || dashboardsRaw[key].split(",")[2].split(":")[1], 
+        title = await i18n.get(`title_${key}`, session.get($$.MONKSHU_CONSTANTS.LANG_ID)) || dashboardsRaw[key].split(",")[3].split(":")[1],
+        dashType = dashboardsRaw[key].split(",")[4] ? dashboardsRaw[key].split(",")[4].split(":")[1] : null;
+
+        if (securityguard.isAllowed(key) && dashType == "AI") data.dashboards.push({ name, file, refresh, title, id: key });
+    }
+
+    Object.assign(data.htmlData, { ...content.predictedIntents, elementTitle: query });
+    data.pagedata = encodeURIComponent(JSON.stringify(data.htmlData));
+    
+    const role = securityguard.getCurrentRole();
+    Object.assign(data, {role: (typeof role == "string") ? role : role.native, themeMode: new URL(router.getCurrentURL()).searchParams.get("themeMode") || "light"});
+    return data;
+}
+
+export const main = {changePassword, interceptPageLoadAndPageLoadData, timeRangeUpdated, playPauseCharts, toggleTheme, loadPDFReport, showQueryResult};

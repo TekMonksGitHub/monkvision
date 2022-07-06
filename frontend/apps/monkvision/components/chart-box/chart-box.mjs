@@ -58,7 +58,8 @@ async function _refreshData(element, force) {
 		const canvasNode = shadowRoot.querySelector("canvas#canvas"), canvasParent = canvasNode.parentNode, canvasClone = canvasNode.cloneNode();
 		canvasNode.remove(); canvasParent.appendChild(canvasClone); }
 	const createData = _ => {return {title: content&&content.contents? content.contents.title || element.getAttribute("title"):element.getAttribute("title"), 
-		styleBody: element.getAttribute("styleBody")?`<style>${element.getAttribute("styleBody")}</style>`:null}};
+		styleBody: element.getAttribute("styleBody")?`<style>${element.getAttribute("styleBody")}</style>`:null,
+		calendar: content.timeRange ? content.timeRange : null }};
 	const clone = object => object?JSON.parse(JSON.stringify(object)):null;
 
 	if (!force && content && !content.contents) {	// clear everything if data is empty and changed
@@ -222,12 +223,24 @@ async function _getContent(api, params) {
 	const API_TO_CALL = `${APP_CONSTANTS.API_PATH}/${api}`;
 
 	const paramObj = {timeRange: getTimeRange()}; if (params) for (const param of params.split("&")) paramObj[param.split("=")[0]] = param.split("=")[1];
+	if (paramObj.duration && paramObj.metric) paramObj.timeRange = _setNLPDashboardTimeRange(paramObj.duration);
+
 	const resp = await apiman.rest(API_TO_CALL, "GET", paramObj, true, false);
 
 	if (resp && resp.type=="text" && resp.contents && resp.contents.length) for (const [i,line] of resp.contents.entries())
 		resp.contents[i] = _escapeHTML(line).replace(/(?:\r\n|\r|\n)/g, '<br>');
 
+	if (paramObj.duration && paramObj.metric) resp.timeRange = paramObj.timeRange;		//shows calendar for AI dashboard
 	return resp;
+}
+
+const _dateAsHTMLDateValue = date => new Date(date.toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
+
+function _setNLPDashboardTimeRange(duration) {
+    let timeRange = {}, dateNow = new Date();
+    timeRange["to"] = _dateAsHTMLDateValue(dateNow);
+    timeRange["from"] = _dateAsHTMLDateValue(new Date(dateNow.setMinutes(dateNow.getMinutes() - duration)));
+    return timeRange;
 }
 
 export const chart_box = {trueWebComponentMode: true, elementRendered, setTimeRange, getTimeRange, exportCSV}
