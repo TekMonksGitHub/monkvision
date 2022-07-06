@@ -1,0 +1,15 @@
+{
+    "admin": [
+        "dash1",
+        "dash2",
+        "dash3"
+    ],
+    "dba": [
+        "dash2"
+    ],
+    "user": [
+        "dash1",
+        "dash2",
+        "dash3"
+    ]
+}

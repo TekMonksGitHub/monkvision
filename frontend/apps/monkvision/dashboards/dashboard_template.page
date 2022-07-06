@@ -1,0 +1,36 @@
+SCHEMA
+======
+{{schema}}
+======
+
+
+LAYOUT
+=================
+{{layout}}
+
+=================
+Row Heights = {{rowHeights}}
+Col Widths = 100%
+=================
+
+
+CSS CLASSES
+===========
+CONTAINER CLASSES = grid-container-extension
+ITEM CLASSES = grid-item-extension
+PER ITEM CLASS = class
+===========
+
+
+CSS
+=======
+body {margin: 0;}
+.grid-item-extension {
+    box-shadow:  0 0 1px rgba(34, 25, 25, 0.4);
+    border-radius: 10px;
+    margin: 5px;
+    background-color: {{GridItemBackground}};
+    color: {{GridItemColor}};
+    border: {{GridItemBorder}};
+}
+=======

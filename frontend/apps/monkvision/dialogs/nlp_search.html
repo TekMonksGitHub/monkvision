@@ -1,0 +1,129 @@
+<!-- 
+(C) 2022 TekMonks. All rights reserved.
+-->
+<style>
+/* Most of these are overridden or coming from theme.json */
+body {
+    margin: 0;
+    padding: 0;
+    /* min-height: 600px; */
+    z-index: -10;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+/* Forcing browsers to enable background graphics while using print()  */
+* {
+    -webkit-print-color-adjust: exact !important;
+    /* Chrome, Safari */
+    color-adjust: exact !important;
+    /* Firefox */
+}
+
+div#nlp-search-preview-container {
+    background-color: white;
+    border: 2px solid white;
+    height: 40px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-bottom-color: rgb(245, 247, 250);
+    border-bottom-width: 3px;
+}
+
+span#nlp-search-preview-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    height: 23px;
+}
+
+div#nlp-search-preview-maincontent {
+    background-color: white;
+    margin-top: 20px;
+}
+
+span#nlp-search-preview-header>span#title {
+    text-align: center;
+}
+
+input#dashboardname, input#save-btn {
+    box-shadow: 0 0 1px rgb(34 25 25 / 40%);
+    border-radius: 5px;
+    color: rgba(0,0,0,0.75);
+    border-style: none;
+}
+
+input#dashboardname:focus{
+    outline: none;
+}
+
+input#dashboardname{
+    padding-left: 10px;
+}
+
+input#save-btn{ 
+    width: 85px;
+    margin-left: 20px;
+}
+
+input::-webkit-calendar-picker-indicator {
+    opacity: 100;
+}
+
+#dashboard-label{
+    color: rgba(0,0,0,0.5);
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-right: 20px;
+    padding-top: 2px;
+}
+</style>
+
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+
+    <link href="./img/favicon.png" rel="icon" type="image/x-icon">
+
+    <script type="module">
+        import { page_generator } from "/framework/components/page-generator/page-generator.mjs";
+    </script>
+
+    <title>MonkVision - NLP Preview Page</title>
+    {{{css}}}
+</head>
+
+<body>
+    <div id="nlp-search-preview-container">
+        <span id="nlp-search-preview-header">
+            <label id="dashboard-label" for="dashboard-text">Save query to new or existing dashboard: </label>
+            <datalist id="dashboardlist">
+            {{#dashboards}}
+                <option data-filepath="{{file}}" name="{{name}}">{{name}}</option>
+            {{/dashboards}}
+            </datalist>
+            <input type="hidden" id="dashboardpath">
+            <input list="dashboardlist" id="dashboardname" type="search" placeholder="Add/Choose Dashboard">
+            <input id="save-btn" type="button" value="Save" onclick="createOrUpdateDashboard(this)">
+        </span>
+    </div>
+    <div id="nlp-search-preview-maincontent">
+        <page-generator file="{{{dash}}}" pagedata='{{pagedata}}'></page-generator>
+    </div>
+</body>
+
+<script>
+async function createOrUpdateDashboard(element) {
+    const shadowRoot = monkshu_env.components["dialog-box"].getShadowRootByContainedElement(element);
+    const dashboardname = shadowRoot.querySelector("input#dashboardname").value;
+    const dashboardPath = shadowRoot.querySelector("#dashboardlist").options.namedItem(dashboardname);
+    shadowRoot.querySelector("input#dashboardpath").value = dashboardPath ? dashboardPath.getAttribute("data-filepath") : "";
+    monkshu_env.components["dialog-box"].submit(element);
+}
+</script>
+</html>
