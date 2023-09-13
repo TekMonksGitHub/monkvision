@@ -41,7 +41,16 @@ exports.doService = async jsonReq => {
     if (jsonReq[explanationCode]) textexplanation = jsonReq[explanationCode];
     else if (jsonReq["elseExplanation"]) textexplanation = jsonReq["elseExplanation"];
 
-    const result = {result: true, type: "metrictext", contents: {textmain:`${parseFloat(truePercent).toFixed(2)} %`, fgcolor, bgcolor, textexplanation}}; 
+    // set minimum and maximum point of a percentage
+    let minVal = null;
+    if (jsonReq[minValCode]) minVal = jsonReq[minValCode];
+    else if (jsonReq["minValCode"]) minVal = jsonReq["minValCode"];
+
+    let maxVal = null;
+    if (jsonReq[maxValCode]) maxVal = jsonReq[maxValCode];
+    else if (jsonReq["maxValCode"]) maxVal = jsonReq["maxValCode"];	
+
+    const result = {result: true, type: "metrictext", contents: {textmain:`${parseFloat(truePercent).toFixed(2)} %`, fgcolor, bgcolor, textexplanation, minVal, maxVal}}; 
     if (title) result.contents.title = title; if (icon) result.contents.icon = icon; return result;
 }
 
