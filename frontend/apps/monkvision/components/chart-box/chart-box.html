@@ -140,6 +140,20 @@ canvas#canvas {
 div#container > p {
     margin: unset;
 }
+span#lowVal{
+    position: absolute;
+    left: 10%;
+    top:85%;
+    font-size: 1.5em;
+    
+}
+span#highVal{
+    position: absolute;
+    right: 10%;
+    top: 85%;
+    font-size: 1.5em;
+    
+}
 @media print {
     div#content{
         overflow-y: hidden;
@@ -170,6 +184,10 @@ div#container > p {
     {{#icon}}<span id="metricicon"><img src="{{.}}"></span>{{/icon}}
     <span id="metrictextmain">{{textmain}}</span>
     <span id="metrictextexplanation">{{textexplanation}}</span>
+
+    <!-- To display the endpoints of an average or percentage-->
+    {{#minVal}}<span id="lowVal">LOW: {{.}}</span>{{/minVal}}
+    {{#maxVal}}<span id="highVal">HIGH: {{.}}</span>{{/maxVal}}
     </div></div>
     {{/metrictext}}
 
