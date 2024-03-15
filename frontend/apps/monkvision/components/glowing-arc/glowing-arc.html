@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    body{
+      font-family: 'Montserrat';
+      position: relative;
+      color: #ffffff;
+      display: block;
+      margin: 0;
+    }
+    .circle-element {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 0px solid white;
+      border-radius: 50%;
+      aspect-ratio: 1;
+    }
+
+    .circle-element span {
+      display: block;
+      transform: translate(6%, 524%);
+    }
+
+    .mainTitle {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 100%;
+      text-align: center;
+      position: absolute;
+      bottom: -17%;
+    }
+
+    .color-arc {
+      box-sizing: border-box;
+      position: absolute;
+      overflow: visible;
+      bottom: 5%;
+      left: 0%;
+      max-height: 100%;
+      max-width: 100%;
+      aspect-ratio: 1;
+      transform: translate(10%, 10%);
+    }
+
+    .innerTitle, .innerSubtitle{
+      font-style: normal;
+      font-weight: 500;
+      font-size: 10px;
+      line-height: 160%;
+      text-align: center;
+      position: relative;
+    }
+    .innerTitle{
+      bottom: 2%;
+    }
+    .innerSubtitle{
+      top: 2%;
+    }
+
+    .data{
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 100%;
+    }
+
+    .warning-triangle {
+      position: absolute;
+      top: 6%;
+      right: -2%;
+      width: 20%;
+      height: 20%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    </style>
+</head>
+<body>
+    <div class="circle-element" onmouseover="monkshu_env.components['glowing-arc'].startAnimation(this)" onmouseout="monkshu_env.components['glowing-arc'].addAnimation(this)">
+        <svg class="color-arc" viewBox="0 0 250 250">
+          <g fill="none">
+            <path class="arc" d="{{d}}" stroke="{{color}}" stroke-width="18px" stroke-linecap="round">
+              {{#animate}}
+              <animate id="a1" attributeType="XML" attributeName="stroke-dasharray" from="0" to="1000" dur="2s" fill="remove-during-active" />
+              {{/animate}}
+              </path>
+              <path d="{{circle}}" stroke="{{outlineColor}}{{^outlineColor}}white{{/outlineColor}}" stroke-width="2px" stroke-linecap="round" opacity="0.9"/>
+          </g>
+          <g>
+            <style>
+              .small, .heavy{
+                text-anchor: middle;
+                fill: white;
+                dominant-baseline: middle;
+                transform: translate(-10%, -1%);
+              }
+              .small {
+                font: normal {{size1}}px Montserrat;
+              }
+              .heavy {
+                font: bold {{size2}}px Montserrat;
+              }           
+            </style>
+            <text x="50%" y="{{y1}}%" width="200" class="small">{{innerTitle}}</text>
+            <text x="50%" y="50%" class="heavy">{{middleText}}</text>
+            <text x="50%" y="{{y2}}%" class="small">{{innerSubtitle}}</text>
+            <text x="50%" y="96%" class="small">{{mainTitle}}</text>
+        </g>
+        </svg>
+        {{#warningColour}}
+          <div class="warning-triangle">
+            <svg width="31" height="30" viewBox="0 0 31 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M29.8564 20.2819L21.0645 4.00748C19.9663 2.02265 17.8769 0.790771 15.6085 0.790771C13.3401 0.790771 11.2507 2.02265 10.1525 4.00748L1.22029 20.2663C0.170864 22.1973 0.215487 24.5382 1.33774 26.4278C2.45999 28.3174 4.49412 29.4767 6.69186 29.4791H24.3693C26.5651 29.4792 28.5991 28.3242 29.7242 26.4385C30.8492 24.5527 30.8994 22.2142 29.8564 20.2819ZM14.2679 11.3029C14.2679 10.6572 14.7913 10.1338 15.437 10.1338C16.0827 10.1338 16.6062 10.6572 16.6062 11.3029V16.1198C16.6062 16.7655 16.0827 17.2889 15.437 17.2889C14.7913 17.2889 14.2679 16.7655 14.2679 16.1198V11.3029ZM15.4526 21.8252C16.0983 21.8252 16.6218 21.3017 16.6218 20.656L16.6062 20.6404C16.6062 20.0034 16.0897 19.4869 15.4526 19.4869C14.8104 19.4953 14.2919 20.0138 14.2835 20.656C14.2835 21.3017 14.8069 21.8252 15.4526 21.8252Z" fill='{{warningColour}}' />
+            </svg>
+          </div>
+        {{/warningColour}}
+      </div>
+</body>
+</html>
