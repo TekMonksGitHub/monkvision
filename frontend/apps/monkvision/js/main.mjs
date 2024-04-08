@@ -127,5 +127,19 @@ function getShadowRoot(ctx){
 function querySelector(ctx, q , all=false){
     return all? getShadowRoot(ctx).querySelectorAll(q) : getShadowRoot(ctx).querySelector(q);
 }
+function addFlattenedHtml(items) {
+    items.forEach((item) => {
+      const { id, html, ...dataAttributes } = item;
+      let flattenedHtml = `<${html}`;
+  
+      flattenedHtml += ` id="${id}"`;
+      for (const key in dataAttributes) {
+        flattenedHtml += ` data-${key}="${dataAttributes[key]}"`;
+      }
+      flattenedHtml += `>`;
+      flattenedHtml += `</${html}>`;
+      item.flattenedHtml = flattenedHtml;
+    });
+  }
 
-export const main = {changePassword, interceptPageLoadAndPageLoadData, timeRangeUpdated, playPauseCharts, toggleTheme, loadPDFReport, querySelector};
+export const main = {changePassword, interceptPageLoadAndPageLoadData, timeRangeUpdated, playPauseCharts, toggleTheme, loadPDFReport, querySelector, addFlattenedHtml};
