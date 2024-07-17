@@ -1,0 +1,17 @@
+{
+    "cpu": "ssh_mon_ddos",
+    "ram": "ssh_mon_too_many_connections_attack",
+    "disk": "ssh_mon_login_attack",
+    "staging_cpu": "ssh_mon_ddos",
+    "staging_ram": "ssh_mon_too_many_connections_attack",
+    "staging_disk": "ssh_mon_login_attack",
+    "primary_prod_cpu": "ssh_mon_ddos",
+    "primary_prod_ram": "ssh_mon_too_many_connections_attack",
+    "primary_prod_disk": "ssh_mon_login_attack",
+    "secondary_prod_cpu": "ssh_mon_ddos",
+    "secondary_prod_ram": "ssh_mon_too_many_connections_attack",
+    "secondary_prod_disk": "ssh_mon_login_attack",
+    "dev_cpu": "ssh_mon_ddos",
+    "dev_ram": "ssh_mon_too_many_connections_attack",
+    "dev_disk": "ssh_mon_login_attack"
+}

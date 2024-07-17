@@ -16,6 +16,7 @@ div#container {
 	top: 0;
 	height: 100vh;
 	z-index: 1;
+	overflow-y: auto;
 }
 
 div#maincontent {
@@ -89,6 +90,37 @@ span#header > img#playpause:hover {
 	filter: brightness(70%);
 	transition: all 1s ease;
 }
+
+span#searchbar {
+	position: absolute;
+}
+
+input#searchbartext{
+	box-shadow: 0 0 1px rgb(34 25 25 / 40%);
+	border-radius: 5px;
+    padding-left: 40px;
+    color: rgba(0,0,0,0.75);
+	border-style: none;
+	width: 100%;
+	height: 30px;
+	font-size: 0.65em;
+	font-family: 'Raleway';
+}
+
+input#searchbartext:focus{
+	outline: none;
+}
+
+span#searchbar > img#searchicon{
+	position: absolute;
+	top: 3px;
+	left: 10px;
+}
+
+dialog-box#nlpsearch{
+	left: 12%;
+	top: 10%;
+}
 </style>
 
 <!doctype html>
@@ -117,15 +149,17 @@ span#header > img#playpause:hover {
 <body>
 <div id="leftheader">
 	{{#dashboards}}
-	<img id="{{id}}" class="dashicon" src="{{{htmlData.dashicon}}}" alt="{{title}}" title="{{title}}" onclick="router.loadPage('./main.html?dash=./dashboards/{{file}}&title={{title}}&refresh={{refresh}}&name={{name}}&themeMode={{themeMode}}');"><span>{{name}}</span>
+	<img id="{{id}}" class="dashicon" src="{{{htmlData.dashicon}}}" alt="{{title}}" title="{{title}}" onclick="router.loadPage('./main.html?dash=./dashboards/{{file}}&title={{title}}&refresh={{refresh}}&name={{name}}&dashType={{dashType}}&themeMode={{themeMode}}');"><span>{{name}}</span>
 	{{/dashboards}}
 </div>
 <div id="container">
 	<span id="header">
 		<img id="textlogo" src="{{{htmlData.textlogo}}}">
 		<span id="title">{{title}}</span>
+		{{#showDateFilter}}
 		<input id="datetimepickerfrom" type="datetime-local" value="{{{dateTimeWeekAgo}}}" onchange="main.timeRangeUpdated(true)">
 		<input id="datetimepickerto" type="datetime-local" value="{{{dateTimeNow}}}" onchange="main.timeRangeUpdated(true)">
+		{{/showDateFilter}}
 		<img id="playpause" src="./img/pause.svg" onclick="main.playPauseCharts(this)">
 		<span-with-menu id="toggle-theme" {{{htmlData.span-with-menu#toggle-theme}}}><img src="{{{htmlData.themeIcon}}}" {{{htmlData.span-with-menu#toggle-theme>img}}}>
 			<menu-item onclick="main.toggleTheme(this)">Dark</menu-item>
@@ -138,11 +172,17 @@ span#header > img#playpause:hover {
 		<span id="signoff"><img src="./img/poweroff.svg" onclick="loginmanager.logout()"></span>
 	</span>
 
+	<span id="searchbar">
+		<img id="searchicon" src="{{{htmlData.SearchIcon}}}" alt="search icon" onclick="main.showQueryResult(this)">
+		<input id="searchbartext" type="text" placeholder="{{i18n.NLPSearch}}" onkeyup="if (event.keyCode == 13) main.showQueryResult(this);">
+	</span>
+
 	<div id="maincontent">
 		<page-generator file="{{{dash}}}" pagedata='{{pagedata}}'></page-generator>
 	</div>
 
 	<dialog-box id="dialog"></dialog-box>
+	<dialog-box id="nlpsearch"></dialog-box>
 </div>
 </body>
 </html>

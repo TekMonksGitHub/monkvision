@@ -65,7 +65,7 @@
         "*": "@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');",
         "body": "background-color: rgb(80, 80, 80); font-family: 'Raleway';",
         "div#container": "background-color: rgb(30, 30, 30); border-top-left-radius: 20px; left: 64px; width: calc(100% - 64px);",
-        "div#maincontent": "top: 65px; width: calc(95vw - 60px); height: calc(100vh - 65px); left: 30px;",
+        "div#maincontent": "top: 95px; width: calc(95vw - 60px); height: calc(100vh - 95px); left: 30px;",
         "div#leftheader": "background-color: #024086db; padding-top: 40px;",
         "div#leftheader > img.dashicon": "border: 0.5px solid #024086db; height: 48px; width: 48px; left: 4px; padding: 2px;",
         "div#leftheader > img.dashicon:hover": "left: 4px; padding: 2px; border-radius: 5px; border-width: 0.5px; border-style: outset; border-color: white;",
@@ -78,7 +78,9 @@
         "span#header > span#title": "width: 300px; font-size: 0.85em; font-weight: bold; background-color: rgb(80,80,80); box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); border-radius: 5px; padding: 5px; color: rgba(250,250,250,0.95);",
         "input#datetimepickerfrom, input#datetimepickerfrom:active, input#datetimepickerto, input#datetimepickerto:active":
             "font-size: 0.8em; font-family: sans-serif; background-color: rgb(80,80,80); color: rgba(250,250,250,0.95); border-radius: 4px; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); padding: 2px; border-style: none;",
-        "span#header > img#playpause": "height: 30px; width: 30px;"
+        "span#header > img#playpause": "height: 30px; width: 30px;",
+        "span#searchbar": "top: 55px; left: 20px; width: calc(100% - 50px);",
+        "span#searchbar > img#searchicon": "height: 23px; width: 25px;"
     },
     "main_i18n": {
         "en": {
@@ -102,7 +104,10 @@
             "none": "None",
             "httpGooglePie":"HTTP Google Pie",
             "httpGoogle": "HTTP Google",
-            "httpGoogleBar":"HTTP Google Bar"
+            "httpGoogleBar":"HTTP Google Bar",
+            "dashboardError": "Error while saving the dashboard",
+            "NLPSearch": "e.g Show me cpu usage for past 2 hours",
+            "SearchIcon": "./img/search_icon.svg"
         }
     },
     "main_html_data": {
@@ -131,7 +136,8 @@
         "themeIcon": "./img/theme_icon.svg",
         "GridItemBackground": "rgb(30,30,30)",
         "GridItemColor": "rgba(250,250,250,0.95)",
-        "GridItemBorder": "0.1px solid rgba(250,250,250,0.95)"
+        "GridItemBorder": "0.1px solid rgba(250,250,250,0.95)",
+        "SearchIcon": "./img/search_icon.svg"
     },
     "pdf_report_css": {
         "*": "@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');",
@@ -151,5 +157,32 @@
     "pdf_report_html_data": {
         "textlogo": "./img/textlogo_light.png",
         "title": "Analytics Reports"
+    },
+    "nlp_search_css": {
+        "*": "@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');",
+        "body": "background-color: rgb(245, 247, 250); font-family: 'Raleway';",
+        "span#nlp-search-preview-header > img#playpause": "height: 30px; width: 30px;",
+        "span#nlp-search-preview-header > img#textlogo": "height: 30px; width: 160px;",
+        "input#datetimepickerfrom, input#datetimepickerfrom:active, input#datetimepickerto, input#datetimepickerto:active":
+            "font-size: 0.8em; font-family: sans-serif; color: rgba(0,0,0,0.75);border-radius: 4px; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); padding: 2px; border-style: none; pointer-events: none;",
+        "div#nlp-search-preview-maincontent": "top: 120px; width: calc(95vw - 100px); height: calc(100vh - 120px); left: 100px;",
+        "@media print": "div#pdf-preview-container {display: none;} div#pdf-preview-maincontent{top: unset; width: 100vw; height: 100vh; left: unset;}"
+    },
+    "nlp_search_i18n": {
+        "en":{
+            "title": "Monkvision Dashboards",
+            "name_dash1": "Overview",
+            "name_dash2": "Examples",
+            "name_dash3": "Details2"
+        }
+    },
+    "nlp_search_html_data": {
+        "textlogo": "./img/textlogo_light.png",
+        "title": "Analytics Reports",
+        "GridColor": "black",
+        "LabelColor": "rgba(72,72,72,0.98)",
+        "GridItemBackground": "rgb(30,30,30)",
+        "GridItemColor": "rgba(250,250,250,0.95)",
+        "GridItemBorder": "0.1px solid rgba(229,229,229,0.99)"
     }
 }
