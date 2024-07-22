@@ -1,0 +1,35 @@
+{
+    "extensions": [
+        "redirect"
+    ],
+    "redirects": [
+        {
+            "^http(.*)://([^/]+?)/index.html$": "http{{{$1}}}://{{{$2}}}/apps/monkvision/index.html"
+        },
+        {
+            "^http(.*)://([^/]+?)/$": "http{{{$1}}}://{{{$2}}}/apps/monkvision/index.html"
+        },
+        {
+            "^http(.*)://([^/]+?)$": "http{{{$1}}}://{{{$2}}}/apps/monkvision/index.html"
+        }
+    ],
+    "diskCache": {
+        "refresh": 1000,
+        "dontCache": [
+            ".*\\.pdf"
+        ],
+        "maxSizeInMB": "1024",
+        "ignoreAfterMaxHits": 10
+    },
+    "httpdHeaders": {
+        "Cache-Control": "max-age=604800, must-revalidate, private",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+    },
+    "ssl": false,
+    "sslKeyFile":"/home/deep/Documents/SSL/server.key",
+    "sslCertFile":"/home/deep/Documents/SSL/server.crt",        
+    "port": 8080,
+    "host": "localhost"
+}
