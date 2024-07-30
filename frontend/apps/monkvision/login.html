@@ -91,7 +91,7 @@ span#signin > span > a {text-decoration: none;}
 
 <div class="lgbox">
 	<span><br><br>{{i18n.LoginMsg}}<br><br></span>
-	<login-box roles="[APP_CONSTANTS.GUEST_ROLE, APP_CONSTANTS.USER_ROLE]" routeOnSuccess="./main.html"></login-box>
+	<login-box roles='["{{APP_CONSTANTS.GUEST_ROLE}}", "{{APP_CONSTANTS.USER_ROLE}}"]' routeOnSuccess="./main.html"></login-box>
 </div>
 
 <div class="langbox">

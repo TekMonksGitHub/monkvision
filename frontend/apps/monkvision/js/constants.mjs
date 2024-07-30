@@ -7,9 +7,10 @@ const BACKEND = "http://localhost:9090";
 const APP_NAME = "monkvision";
 const APP_PATH = `${FRONTEND}/apps/${APP_NAME}`;
 const API_PATH = `${BACKEND}/apps/${APP_NAME}`;
+const CONF_PATH = `${APP_PATH}/conf`;
 
 export const APP_CONSTANTS = {
-    FRONTEND, BACKEND, APP_PATH, APP_NAME, API_PATH,
+    FRONTEND, BACKEND, APP_PATH, APP_NAME, API_PATH,CONF_PATH,
     INDEX_HTML: APP_PATH+"/index.html",
     MAIN_HTML: APP_PATH+"/main.html",
     LOGIN_HTML: APP_PATH+"/login.html",
@@ -33,10 +34,10 @@ export const APP_CONSTANTS = {
     USER_ROLE: "user",
     GUEST_ROLE: "guest",
     PERMISSIONS_MAP: {
-        user:[APP_PATH+"/main.html", APP_PATH+"/register.html", APP_PATH+"/login.html", APP_PATH+"/pdf_report.html", $$.MONKSHU_CONSTANTS.ERROR_THTML],
-        guest:[APP_PATH+"/register.html", APP_PATH+"/login.html", $$.MONKSHU_CONSTANTS.ERROR_THTML],
-        admin:[APP_PATH+"/main.html", APP_PATH+"/register.html", APP_PATH+"/login.html", APP_PATH+"/pdf_report.html", $$.MONKSHU_CONSTANTS.ERROR_THTML, "dash1", "dash2", "dash3"],
-        dba:[APP_PATH+"/main.html", APP_PATH+"/register.html", APP_PATH+"/login.html", APP_PATH+"/pdf_report.html", $$.MONKSHU_CONSTANTS.ERROR_THTML, "dash2"]
+        user:[APP_PATH+"/main.html", APP_PATH+"/register.html", APP_PATH+"/login.html", APP_PATH+"/pdf_report.html", $$.MONKSHU_CONSTANTS.ERROR_HTML],
+        guest:[APP_PATH+"/register.html", APP_PATH+"/login.html", $$.MONKSHU_CONSTANTS.ERROR_HTML],
+        admin:[APP_PATH+"/main.html", APP_PATH+"/register.html", APP_PATH+"/login.html", APP_PATH+"/pdf_report.html", $$.MONKSHU_CONSTANTS.ERROR_HTML, "dash1", "dash2", "dash3"],
+        dba:[APP_PATH+"/main.html", APP_PATH+"/register.html", APP_PATH+"/login.html", APP_PATH+"/pdf_report.html", $$.MONKSHU_CONSTANTS.ERROR_HTML, "dash2"]
     },
     API_KEYS: {"*":"fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389"},
     KEY_HEADER: "X-API-Key"

@@ -7,10 +7,12 @@ import {router} from "/framework/js/router.mjs";
 import {session} from "/framework/js/session.mjs";
 import {securityguard} from "/framework/js/securityguard.mjs";
 import {apimanager as apiman} from "/framework/js/apimanager.mjs";
+import { loadbalancer } from "/framework/js/loadbalancer.mjs";
 
 const init = async _ => {
 	window.APP_CONSTANTS = (await import ("./constants.mjs")).APP_CONSTANTS;
 	window.LOG = (await import ("/framework/js/log.mjs")).LOG;
+	await _addLoadbalancers();
 	if (!session.get($$.MONKSHU_CONSTANTS.LANG_ID)) session.set($$.MONKSHU_CONSTANTS.LANG_ID, "en");
 	securityguard.setPermissionsMap(APP_CONSTANTS.PERMISSIONS_MAP);
 	securityguard.setCurrentRole(securityguard.getCurrentRole() || APP_CONSTANTS.GUEST_ROLE);
@@ -28,7 +30,7 @@ async function main() {
 }
 
 async function _addPageDataInterceptors() {
-	const interceptors = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/pageInterceptors.json`);
+	const interceptors = await $$.requireJSON(`${APP_CONSTANTS.CONF_PATH}/pageInterceptors.json`);
 	for (const interceptor of interceptors) {
 		const modulePath = interceptor.module, functionName = interceptor.function;
 		let module = await import(`${APP_CONSTANTS.APP_PATH}/${modulePath}`); module = module[Object.keys(module)[0]];
@@ -36,4 +38,19 @@ async function _addPageDataInterceptors() {
 	}
 }
 
-export const application = {init, main};
+const interceptPageLoadData = _ => router.addOnLoadPageData("*", async (data, _url) => {
+    data.APP_CONSTANTS = APP_CONSTANTS; 
+});
+async function _addLoadbalancers() {
+    let lbConf; try { lbConf = await $$.requireJSON(`${APP_CONSTANTS.CONF_PATH}/lb.json`) } catch (err) { };
+    if (!lbConf) return;    // no LBs configured
+    for (const lbconfKey of Object.keys(lbConf)) {
+        if (lbconfKey == "backends") lbConf[lbconfKey].roothost = new URL(APP_CONSTANTS.BACKEND).hostname;
+        else if (lbconfKey == "frontends") lbConf[lbconfKey].roothost = new URL(APP_CONSTANTS.FRONTEND).hostname;
+        else continue;    // not a known LB configuration
+        const lbThis = loadbalancer.createLoadbalancer(lbConf[lbconfKey]);
+        if (lbThis) { router.addLoadbalancer(lbThis); LOG.info(`Added load balancer for policy ${lbconfKey}`); }
+        else LOG.error(`Bad load balancer policy ${lbconfKey}.`);
+    }
+}
+export const application = {init, main,interceptPageLoadData};
