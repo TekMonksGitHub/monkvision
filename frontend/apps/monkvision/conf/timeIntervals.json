@@ -1,0 +1,10 @@
+{
+    "timeOptions": {
+        "none": "Select time",
+        "1hour": "Last 1 Hour",
+        "6hours": "Last 6 Hours",
+        "1day": "Last 1 Day",
+        "7days": "Last 7 Days",
+        "1month": "Last 1 Month"
+    }
+}

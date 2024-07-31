@@ -17,11 +17,35 @@ const SELECTED_DATES = "__monkvision_selecteddates", DASHBOARD_TIMER = "__monkvi
 
 const dateAsHTMLDateValue = date => new Date(date.toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
 
-function timeRangeUpdated(stopRefresh, dates) {
-    if (!dates) dates = { from: document.querySelector("input#datetimepickerfrom").value,
-        to: document.querySelector("input#datetimepickerto").value };
-    else { document.querySelector("input#datetimepickerfrom").value = dates.from;
-        document.querySelector("input#datetimepickerto").value = dates.to;
+function timeRangeUpdated(stopRefresh, isDropdownChange) {
+    let dates;
+    const timePicker = document.getElementById('timepicker');
+    if (isDropdownChange) {
+        const selectedValue = timePicker.value;
+        const currentTime = new Date();
+        const timeMappings = {
+            '1hour': 1 * 60 * 60 * 1000,
+            '6hours': 6 * 60 * 60 * 1000,
+            '1day': 24 * 60 * 60 * 1000,
+            '7days': 7 * 24 * 60 * 60 * 1000,
+            '1month': 30 * 24 * 60 * 60 * 1000
+        };
+        let from = new Date(currentTime.getTime() - timeMappings["7days"]);
+        if (selectedValue !== 'none') {
+            from = new Date(currentTime.getTime() - timeMappings[selectedValue]);
+        }
+        dates = {
+            from: from.toISOString().slice(0, 16),
+            to: currentTime.toISOString().slice(0, 16)
+        };
+        document.getElementById('datetimepickerfrom').value = dates.from;
+        document.getElementById('datetimepickerto').value = dates.to;
+    } else {
+        dates = {
+            from: document.querySelector("input#datetimepickerfrom").value,
+            to: document.querySelector("input#datetimepickerto").value
+        };
+        timePicker.value = 'none';
     }
 
     session.set(SELECTED_DATES, dates);
@@ -83,7 +107,19 @@ async function interceptPageLoadAndPageLoadData() {
         const allDashIcons = document.querySelectorAll("div#leftheader > img.dashicon");
         for (const dashIcon of allDashIcons) if (data.dash.endsWith(dashboardsRaw[dashIcon.id].split(",")[0]))
             dashIcon.classList.add("selected"); else dashIcon.classList.remove("selected");
-
+        
+        // set options for timepicker on page load
+        const timeIntervalsJson = await $$.requireJSON(`${APP_CONSTANTS.APP_PATH}/conf/timeIntervals.json`);
+        const timeOptions = timeIntervalsJson.timeOptions;
+        const timePicker = document.getElementById('timepicker');
+        timePicker.innerHTML = '';
+        for (const value in timeOptions) {
+            const option = document.createElement('option');
+            option.value = value;
+            option.textContent = timeOptions[value];
+            timePicker.appendChild(option);
+        }
+            
         // load initial charts and set the refresh interval
         timeRangeUpdated(false);    // load initial charts they will get the dates from HTML
         if (data.refresh) {session.set(REFRESH_INTERVAL, data.refresh); _startRefresh()};
