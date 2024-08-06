@@ -37,7 +37,7 @@ async function timeRangeUpdated(stopRefresh, selectedValue) {
 
     session.set(SELECTED_DATES, dates);
     chart_box.setTimeRange(dates);
-    if (stopRefresh) playPauseCharts(document.querySelector("img#playpause"), "stop");
+    if (stopRefresh) playPauseCharts(document.querySelector("img#playpause"), "stop"); // user selected a particular time range, stop refresh
 }
 
 function playPauseCharts(img, force) {
