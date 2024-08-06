@@ -131,7 +131,11 @@ span#header > img#playpause:hover {
 		<span id="title">{{title}}</span>
 		<input id="datetimepickerfrom" type="datetime-local" value="{{{dateTimeWeekAgo}}}" onchange="main.timeRangeUpdated(true)">
 		<input id="datetimepickerto" type="datetime-local" value="{{{dateTimeNow}}}" onchange="main.timeRangeUpdated(true)">
-		<select id="timepicker" onchange="main.timeRangeUpdated(true,true)"></select>
+		<select id="timepicker" onchange="main.timeRangeUpdated(true, this.value)">
+			{{#htmlData.timeRangeMap}}
+				<option value="{{value}}">{{label}}</option>
+			{{/htmlData.timeRangeMap}}
+		</select>
 		<img id="playpause" src="./img/pause.svg" onclick="main.playPauseCharts(this)">
 		<span-with-menu id="toggle-theme" {{{htmlData.span-with-menu#toggle-theme}}}><img src="{{{htmlData.themeIcon}}}" {{{htmlData.span-with-menu#toggle-theme>img}}}>
 			<menu-item onclick="main.toggleTheme(this)">Dark</menu-item>

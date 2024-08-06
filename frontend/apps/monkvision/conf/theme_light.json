@@ -131,7 +131,8 @@
         "themeIcon": "./img/theme_icon.svg",
         "GridItemBackground": "white",
         "GridItemColor": "rgb(72,72,72)",
-        "GridItemBorder": "0.1px solid rgba(250,250,250,0)"
+        "GridItemBorder": "0.1px solid rgba(250,250,250,0)",
+        "timeRangeMap":[{ "label":"Pick Timerange"},{ "label":"Last 1 Hour","value":"3600000"},{ "label":"Last 6 Hours","value":"21600000"},{ "label":"Last 1 day","value":"86400000"},{ "label":"Last 7 days","value":"604800000"},{ "label":"Last 30 days","value":"2592000000"}]
     },
     "pdf_report_css": {
         "*": "@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');",
