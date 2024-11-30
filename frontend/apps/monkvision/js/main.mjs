@@ -125,4 +125,32 @@ function _startRefresh() {
     loginmanager.addLogoutListener(_=>clearInterval(session.get(DASHBOARD_TIMER)));
 }
 
-export const main = {changePassword, interceptPageLoadAndPageLoadData, timeRangeUpdated, playPauseCharts, toggleTheme, loadPDFReport};
+function getShadowRoot(ctx){
+    return ctx.tagName.includes('-')? ctx.shadowRoot : ctx.getRootNode();
+}
+/**
+ * 
+ * @param {HTMLElement} ctx contained element to find parent shadowRoot 
+ * @param {keyof HTMLElementTagNameMap} q qualified CSS-Selector
+ * @param {Boolean} all set true to find all instances, default false
+ * @returns {HTMLElement | HTMLElement[]}
+*/
+function querySelector(ctx, q , all=false){
+    return all? getShadowRoot(ctx).querySelectorAll(q) : getShadowRoot(ctx).querySelector(q);
+}
+function addFlattenedHtml(items) {
+    items.forEach((item) => {
+      const { id, html, ...dataAttributes } = item;
+      let flattenedHtml = `<${html}`;
+  
+      flattenedHtml += ` id="${id}"`;
+      for (const key in dataAttributes) {
+        flattenedHtml += ` data-${key}="${dataAttributes[key]}"`;
+      }
+      flattenedHtml += `>`;
+      flattenedHtml += `</${html}>`;
+      item.flattenedHtml = flattenedHtml;
+    });
+  }
+
+export const main = {changePassword, interceptPageLoadAndPageLoadData, timeRangeUpdated, playPauseCharts, toggleTheme, loadPDFReport, querySelector, addFlattenedHtml};

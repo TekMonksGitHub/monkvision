@@ -1,0 +1,232 @@
+<style>
+:host {
+    --svg-ratio: 820/160;
+}
+body, html {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    color: white;
+    aspect-ratio: var(--svg-ratio);
+    font-family: Ubuntu, sans-serif;
+}
+.type, .bg text{
+    text-transform: uppercase;
+}
+body>span{
+    text-transform: uppercase;
+    left: 47%;
+    top: 0.2%;
+}
+.bg{
+    width: 100%;
+    height: 100%;
+}
+.abs{
+    position: absolute;
+}
+.flex-container {
+    display: flex;
+    flex-wrap: nowrap;
+    scroll-behavior: smooth;
+    aspect-ratio: 860/154;
+    width: 95.1%;
+    margin-top: 3%;
+    margin-left: 2.3%;
+    overflow: auto hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.flex-container::-webkit-scrollbar {
+    width: 0;
+}
+
+.flex-child {
+    height: 84%;
+    width: 12%;
+    padding: 1%;
+    margin: 2% 1%;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+.selected{
+    border: 1px solid white;
+    filter: drop-shadow(0 0 0.2rem rgba(255, 255, 255, 0.7));
+}
+.flex-child>glowing-arc{
+    width: 100%;
+}
+
+.spread-input {
+    width: 2.5%;
+    height: 9%;
+    top: 5.3%;
+    opacity: 0;
+    padding: 0.2rem;
+    border: 1px solid rgba(256, 256, 256, 0.3);
+    border-radius: 0.5rem;
+    transition: width 0.3s, opacity 0.3s, left 0.1s, top 0.1s, height 0.3s;
+    right: 8.6%;
+    cursor: pointer;
+}
+
+.spread-input:focus {
+    cursor: auto;
+    opacity: 1;
+    width: 34%;
+    left: 54%;
+    outline-color: rgba(256, 256, 256, 0.3);
+}
+.modal {
+    display: none;
+    position: fixed;
+    opacity: 0;
+    width: 0%;
+    height: 0%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background-image: url('./img/modal_bg.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transition: all 0.3s ease-out;
+}
+
+.backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(2, 25, 34, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 9998;
+}
+
+.modal-content{
+    overflow: hidden;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0.2rem;
+    top: 3rem;
+    right: 2rem;
+    left: 2rem;
+}
+
+.all-cards{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.header{
+    font-size: 1.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: white;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+}
+#expand {
+    width: 2.5%;
+    height: 12%;
+    right: 4.8%;
+    top: 5.3%;
+    cursor: pointer;
+}
+.searchbox{
+    display: inline-flex;
+    width: 40%;
+    height: 4%;
+    position: absolute;
+    border: 0.1rem snow solid;
+    border-radius: 0.5rem;
+    left: 55%;
+    top: 1%;
+}
+.searchbox img{
+    width: 4%;
+    padding: 2px;
+}
+.searchbox input{
+    width: 100%;
+    background-color: transparent;
+    border: 0 transparent;
+    color: white;
+}
+
+.searchbox input:focus {
+    outline: none;
+    box-shadow: 0 0 0 0 rgba(0, 0, 255, 0.4);
+}
+
+.searchbox ::placeholder {
+    color: white;
+    opacity: 1;
+}
+#closeModal{
+    position: absolute;
+    right: 0.7%;
+    display: flex;
+    top: 1.5%;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+path#prev, path#next{
+    cursor: pointer;
+}
+</style>
+    <div class="abs bg">
+        <svg viewBox="80 861 820 160" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <text x="80" y="874" text-anchor="start" dominant-baseline="middle" fill="white" font-size="13">{{name}}</text>
+            <path d="M554.007 1019.11H554.017H887C892.247 1019.11 896.5 1014.85 896.5 1009.61V1008.26C896.5 1005.64 895.411 1003.12 893.492 1001.33L884.615 993.019C882.494 991.034 881.29 988.259 881.29 985.353V928.66C881.29 925.57 882.652 922.637 885.011 920.642L893.133 913.775C895.268 911.97 896.5 909.316 896.5 906.52V902.132C896.5 899.47 895.383 896.93 893.421 895.13L859.478 863.999C857.726 862.392 855.435 861.5 853.057 861.5H654.4H492.165H280.961C278.434 861.5 276.011 862.507 274.228 864.297L254.84 883.771C252.87 885.75 250.192 886.862 247.399 886.862H108.884H91C85.7533 886.862 81.5 891.115 81.5 896.362V906.234C81.5 909.185 82.8712 911.968 85.2109 913.767L94.129 920.621C96.715 922.608 98.2305 925.685 98.2305 928.946V985.069C98.2305 988.148 96.8796 991.071 94.5351 993.066L84.8435 1001.31C82.7223 1003.12 81.5 1005.76 81.5 1008.55V1010C81.5 1015.25 85.7533 1019.5 91 1019.5H533.226H533.23L554.007 1019.11Z" stroke="white" stroke-opacity="0.3"/>
+            <path d="M232.302 864.591C232.678 864.213 233.189 864 233.721 864H256.195C257.974 864 258.868 866.147 257.614 867.409L245.698 879.409C245.322 879.787 244.811 880 244.279 880H221.805C220.026 880 219.132 877.853 220.386 876.591L232.302 864.591Z" fill="#D9D9D9"/>
+            <path d="M232.657 864.943C232.939 864.659 233.322 864.5 233.721 864.5H256.195C257.529 864.5 258.199 866.111 257.26 867.057L245.343 879.057C245.061 879.341 244.678 879.5 244.279 879.5H221.805C220.471 879.5 219.801 877.889 220.74 876.943L232.657 864.943Z" stroke="white" stroke-opacity="0.3"/>
+            <path d="M200.657 864.943C200.939 864.659 201.322 864.5 201.721 864.5H224.195C225.529 864.5 226.199 866.111 225.26 867.057L213.343 879.057C213.061 879.341 212.678 879.5 212.279 879.5H189.805C188.471 879.5 187.801 877.889 188.74 876.943L200.657 864.943Z" stroke="white" stroke-opacity="0.3"/>
+            <path d="M168.657 864.943C168.939 864.659 169.322 864.5 169.721 864.5H192.195C193.529 864.5 194.199 866.111 193.26 867.057L181.343 879.057C181.061 879.341 180.678 879.5 180.279 879.5H157.805C156.471 879.5 155.801 877.889 156.74 876.943L168.657 864.943Z" stroke="white" stroke-opacity="0.3"/>
+            <g opacity="0.6">
+            <path id="prev" onclick="monkshu_env.components['card-view'].scrollFlex(this, -1)" d="M80 918.286C80 916.587 81.9831 915.662 83.2847 916.753L94.2847 925.972C94.7381 926.352 95 926.913 95 927.505V987.639C95 988.206 94.7587 988.747 94.3363 989.127L83.3363 999.004C82.0487 1000.16 80 999.247 80 997.516V918.286Z" fill="#D9D9D9"/>
+            <path d="M89.4313 962.45L85.3563 958.375C84.875 957.894 84.875 957.106 85.3563 956.625L89.4313 952.55" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <g opacity="0.6">
+            <path id="next" onclick="monkshu_env.components['card-view'].scrollFlex(this, 1)" d="M899 917.286C899 915.587 897.017 914.662 895.715 915.753L884.715 924.972C884.262 925.352 884 925.913 884 926.505V986.639C884 987.206 884.241 987.747 884.664 988.127L895.664 998.004C896.951 999.16 899 998.247 899 996.516V917.286Z" fill="#D9D9D9"/>
+            <path d="M889.569 962.45L893.644 958.375C894.125 957.894 894.125 957.106 893.644 956.625L889.569 952.55" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <path d="M825.401 885.908L822.256 882.842C823.477 881.345 824.068 879.446 823.908 877.534C823.748 875.623 822.849 873.844 821.397 872.564C819.944 871.284 818.047 870.6 816.097 870.652C814.147 870.704 812.291 871.49 810.912 872.846C809.532 874.202 808.734 876.027 808.68 877.944C808.627 879.861 809.323 881.726 810.625 883.155C811.927 884.583 813.736 885.467 815.68 885.624C817.625 885.781 819.556 885.2 821.078 884L824.197 887.067C824.276 887.145 824.37 887.207 824.473 887.249C824.576 887.291 824.687 887.313 824.799 887.313C824.911 887.313 825.022 887.291 825.125 887.249C825.228 887.207 825.322 887.145 825.401 887.067C825.554 886.911 825.639 886.704 825.639 886.487C825.639 886.271 825.554 886.064 825.401 885.908ZM816.323 884C815.15 884 814.003 883.658 813.027 883.017C812.051 882.376 811.291 881.465 810.842 880.399C810.393 879.333 810.275 878.16 810.504 877.029C810.733 875.897 811.298 874.858 812.128 874.042C812.958 873.226 814.015 872.67 815.166 872.445C816.317 872.22 817.51 872.336 818.594 872.777C819.678 873.219 820.605 873.966 821.257 874.926C821.908 875.885 822.256 877.013 822.256 878.167C822.256 879.714 821.631 881.197 820.519 882.291C819.406 883.385 817.897 884 816.323 884Z" fill="white"/>
+            <g fill="white">
+            <rect x="842.5" y="871.508" width="6.325" height="6.325" rx="2.25"/>
+            <rect x="851.175" y="871.508" width="6.325" height="6.325" rx="2.25"/>
+            <rect x="842.5" y="880.175" width="6.325" height="6.325" rx="2.25"/>
+            <rect x="851.175" y="880.175" width="6.325" height="6.325" rx="2.25"/>
+            </g>
+        </svg>
+    </div>
+    <div class="abs flex-container" onscrollend="monkshu_env.components['card-view'].scrollEndHandler(this)">
+        {{#items}}
+        <div class="flex-child" id="_{{id}}" onclick="monkshu_env.components['card-view'].selectItemHandler(this)">
+            {{{flattenedHtml}}}
+        </div>
+        {{/items}}
+    </div>
+    <input type="text" class="abs spread-input" />
+    <div id="expand" class="abs" onclick="monkshu_env.components['card-view'].openModal(this)"></div>
+    <div id="allCardsModal" class="modal">
+        <span class="header">{{name}}</span>
+        <div class="searchbox">
+            <input placeholder="search" type="text" onkeyup="monkshu_env.components['all-cards'].search(this)">
+            <img src="./img/search.svg">
+        </div>
+        <span id="closeModal"><img src="./img/cross.svg"></span>
+        <div class="modal-content">
+            <all-cards/>
+        </div>
+    </div>
+    <div id="backdrop" class="backdrop"></div>

@@ -1,0 +1,38 @@
+<style>
+    body{
+        height: 100%;
+        margin: 0;
+        overscroll-behavior: contain;
+    }
+    .cardsContainer{
+        overflow-y: scroll;
+        height: 100%;
+        overscroll-behavior: contain;
+    }
+    .cardsContainer::-webkit-scrollbar {
+        width: 0em;
+    }
+    .rowFlex{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .flex-child {
+        width: 11.6%;
+        padding: 1rem;
+        aspect-ratio: 1;
+        box-sizing: border-box;
+    }
+    .selected{
+        border: 1px solid white;
+        filter: drop-shadow(0 0 0.2rem rgba(255, 255, 255, 0.7));
+    }
+</style>
+<div class="cardsContainer rowFlex">
+    {{#items}}
+    <div class='flex-child {{#selected-item}}selected{{/selected-item}}' id="_{{id}}" onclick="monkshu_env.components['card-view'].selectItemHandler(this, 'all-cards')">
+    {{{flattenedHtml}}}
+    </div>
+    {{/items}}
+</div>
