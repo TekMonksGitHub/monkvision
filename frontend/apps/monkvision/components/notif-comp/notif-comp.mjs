@@ -3,13 +3,39 @@
  * License: MIT - see enclosed license.txt file.
  */
 
-import { main } from "./../../js/main.mjs";
+import {main} from "./../../js/main.mjs";
 
 /**
  * component usage in html
- <notif-comp id="2" data-status-text="WARNING" data-head1="(OS Metric) Status of Node/Host" data-head2="(OS Metric) Status of Node/Host" data-head3="(OS Metric) Status of Node/Host" data-warning="true" data-color="yellow" data-long1="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero. Maecenas tempus erat pharetra nisl maximus tincidunt at quis massa. Vivamus ullamcorper ut ligula ut rutrum." data-short1="Email sent to: abhinav@mail.com" data-long2="Torem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero. Maecenas tempus erat pharetra nisl maximus tincidunt at quis massa. Vivamus ullamcorper ut ligula ut rutrum." data-short2="Email sent to: abhinav2@mail.com" data-long3="Morem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero. Maecenas tempus erat pharetra nisl maximus tincidunt at quis massa. Vivamus ullamcorper ut ligula ut rutrum." data-short3="Email sent to: abhinav3@mail.com"></notif-comp>
- <notif-comp id="3" data-status-text="CRITICAL" data-head1="(OS Metric) Status of Node/Host" data-head2="(OS Metric) Status of Node/Host" data-head3="(OS Metric) Status of Node/Host" data-critical="true" data-color="red" data-long1="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero. Maecenas tempus erat pharetra nisl maximus tincidunt at quis massa. Vivamus ullamcorper ut ligula ut rutrum." data-short1="Email sent to: abhinav@mail.com" data-long2="Torem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero. Maecenas tempus erat pharetra nisl maximus tincidunt at quis massa. Vivamus ullamcorper ut ligula ut rutrum." data-short2="Email sent to: abhinav2@mail.com" data-long3="Morem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero. Maecenas tempus erat pharetra nisl maximus tincidunt at quis massa. Vivamus ullamcorper ut ligula ut rutrum." data-short3="Email sent to: abhinav3@mail.com"></notif-comp> 
- <notif-comp id="third" data-status-text="System Notification (Today)" data-head1="(OS Metric) Status of Node/Host" data-head2="(OS Metric) Status of Node/Host" data-head3="(OS Metric) Status of Node/Host" data-system="true" data-color="white" data-long1="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero. Maecenas tempus erat pharetra nisl maximus tincidunt at quis massa. Vivamus ullamcorper ut ligula ut rutrum." data-short1="Email sent to: abhinav@mail.com" data-long2="Torem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero. Maecenas tempus erat pharetra nisl maximus tincidunt at quis massa. Vivamus ullamcorper ut ligula ut rutrum." data-short2="Email sent to: abhinav2@mail.com" data-long3="Morem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero. Maecenas tempus erat pharetra nisl maximus tincidunt at quis massa. Vivamus ullamcorper ut ligula ut rutrum." data-short3="Email sent to: abhinav3@mail.com"></notif-comp>
+ <notif-comp id="2" data-status-text="WARNING" data-head1="(OS Metric) Status of Node/Host" 
+    data-head2="(OS Metric) Status of Node/Host" data-head3="(OS Metric) Status of Node/Host" 
+    data-warning="true" data-color="yellow" 
+    data-long1="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero." 
+    data-short1="Email sent to: abhinav@mail.com" 
+    data-long2="Torem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero." 
+    data-short2="Email sent to: abhinav2@mail.com" 
+    data-long3="Morem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero. " 
+    data-short3="Email sent to: abhinav3@mail.com">
+</notif-comp>
+ <notif-comp id="3" data-status-text="CRITICAL" data-head1="(OS Metric) Status of Node/Host" 
+    data-head2="(OS Metric) Status of Node/Host" data-head3="(OS Metric) Status of Node/Host" 
+    data-critical="true" data-color="red" 
+    data-long1="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero." 
+    data-short1="Email sent to: abhinav@mail.com" 
+    data-long2="Torem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero." 
+    data-short2="Email sent to: abhinav2@mail.com" 
+    data-long3="Morem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero. " 
+    data-short3="Email sent to: abhinav3@mail.com"></notif-comp> 
+ <notif-comp id="third" data-status-text="System Notification (Today)" 
+    data-head1="(OS Metric) Status of Node/Host" data-head2="(OS Metric) Status of Node/Host" 
+    data-head3="(OS Metric) Status of Node/Host" data-system="true" data-color="white" 
+    data-long1="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero." 
+    data-short1="Email sent to: abhinav@mail.com" 
+    data-long2="Torem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero." 
+    data-short2="Email sent to: abhinav2@mail.com" 
+    data-long3="Morem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis nisl libero. " 
+    data-short3="Email sent to: abhinav3@mail.com">
+</notif-comp>
  */
 
 

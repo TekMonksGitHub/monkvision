@@ -1,0 +1,6 @@
+{
+    "host": "{{{hostname}}}",
+    "ssl": true,
+    "sslKeyFile": "/Users/rvkapoor/Documents/Programs/source/etc/dnsip_privkey.pem",
+    "sslCertFile": "/Users/rvkapoor/Documents/Programs/source/etc/dnsip_fullchain.pem"
+}

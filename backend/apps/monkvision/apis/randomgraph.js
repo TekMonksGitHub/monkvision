@@ -12,7 +12,7 @@ const utils = require(`${APP_CONSTANTS.LIB_DIR}/utils.js`);
  *                  numentries - The number of entries needed
  *                  numys - The number of Ys required
  *                  yrange - The range for Ys
- *                  timeRange - String in this format -> `{from:"UTC Time", to: "UTC Time"}`
+ *                  timeRange - {from:"UTC Time", to: "UTC Time"}
  *                  
  *              Optionally
  *                  notUTC - Return results in server's local time not UTC
@@ -20,7 +20,6 @@ const utils = require(`${APP_CONSTANTS.LIB_DIR}/utils.js`);
 exports.doService = async jsonReq => {
     if (!validateRequest(jsonReq)) {LOG.error("Validation failure."); return CONSTANTS.FALSE_RESULT;}
     jsonReq.yrange = {from: parseInt(jsonReq.yrange.split("-")[0]), to: parseInt(jsonReq.yrange.split("-")[1])}; 
-    jsonReq.timeRange = JSON.parse(jsonReq.timeRange);
     
     const x = _getRandomTimes(jsonReq.timeRange, jsonReq.numentries, jsonReq.notUTC), 
         ys = _getRandomYs(jsonReq.numys, jsonReq.numentries, jsonReq.yrange), 

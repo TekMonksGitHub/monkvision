@@ -17,7 +17,7 @@ const utils = require(`${APP_CONSTANTS.LIB_DIR}/utils.js`);
  * time adjustment flag is specified. Query is variable and a parameter.
  * @param {object} jsonReq Incoming request, must have the following
  *                  id - query file ID
- *                  timeRange - String in this format -> `{from:"UTC Time", to: "UTC Time"}`
+ *                  timeRange - {from:"UTC Time", to: "UTC Time"}
  *                  
  *              Optionally
  *                  nullValue - If additonal status is null or empty return it as this value
@@ -26,7 +26,7 @@ const utils = require(`${APP_CONSTANTS.LIB_DIR}/utils.js`);
 exports.doService = async jsonReq => {
 	if (!validateRequest(jsonReq)) {LOG.error("Validation failure."); return CONSTANTS.FALSE_RESULT;}
     
-    const queryParams = _getAdditionalQueryParams(jsonReq); const timeRange = utils.getTimeRangeForSQLite(JSON.parse(jsonReq.timeRange));
+    const queryParams = _getAdditionalQueryParams(jsonReq); const timeRange = utils.getTimeRangeForSQLite(jsonReq.timeRange);
     queryParams.$from = timeRange.from; queryParams.$to = timeRange.to;
     const rows = await db.runGetQueryFromID(jsonReq.id, queryParams);
     if (!rows) {LOG.error("DB read issue"); return CONSTANTS.FALSE_RESULT;}

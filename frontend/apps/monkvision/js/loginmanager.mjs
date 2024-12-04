@@ -3,7 +3,6 @@
  * License: MIT - see enclosed license.txt file.
  */
 import {application} from "./application.mjs";
-import {router} from "/framework/js/router.mjs";
 import {session} from "/framework/js/session.mjs";
 import {securityguard} from "/framework/js/securityguard.mjs";
 import {apimanager as apiman} from "/framework/js/apimanager.mjs";
@@ -24,7 +23,6 @@ async function signin(id, pass) {
                 session.set(APP_CONSTANTS.USERNAME, resp.name);
                 session.set(APP_CONSTANTS.USERORG, resp.org);
                 securityguard.setCurrentRole(resp.role);
-                startAutoLogoutTimer();
                 resolve(true);
             } else {LOG.error(`Login failed for ${id}`); resolve(false);}
         });
@@ -72,13 +70,13 @@ async function logout() {
 }
 
 function startAutoLogoutTimer() {
-    router.addOnLoadPage(startAutoLogoutTimer);
-
     if (!session.get(APP_CONSTANTS.USERID)) return; // not logged in
     
     const events = ["load", "mousemove", "mousedown", "click", "scroll", "keypress"];
-    const resetTimer = _=> {_stoptAutoLogoutTimer(); currTimeout = setTimeout(_=>{
-        LOG.error("Auto logout on timeout"); logout()}, APP_CONSTANTS.TIMEOUT);}
+    const resetTimer = _=> {
+        _stoptAutoLogoutTimer(); 
+        currTimeout = setTimeout(_=>{LOG.error("Auto logout on timeout"); logout();}, APP_CONSTANTS.TIMEOUT);
+    }
     for (const event of events) {document.addEventListener(event, resetTimer);}
     resetTimer();   // start the timing
 }

@@ -6,8 +6,7 @@
  */
 const util = require("util");
 const sqlite3 = require("sqlite3");
-const DB_QUERIES = require(`${APP_CONSTANTS.CONF_DIR}/monkvision.json`).queries;
-const DB_PATH = require("path").resolve(require(`${APP_CONSTANTS.CONF_DIR}/monkvision.json`).db);
+const monkvisionconf = require(`${APP_CONSTANTS.CONF_DIR}/monkvision.json`);
 
 let dbInstance, dbRunAsync, dbAllAsync;
 
@@ -67,7 +66,7 @@ exports.getQuery = async(cmd, params=[]) => {
  * @param {string} id The query ID
  * @param {array} params The params for the SQL
  */
-exports.runGetQueryFromID = async (id, params=[]) => await exports.getQuery(DB_QUERIES[id], params);
+exports.runGetQueryFromID = async (id, params=[]) => await exports.getQuery(monkvisionconf.queries[id], params);
 
 exports.init = async _ => await _initDB();
 
@@ -77,7 +76,7 @@ async function _initDB() {
 
 function _openDB() {
     return new Promise(resolve => {
-		if (!dbInstance) dbInstance = new sqlite3.Database(DB_PATH, sqlite3.OPEN_READWRITE|sqlite3.OPEN_CREATE, err => {
+		if (!dbInstance) dbInstance = new sqlite3.Database(monkvisionconf.db, sqlite3.OPEN_READWRITE|sqlite3.OPEN_CREATE, err => {
             if (err) {LOG.error(`Error opening DB, ${err}`, true); resolve(false);} 
             else {
                 dbRunAsync = util.promisify(dbInstance.run.bind(dbInstance)); 

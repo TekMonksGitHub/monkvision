@@ -10,7 +10,7 @@ const utils = require(`${APP_CONSTANTS.LIB_DIR}/utils.js`);
 exports.doService = async jsonReq => {
 	if (!validateRequest(jsonReq)) {LOG.error("Validation failure."); return CONSTANTS.FALSE_RESULT;}
 	
-	const rows = await db.getAlerts(utils.getTimeRangeForSQLite(JSON.parse(jsonReq.timeRange)));
+	const rows = await db.getAlerts(utils.getTimeRangeForSQLite(jsonReq.timeRange));
     if (!rows) {LOG.error(`DB read issue: ${err}`); return CONSTANTS.FALSE_RESULT;}
     
     let contents = [];

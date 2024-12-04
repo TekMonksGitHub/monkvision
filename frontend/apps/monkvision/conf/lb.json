@@ -1,11 +1,11 @@
 {
     "backends": {
-        "endpoints": ["localhost"],
+        "endpoints": [],
         "balancing_algorithm": "roundrobin"
     },
 
     "frontends": {
-        "endpoints": ["localhost"],
+        "endpoints": [],
         "balancing_algorithm": "roundrobin"
     }
 }

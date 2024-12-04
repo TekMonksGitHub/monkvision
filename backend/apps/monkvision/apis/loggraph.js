@@ -11,11 +11,11 @@ const utils = require(`${APP_CONSTANTS.LIB_DIR}/utils.js`);
  * time adjustment flag is specified. 
  * @param {object} jsonReq Incoming request, must have the following
  *                  id - The ID of the log
- *                  timeRange - String in this format -> `{from:"UTC Time", to: "UTC Time"}`
+ *                  timeRange - {from:"UTC Time", to: "UTC Time"}
  *                  
  *              Optionally
  *                  statusFalseValue - If status is false, then return it as this value, used only if statusAsBoolean - false
- *                  statusTrueeValue - If status is true, then return it as this value, used only if statusAsBoolean - false
+ *                  statusTrueValue - If status is true, then return it as this value, used only if statusAsBoolean - false
  *                  statusAsBoolean - Return status as a boolean variable, not values
  *                  nullValue - If additonal status is null or empty return it as this value
  *                  notUTC - Return results in server's local time not UTC
@@ -23,7 +23,7 @@ const utils = require(`${APP_CONSTANTS.LIB_DIR}/utils.js`);
 exports.doService = async jsonReq => {
 	if (!validateRequest(jsonReq)) {LOG.error("Validation failure."); return CONSTANTS.FALSE_RESULT;}
     
-    const rows = await db.getLogs(jsonReq.id, utils.getTimeRangeForSQLite(JSON.parse(jsonReq.timeRange)));
+    const rows = await db.getLogs(jsonReq.id, utils.getTimeRangeForSQLite(jsonReq.timeRange));
     if (!rows) {LOG.error("DB read issue"); return CONSTANTS.FALSE_RESULT;}
 
     const x = [], y = [], info = [], falseStatusValue = jsonReq.statusFalseValue?jsonReq.statusFalseValue:0.1,

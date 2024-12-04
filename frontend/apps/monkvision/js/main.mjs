@@ -17,17 +17,25 @@ const SELECTED_DATES = "__monkvision_selecteddates", DASHBOARD_TIMER = "__monkvi
 
 const dateAsHTMLDateValue = date => new Date(date.toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
 
-async function timeRangeUpdated(stopRefresh, selectedValue) {
+async function timeRangeUpdated(stopRefresh, selectedValue, fromPastInterval) {
     const timePicker = document.getElementById('timepicker');
     let dates;
     if (selectedValue) {
         dates = {
-            from: dateAsHTMLDateValue(new Date(new Date().getTime() - selectedValue)),
+            from: selectedValue.from,
             to: dateAsHTMLDateValue(new Date())
         };
         document.querySelector("input#datetimepickerfrom").value = dates.from;
         document.querySelector("input#datetimepickerto").value = dates.to;
-    } else {
+    } else if (fromPastInterval) {
+        dates = {
+            from: dateAsHTMLDateValue(new Date(Date.now() - fromPastInterval)),
+            to: dateAsHTMLDateValue(new Date())
+        };
+        document.querySelector("input#datetimepickerfrom").value = dates.from;
+        document.querySelector("input#datetimepickerto").value = dates.to;
+    }
+    else {
         dates = {
             from: document.querySelector("input#datetimepickerfrom").value,
             to: document.querySelector("input#datetimepickerto").value

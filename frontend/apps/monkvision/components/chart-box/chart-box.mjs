@@ -225,7 +225,7 @@ async function _getContent(api, params) {
 	const resp = await apiman.rest(API_TO_CALL, "GET", paramObj, true, false);
 
 	if (resp && resp.type=="text" && resp.contents && resp.contents.length) for (const [i,line] of resp.contents.entries())
-		resp.contents[i] = _escapeHTML(line).replace(/(?:\r\n|\r|\n)/g, '<br>');
+		resp.contents[i] = _escapeHTML(line.trim()).replace(/(?:\r\n|\r|\n)/g, '<br>');
 
 	return resp;
 }

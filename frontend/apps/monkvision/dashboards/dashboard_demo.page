@@ -1,0 +1,60 @@
+SCHEMA
+======
+{
+    "alerts": {"html":"chart-box", "id":"alerts", "title":"{{i18n.CriticalAlerts}}", "api":"alerts", 
+        "type":"text",
+        "styleBody":"div#container{height: calc(100vh - 105px) !important;} div#container > p {margin-bottom: 0.8em;} div#content {height: calc(100% - 26em);} div#textcontent:nth-child(odd){background-color:{{AlertsBackground}}} div#textcontent:nth-child(even){background-color:{{AlertsBackgroundLight}}} div#content > div#textcontent > span#text > p:hover {background-color: unset}"},
+
+ 
+    "httpBar": {"html":"chart-box", "id":"httpBar", "title":"Nginx Server", "api":"loggraph", 
+        "type":"bargraph", 
+        "maxticks":5, "ysteps":"[0.10]", "ylabels":"[1:{{i18n.OK}},0:{{i18n.Issue}},else:]", 
+        "ycolors":"[0.1:{{yColors1}},else:{{yColors2}}]", "yAtZeros":"[true]", "gridLines":"true",
+        "labelColor":"{{LabelColor}}", "gridColor":"{{GridColor}}",
+        "styleBody": "div#content{overflow-y: hidden}",
+        "params":"id=http_mon_159.223.108.172_159.223.108.172_80&statusAsBoolean=false&statusFalseValue=0.1&statusTrueValue=1&nullValue={{i18n.none}}"},
+
+    "dbBar": {"html":"chart-box", "id":"dbBar", "title":"MariaDB Server", "api":"loggraph", 
+        "type":"bargraph", 
+        "maxticks":5, "ysteps":"[0.10]", "ylabels":"[1:{{i18n.OK}},0:{{i18n.Issue}},else:]", 
+        "ycolors":"[0.1:{{yColors1}},else:{{yColors2}}]", "yAtZeros":"[true]", "gridLines":"true",
+        "labelColor":"{{LabelColor}}", "gridColor":"{{GridColor}}",
+        "styleBody": "div#content{overflow-y: hidden}",
+        "params":"id=ping_mon_159.223.108.172_159.223.108.172_5606&statusAsBoolean=false&statusFalseValue=0.1&statusTrueValue=1&nullValue={{i18n.none}}"}
+}
+======
+
+
+LAYOUT
+=================
+------------------------
+| httpBar     | dbBar  |
+|-----------------------
+|         alerts       |
+|----------------------|
+=================
+Row Heights = calc(50vh - 33px),calc(50vh - 33px)
+Col Widths = 50%,50%
+=================
+
+
+CSS CLASSES
+===========
+CONTAINER CLASSES = grid-container-extension
+ITEM CLASSES = grid-item-extension
+PER ITEM CLASS = class
+===========
+
+
+CSS
+=======
+body {margin: 0;}
+.grid-item-extension {
+    box-shadow:  0 0 1px rgba(34, 25, 25, 0.4);
+    border-radius: 10px;
+    margin: 5px;
+    background-color: {{GridItemBackground}};
+    color: {{GridItemColor}};
+    border: {{GridItemBorder}};
+}
+=======

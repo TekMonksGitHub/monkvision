@@ -1,9 +1,6 @@
 {
-    "db": "c:/Users/Rohit Kapoor/source/cyberwarrior/db/cyberwarrior.db",
+    "db": "/Users/rvkapoor/Documents/Programs/source/monboss/db/monboss.db",
     "queries": {
-        "clientAttacksBanner": "select cast(sum(status) as float)*100/count(status) as percent from logs where timestamp > $from and timestamp < $to",
-        "clientAttacksPie": "select sum(status) as y1, count(status) - sum(status) as y0, $issues y0_info, $none as y1_info from logs where timestamp > $from and timestamp < $to",
-        "overallBars": "select timestamp as x, case round(sum(status)*100/count(status)) when 0 then $zeroReplacement else round(sum(status)*100/count(status)) end as y0, group_concat(case when status=0 then additional_status end) as info0 from logs where timestamp > $from and timestamp < $to group by round(strftime('%s',timestamp)/$timeStep)",
-        "specificBars": "select timestamp as x, case round(sum(status)*100/count(status)) when 0 then $zeroReplacement else round(sum(status)*100/count(status)) end as y0, group_concat(case when status=0 then additional_status end) as info0 from logs where timestamp > $from and timestamp < $to and logid=$logid group by round(strftime('%s',timestamp)/$timeStep)"
+        "barQuery": "select timestamp as x, status as y, from logs where timestamp > $from and timestamp < $to and logid=$logid"
     }
 }

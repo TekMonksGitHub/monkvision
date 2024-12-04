@@ -1,5 +1,3 @@
 {
-    "dash1":"dashboard_summary_cyberwarrior.page,refresh:5000",
-    "dash2":"dashboard_details_cyberwarrior.page,refresh:5000",
-    "dash3":"dashboard_details_cyberwarrior2.page,refresh:5000"
+    "dash1":"dashboard_demo.page,refresh:5000"
 }
