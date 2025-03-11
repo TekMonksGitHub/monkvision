@@ -1,0 +1,429 @@
+
+    <div style="display: flex;flex-direction: row;width: 100%;">
+        <style>
+            .font{
+                font-family: 'ubuntu';
+                color: #FFFFFF;
+                font-weight: 400;
+            }
+              /* Hide the scrollbar for webkit-based browsers */
+              div::-webkit-scrollbar {
+                width: 0.5em;
+            }
+    
+            div::-webkit-scrollbar-track {
+                background: transparent;
+            }
+    
+            div::-webkit-scrollbar-thumb {
+                background: transparent;
+            }
+            @media only screen and (min-width: 1000px) and (max-width:1500px){
+
+                .left-container{
+                    width:50%;
+                    flex-direction: column;
+                    position: relative;
+                    height: 60vh;
+                }
+                .left-component{
+                    padding-top: 1em;
+                    position: relative;
+                }
+                .right-container{
+                    width:50%;
+                    flex-direction: column;
+                    margin-left: 2em;
+                    position: relative;
+                    height: 75vh;
+                }
+                .right-component{
+                    padding-top: 1em;
+                    position: relative;
+                }
+                .right-component-container{
+                    width:100%;
+                    flex-direction: column;
+                    margin-left: 2em;
+                    position: absolute;
+                    height: 60vh;
+                    overflow: auto;
+                    margin-top: 3em;
+                }
+                .arrow-up{
+                    height: 2em;position: absolute;top: 0em; left: 1em;
+                }
+                .arrow-down{
+                    height: 2em;position: absolute;bottom:2em;left: 1em;
+                }
+                .left-component-container-image{
+                    width: 100%;
+                }
+                .left-component-alert-image{
+                    width: 1.5em;position: absolute;top: 1.5em;left: 1em;
+                }
+                .left-component-status{
+                    position: absolute;top: 1.5em;left: 4em;font-size: 12px;
+                }
+                .left-component-system{
+                    position: absolute;top: 3em;left: 3.8em;font-size: 0.8em;
+                    
+                }
+                .left-component-info{
+                    
+                    position: absolute;
+                    top: 5.5em;
+                    left: 4.8em;
+                    font-size: 10px;
+                    max-width: 45em;
+                }
+                .left-component-email{
+                    position: absolute;bottom: 1.5em;left: 4.8em;font-size: 10px;max-width: 46em;
+                    
+                }
+                .right-component-container-image{
+                    width: 100%;
+                }
+                .right-component-setting-image{
+                    width: 1.5em;position: absolute;top: 1.5em;left: 1em;
+                }
+                .right-component-status{
+                    position: absolute;top: 1.5em;left: 4em;font-size: 12px;
+                }
+                .right-component-system{
+                    
+                    position: absolute;
+                    top: 3em;
+                    left: 3.8em;
+                    font-size: 0.8em;
+                }
+                .right-component-info{
+                    position: absolute;top: 6em;left: 4.8em;font-size: 10px;max-width: 45em;
+                    position: absolute;
+   
+                }
+               
+            }
+            @media only screen and (min-width: 1501px) and (max-width:2000px){
+
+                .left-container{
+                    width:50%;
+                    flex-direction: column;
+                    position: relative;
+                    height: 60vh;
+                }
+                .left-component{
+                    padding-top: 1em;
+                    position: relative;
+                }
+                .right-container{
+                    width:50%;
+                    flex-direction: column;
+                    margin-left: 2em;
+                    position: relative;
+                    height: 75vh;
+                }
+                .right-component{
+                    padding-top: 1em;
+                    position: relative;
+                }
+                .right-component-container{
+                    width:100%;
+                    flex-direction: column;
+                    margin-left: 2em;
+                    position: absolute;
+                    height: 60vh;
+                    overflow: auto;
+                    margin-top: 3em;
+                }
+                .arrow-up{
+                    height: 2em;position: absolute;top: 0em; left: 1em;
+                }
+                .arrow-down{
+                    height: 2em;position: absolute;bottom:2em;left: 1em;
+                }
+                .left-component-container-image{
+                    width: 85%;
+                }
+                .left-component-alert-image{
+                    width: 1.5em;position: absolute;top: 1.5em;left: 1em;
+                }
+                .left-component-status{
+                    position: absolute;top: 1.5em;left: 4em;font-size: 12px;
+                }
+                .left-component-system{
+                    position: absolute;top: 3em;left: 3em;
+                }
+                .left-component-info{
+                    position: absolute;top: 7.5em;left: 4.8em;font-size: 10px;max-width: 70%;
+                }
+                .left-component-email{
+                    position: absolute;bottom: 1.5em;left: 4.8em;font-size: 10px;max-width: 46em
+                }
+                .right-component-container-image{
+                    width: 85%;
+                }
+                .right-component-setting-image{
+                    width: 1.5em;position: absolute;top: 1.5em;left: 1em;
+                }
+                .right-component-status{
+                    position: absolute;top: 1.5em;left: 4em;font-size: 12px;
+                }
+                .right-component-system{
+                    position: absolute;top: 3em;left: 3em;
+                }
+                .right-component-info{
+                    position: absolute;top: 7.5em;left: 4.8em;font-size: 10px;max-width: 70%;
+                }
+
+            }
+            @media only screen and (min-width: 2001px) and (max-width:2500px){
+
+                .left-container{
+                    width:50%;
+                    flex-direction: column;
+                    position: relative;
+                    height: 60vh;
+                }
+                .left-component{
+                    padding-top: 1em;
+                    position: relative;
+                }
+                .right-container{
+                    width:50%;
+                    flex-direction: column;
+                    margin-left: 2em;
+                    position: relative;
+                    height: 75vh;
+                }
+                .right-component{
+                    padding-top: 1em;
+                    position: relative;
+                }
+                .right-component-container{
+                    width:100%;
+                    flex-direction: column;
+                    margin-left: 2em;
+                    position: absolute;
+                    height: 60vh;
+                    overflow: auto;
+                    margin-top: 3em;
+                }
+                .arrow-up{
+                    height: 2em;position: absolute;top: 0em; left: 1em;
+                }
+                .arrow-down{
+                    height: 2em;position: absolute;bottom:2em;left: 1em;
+                }
+                .left-component-container-image{
+                    width: 100%;
+                }
+                .left-component-alert-image{
+                    width: 1.5em;position: absolute;top: 1.5em;left: 1em;
+                }
+                .left-component-status{
+                    position: absolute;top: 1.5em;left: 4em;font-size: 12px;
+                }
+                .left-component-system{
+                    position: absolute;top: 3em;left: 3em;
+                }
+                .left-component-info{
+                    position: absolute;top: 7.5em;left: 4.8em;font-size: 10px;max-width: 46em
+                }
+                .left-component-email{
+                    position: absolute;bottom: 1.5em;left: 4.8em;font-size: 10px;max-width: 46em
+                }
+                .right-component-container-image{
+                    width: 100%;
+                }
+                .right-component-setting-image{
+                    width: 1.5em;position: absolute;top: 1.5em;left: 1em;
+                }
+                .right-component-status{
+                    position: absolute;top: 1.5em;left: 4em;font-size: 12px;
+                }
+                .right-component-system{
+                    position: absolute;top: 3em;left: 3em;
+                }
+                .right-component-info{
+                    position: absolute;top: 7.5em;left: 4.8em;font-size: 10px;max-width: 46em;
+                }
+
+            }
+            @media only screen and (min-width: 2501px) and (max-width:3000px){
+
+                .left-container{
+                    width:50%;
+                    flex-direction: column;
+                    position: relative;
+                    height: 60vh;
+                }
+                .left-component{
+                    padding-top: 1em;
+                    position: relative;
+                }
+                .right-container{
+                    width:50%;
+                    flex-direction: column;
+                    margin-left: 2em;
+                    position: relative;
+                    height: 75vh;
+                }
+                .right-component{
+                    padding-top: 1em;
+                    position: relative;
+                }
+                .right-component-container{
+                    width:100%;
+                    flex-direction: column;
+                    margin-left: 2em;
+                    position: absolute;
+                    height: 60vh;
+                    overflow: auto;
+                    margin-top: 3em;
+                }
+                .arrow-up{
+                    height: 2em;position: absolute;top: 0em; left: 1em;
+                }
+                .arrow-down{
+                    height: 2em;position: absolute;bottom:2em;left: 1em;
+                }
+                .left-component-container-image{
+                    width: 100%;
+                }
+                .left-component-alert-image{
+                    width: 1.5em;position: absolute;top: 1.5em;left: 1em;
+                }
+                .left-component-status{
+                    position: absolute;top: 1.5em;left: 4em;font-size: 12px;
+                }
+                .left-component-system{
+                    position: absolute;top: 3em;left: 3em;
+                }
+                .left-component-info{
+                    position: absolute;top: 7.5em;left: 4.8em;font-size: 10px;max-width: 46em
+                }
+                .left-component-email{
+                    position: absolute;bottom: 1.5em;left: 4.8em;font-size: 10px;max-width: 46em
+                }
+                .right-component-container-image{
+                    width: 100%;
+                }
+                .right-component-setting-image{
+                    width: 1.5em;position: absolute;top: 1.5em;left: 1em;
+                }
+                .right-component-status{
+                    position: absolute;top: 1.5em;left: 4em;font-size: 12px;
+                }
+                .right-component-system{
+                    position: absolute;top: 3em;left: 3em;
+                }
+                .right-component-info{
+                    position: absolute;top: 7.5em;left: 4.8em;font-size: 10px;max-width: 46em;
+                }
+
+            }
+            @media only screen and (min-width: 3001px){
+
+                .left-container{
+                    width:50%;
+                    flex-direction: column;
+                    position: relative;
+                    height: 60vh;
+                }
+                .left-component{
+                    padding-top: 1em;
+                    position: relative;
+                }
+                .right-container{
+                    width:50%;
+                    flex-direction: column;
+                    margin-left: 2em;
+                    position: relative;
+                    height: 75vh;
+                }
+                .right-component{
+                    padding-top: 1em;
+                    position: relative;
+                }
+                .right-component-container{
+                    width:100%;
+                    flex-direction: column;
+                    margin-left: 2em;
+                    position: absolute;
+                    height: 60vh;
+                    overflow: auto;
+                    margin-top: 3em;
+                }
+                .arrow-up{
+                    height: 2em;position: absolute;top: 0em; left: 1em;
+                }
+                .arrow-down{
+                    height: 2em;position: absolute;bottom:2em;left: 1em;
+                }
+                .left-component-container-image{
+                    width: 100%;
+                }
+                .left-component-alert-image{
+                    width: 1.5em;position: absolute;top: 1.5em;left: 1em;
+                }
+                .left-component-status{
+                    position: absolute;top: 1.5em;left: 4em;font-size: 12px;
+                }
+                .left-component-system{
+                    position: absolute;top: 3em;left: 3em;
+                }
+                .left-component-info{
+                    position: absolute;top: 7.5em;left: 4.8em;font-size: 10px;max-width: 46em
+                }
+                .left-component-email{
+                    position: absolute;bottom: 1.5em;left: 4.8em;font-size: 10px;max-width: 46em
+                }
+                .right-component-container-image{
+                    width: 100%;
+                }
+                .right-component-setting-image{
+                    width: 1.5em;position: absolute;top: 1.5em;left: 1em;
+                }
+                .right-component-status{
+                    position: absolute;top: 1.5em;left: 4em;font-size: 12px;
+                }
+                .right-component-system{
+                    position: absolute;top: 3em;left: 3em;
+                }
+                .right-component-info{
+                    position: absolute;top: 7.5em;left: 4.8em;font-size: 10px;max-width: 46em;
+                }
+
+                }
+        </style>    
+        <div class="left-container">  
+            {{#leftResults}}
+                <!-- <notif-comp></notif-comp> -->
+                <div class="left-component">
+                    <img src="./img/{{{status}}}_containerBox.svg" class="left-component-container-image">
+                    <img src="./img/alert.svg" class="left-component-alert-image">
+                    <p class="font left-component-status" >{{{status}}}</p>
+                    <p class="font left-component-system" >{{{system}}}</p>
+                    <p class="font left-component-info" >{{{info}}}</p>
+                    <p class="font left-component-email" >Email sent to:{{{email}}}</p>
+                </div>
+            {{/leftResults}}
+        </div>
+        <div class="right-container">
+            <img src="./img/arrow_up.svg" class="arrow-up">
+            <div class="right-component-container">
+                {{#rightResults}}
+                    <!-- <notif-comp></notif-comp> -->
+                    <div class="right-component">
+                        <img src="./img/notif_box.svg" class="right-component-container-image">
+                        <img src="./img/Setting.svg" class="right-component-setting-image">
+                        <p class="font right-component-status" >{{{status}}}</p>
+                        <p class="font right-component-system" >{{{system}}}</p>
+                        <p class="font right-component-info" >{{{info}}}</p>
+                    </div>
+                {{/rightResults}}
+            </div>
+            <img src="./img/arrow_down.svg" class="arrow-down">
+        </div>
+    </div>
