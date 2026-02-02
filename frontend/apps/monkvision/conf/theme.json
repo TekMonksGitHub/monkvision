@@ -64,16 +64,25 @@
     "main_css": {
         "*": "@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');",
         "body": "background-color: rgb(245, 247, 250); font-family: 'Raleway';",
-        "div#container": "background-color: rgb(245, 247, 250);",
-        "div#leftheader": "background-color: #45d19e;",
-        "div#leftheader > img.dashicon": "border: 0.5px solid #45d19e;",
-        "div#leftheader > img.dashicon:hover": "border-width: 0.5px; border-style: outset; border-color: white;",
-        "div#leftheader > img.dashicon.selected": "border-style: inset; border-width: 0.5px; border-color: white;",
-        "div#leftheader > span": "color: white; font-size: x-small; font-weight: 500;",
-        "span#header": "color: #41cf70; font-family: 'Raleway';",
-        "span#header > span#title": "font-size: 0.85em; font-weight: bold; background-color: white; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); color: rgba(0,0,0,0.75);",
+        "div#container": "background-color: rgb(245, 247, 250); border-top-left-radius: 20px; left: 72px; width: calc(100% - 72px); transition: left 0.25s ease, width 0.25s ease;",
+        "div#maincontent": "top: 95px; width: calc(95vw - 72px); height: calc(100vh - 95px); left: 30px;",
+        "div#leftheader": "background: linear-gradient(180deg, rgba(28, 32, 36, 0.95) 0%, rgba(20, 24, 28, 0.92) 100%); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding-top: 20px; width: 72px; box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15); transition: width 0.25s ease; overflow: hidden; z-index: 100;",
+        "div#leftheader:hover": "width: 240px;",
+        "div#leftheader > img.dashicon": "height: 24px; width: 24px; margin: 16px 24px; padding: 0; transition: all 0.2s ease; cursor: pointer; filter: brightness(0.85); position: relative;",
+        "div#leftheader > img.dashicon:hover": "filter: brightness(1.2) drop-shadow(0 0 8px rgba(65, 207, 112, 0.4)); transform: translateX(2px);",
+        "div#leftheader > img.dashicon.selected": "filter: brightness(1.2) drop-shadow(0 0 8px rgba(65, 207, 112, 0.6));",
+        "div#leftheader > img.dashicon.selected::before": "content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 3px; height: 32px; background: linear-gradient(180deg, #41cf70 0%, #2da35e 100%); border-radius: 0 2px 2px 0; box-shadow: 0 0 8px rgba(65, 207, 112, 0.5);",
+        "div#leftheader > span": "color: rgba(255, 255, 255, 0.7); margin-left: 80px; margin-top: -40px; padding-bottom: 20px; width: 140px; font-size: 0.75em; font-weight: 500; letter-spacing: 0.3px; white-space: nowrap; opacity: 0; transition: opacity 0.2s ease; display: block; position: relative;",
+        "div#leftheader:hover > span": "opacity: 1; transition: opacity 0.3s ease 0.1s;",
+        "div#leftheader > span:last-of-type": "margin-top: 0; padding-top: 0;",
+        "span#header": "top: 15px; left: 20px; color: #41cf70; width: calc(100% - 30px); font-family: 'Raleway';",
+        "span#header > img#textlogo": "height: 12px; width: 100px;",
+        "span#header > span#signoff": "margin-right: 20px;",
+        "span#header > span#signoff > img": "height: 30px; width: 30px;",
+        "span#header > span#title": "width: 300px; font-size: 0.85em; font-weight: bold; background-color: white; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); border-radius: 5px; padding: 5px; color: rgba(0,0,0,0.75);",
         "input#datetimepickerfrom, input#datetimepickerfrom:active, input#datetimepickerto, input#datetimepickerto:active, #timepicker":
-            "font-size: 0.8em; font-family: sans-serif; color: rgba(0,0,0,0.75); box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); border-style: none;"
+            "font-size: 0.8em; font-family: sans-serif; color: rgba(0,0,0,0.75);border-radius: 4px; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); padding: 2px; border-style: none;",
+        "span#header > img#playpause": "height: 30px; width: 30px;"
     },
     "main_i18n": {
         "en": {
@@ -103,9 +112,9 @@
     },
     "main_html_data": {
         "span-with-menu#gear": "styleBody='div.menuitem:hover{background: #45d19e !important; color: white !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -120px;}'",
-        "span-with-menu#gear>img": "style='height: 1.5em;width: 1.5em;vertical-align: middle;'",
+        "span-with-menu#gear>img": "style='height: 30px;width: 30px;vertical-align: middle;'",
         "span-with-menu#toggle-theme": "styleBody='div.menuitem:hover{background: #45d19e !important; color: white !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -40px;}'",
-        "span-with-menu#toggle-theme>img": "style='height: 1.5em;width: 1.5em;vertical-align: middle;'",
+        "span-with-menu#toggle-theme>img": "style='height: 30px;width: 30px;vertical-align: middle;'",
         "textlogo": "./img/textlogo_light.png",
         "dashicon": "./img/dashicon.svg",
         "AlertsBackground":"#ebfaf5",

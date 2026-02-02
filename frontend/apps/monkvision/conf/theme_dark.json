@@ -63,17 +63,22 @@
     
     "main_css": {
         "*": "@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');",
-        "body": "background-color: rgb(80, 80, 80); font-family: 'Raleway';",
-        "div#container": "background-color: rgb(30, 30, 30);",
-        "div#leftheader": "background-color: #514f4f;",
-        "div#leftheader > img.dashicon": "border: 0.5px solid #024086db;",
-        "div#leftheader > img.dashicon:hover": "border-width: 0.5px; border-style: outset; border-color: white;",
-        "div#leftheader > img.dashicon.selected": "border-style: inset; border-color: rgba(250,250,250,0.95);",
-        "div#leftheader > span": "color: rgba(250,250,250,0.95); font-size: x-small; font-weight: 500;",
-        "span#header": "color: #41cf70; font-family: 'Raleway';",
-        "span#header > span#title": "font-size: 0.85em; font-weight: bold; background-color: rgb(80,80,80); box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); color: rgba(250,250,250,0.95);",
+        "body": "background-color: #121821; font-family: 'Raleway';",
+        "div#container": "background-color: #121821; border-top-left-radius: 20px; left: 80px; width: calc(100% - 64px);",
+        "div#maincontent": "top: 95px; width: calc(95vw - 60px); height: calc(100vh - 95px); left: 30px;",
+        "div#leftheader": "background-color: #202525; padding-top: 40px;",
+        "div#leftheader > img.dashicon": "height: 48px; width: 48px; left: 7px; padding: 2px;",
+        "div#leftheader > img.dashicon:hover": "left: 7px; padding: 2px; border-radius: 5px; border-width: 0.5px; border-style: outset; border-color: white;",
+        "div#leftheader > img.dashicon.selected": "left: 7px; padding: 2px; border-style: inset; border-radius: 5px; border-width: 0.5px; border-color: rgba(250,250,250,0.95);",
+        "div#leftheader > span": "color: rgba(250,250,250,0.95); padding-bottom: 30px; width: 64px; left: 3px; font-size: smaller; font-weight: 500;",
+        "span#header": "top: 15px; left: 20px; color: #41cf70; width: calc(100% - 30px); font-family: 'Raleway';",
+        "span#header > img#textlogo": "height: 13px; width: 100px;",
+        "span#header > span#signoff": "margin-right: 20px;",
+        "span#header > span#signoff > img": "height: 30px; width: 30px;",
+        "span#header > span#title": "width: 300px; font-size: 0.85em; font-weight: bold; background-color: rgb(80,80,80); box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); border-radius: 5px; padding: 5px; color: rgba(250,250,250,0.95);",
         "input#datetimepickerfrom, input#datetimepickerfrom:active, input#datetimepickerto, input#datetimepickerto:active, #timepicker":
-            "font-size: 0.8em; font-family: sans-serif; background-color: rgb(80,80,80); color: rgba(250,250,250,0.95); box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); border-style: none;"
+            "font-size: 0.8em; font-family: sans-serif; background-color: rgb(80,80,80); color: rgba(250,250,250,0.95); border-radius: 4px; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); padding: 2px; border-style: none;",
+        "span#header > img#playpause": "height: 30px; width: 30px;"
     },
     "main_i18n": {
         "en": {
@@ -102,9 +107,9 @@
     },
     "main_html_data": {
         "span-with-menu#gear": "styleBody='div.menuitem{color: rgba(80,80,80,0.9)} div.menuitem:hover{background: #024086db !important; color: rgba(250,250,250,0.95) !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -120px;}'",
-        "span-with-menu#gear>img": "style='height: 1.5em;width: 1.5em;vertical-align: middle;'",
+        "span-with-menu#gear>img": "style='height: 30px;width: 30px;vertical-align: middle;'",
         "span-with-menu#toggle-theme": "styleBody='div.menuitem{color: rgba(80,80,80,0.9)} div.menuitem:hover{background: #024086db !important; color: rgba(250,250,250,0.95) !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -40px;}'",
-        "span-with-menu#toggle-theme>img": "style='height: 1.5em;width: 1.5em;vertical-align: middle;'",
+        "span-with-menu#toggle-theme>img": "style='height: 30px;width: 30px;vertical-align: middle;'",
         "textlogo": "./img/textlogo_dark.png",
         "dashicon": "./img/dashicon.svg",
         "exportCSVIcon": "./img/download_icon.svg",
@@ -125,9 +130,9 @@
         "thBoxShadowColor" : "#fafafa33",
         "trBackground" : "#505050",
         "themeIcon": "./img/theme_icon.svg",
-        "GridItemBackground": "rgb(30,30,30)",
+        "GridItemBackground": "#121821",
         "GridItemColor": "rgba(250,250,250,0.95)",
-        "GridItemBorder": "0.1px solid rgba(250,250,250,0.95)",
+        "GridItemBorder": "0.1px solid rgba(106,106,106,0.95)",
         "timeRangeMap":[{ "label":"Pick Timerange"},{ "label":"Last 1 Hour","value":"3600000"},{ "label":"Last 6 Hours","value":"21600000"},{ "label":"Last 1 day","value":"86400000"},{ "label":"Last 7 days","value":"604800000"},{ "label":"Last 30 days","value":"2592000000"}]
     },
     "pdf_report_css": {
