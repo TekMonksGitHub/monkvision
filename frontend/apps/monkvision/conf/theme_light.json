@@ -63,17 +63,29 @@
     
     "main_css": {
         "*": "@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');",
-        "body": "background-color: rgb(245, 247, 250); font-family: 'Raleway';",
-        "div#container": "background-color: rgb(245, 247, 250);",
-        "div#leftheader": "background-color: #45d19e;",
-        "div#leftheader > img.dashicon": "border: 0.5px solid #45d19e;",
-        "div#leftheader > img.dashicon:hover": "border-width: 0.5px; border-style: outset; border-color: white;",
-        "div#leftheader > img.dashicon.selected": "border-style: inset; border-width: 0.5px; border-color: white;",
-        "div#leftheader > span": "color: white; font-size: x-small; font-weight: 500;",
+        "body": "font-family: 'Raleway';",
+        "div#container": "background-color: rgb(245, 247, 250); margin-left: 58px; width: calc(100vw - 58px); padding: 1em 0.5em 1em 1em;",
+        "div#maincontent": "width: 100%; height: 100%;",
+        "div#leftheader": "background-color: #202525; padding-top: 40px; width: 58px;background:linear-gradient(180deg,rgba(13,17,23,0.98),rgba(11,15,20,0.96));border-right:1px solid rgba(255,255,255,0.06);box-shadow:2px 0 16px rgba(0,0,0,0.25);backdrop-filter:blur(12px);padding-top:10px;",
+        "div#leftheader > .dash-row > img.dashicon:hover": "border-radius: 5px; border-width: 0.5px; border-style: outset; border-color: white;",
+        "div#leftheader > .dash-row > img.dashicon.selected": "border-style: inset; border-radius: 5px; border-width: 0.5px; border-color: white;",
+        "div#leftheader > .dash-row > span.dashtitle": "color: white; font-size: 14px; font-weight: 500;",
+        "div#leftheader:hover": "width: 190px;",
+        "div#leftheader .dash-row:hover": "background:rgba(59,130,246,0.08);box-shadow:0 0 10px rgba(59,130,246,0.35);",
+        "div#leftheader .dash-row:hover::before": "content:'';position:absolute;left:0;top:8px;bottom:8px;width:3px;border-radius:2px;background:#3b82f6;box-shadow:0 0 6px rgba(59,130,246,0.6);",
+        "div#leftheader .dash-row .dashicon.selected": "filter:brightness(1.1) drop-shadow(0 0 6px rgba(59,130,246,0.6));",
         "span#header": "color: #41cf70; font-family: 'Raleway';",
-        "span#header > span#title": "font-size: 0.85em; font-weight: bold; background-color: white; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); color: rgba(0,0,0,0.75);",
+        "div#leftheader .dash-row": "height:46px;padding:0 10px;gap:12px;margin:4px 0;border-radius:8px;transition:background 0.2s ease,box-shadow 0.2s ease;",
+        "div#leftheader .dash-row .dashicon": "height:28px;width:28px;",
+        "div#leftheader .dash-row .dashtitle": "color:#1f2937;font-size:14px;font-weight:500;",
+        "span#header > img#textlogo": "height: 12px; width: 100px;",
+        "div#leftheader:not(:hover) .dash-row": "justify-content: flex-start; padding-left: 15px; padding-right: 0; gap: 0;",
+        "span#header > span#signoff": "margin-right: 20px;",
+        "span#header > span#signoff > img": "height: 30px; width: 30px;",
+        "span#header > span#title": "width: 300px; font-size: 0.85em; font-weight: bold; background-color: white; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); border-radius: 5px; padding: 5px; color: rgba(0,0,0,0.75);",
         "input#datetimepickerfrom, input#datetimepickerfrom:active, input#datetimepickerto, input#datetimepickerto:active, #timepicker":
-            "font-size: 0.8em; font-family: sans-serif; color: rgba(0,0,0,0.75); box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); border-style: none;"
+            "font-size: 0.8em; font-family: sans-serif; color: rgba(0,0,0,0.75);border-radius: 4px; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); padding: 2px; border-style: none;",
+        "span#header > img#playpause": "height: 30px; width: 30px;"
     },
     "main_i18n": {
         "en": {
@@ -103,9 +115,9 @@
     },
     "main_html_data": {
         "span-with-menu#gear": "styleBody='div.menuitem:hover{background: #45d19e !important; color: white !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -120px;}'",
-        "span-with-menu#gear>img": "style='height: 1.5em;width: 1.5em;vertical-align: middle;'",
+        "span-with-menu#gear>img": "style='height: 30px;width: 30px;vertical-align: middle;'",
         "span-with-menu#toggle-theme": "styleBody='div.menuitem:hover{background: #45d19e !important; color: white !important;} span#content > img:hover{filter: brightness(70%);transition: all 1s ease;} div#menu{margin-left: -40px;}'",
-        "span-with-menu#toggle-theme>img": "style='height: 1.5em;width: 1.5em;vertical-align: middle;'",
+        "span-with-menu#toggle-theme>img": "style='height: 30px;width: 30px;vertical-align: middle;'",
         "textlogo": "./img/textlogo_light.png",
         "dashicon": "./img/dashicon.svg",
         "AlertsBackground":"#ebfaf5",
@@ -126,8 +138,8 @@
         "trBackground" : "#ebfaf5",
         "exportCSVIcon": "./img/download_icon.svg",
         "themeIcon": "./img/theme_icon.svg",
-        "GridItemBackground": "white",
-        "GridItemColor": "rgb(72,72,72)",
+        "GridItemBackground": "#121821",
+        "GridItemColor": "rgb(244 244 244)",
         "GridItemBorder": "0.1px solid rgba(250,250,250,0)",
         "timeRangeMap":[{ "label":"Pick Timerange"},{ "label":"Last 1 Hour","value":"3600000"},{ "label":"Last 6 Hours","value":"21600000"},{ "label":"Last 1 day","value":"86400000"},{ "label":"Last 7 days","value":"604800000"},{ "label":"Last 30 days","value":"2592000000"}]
     },
@@ -135,6 +147,7 @@
         "*": "@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');",
         "body": "background-color: rgb(245, 247, 250); font-family: 'Raleway';",
         "span#pdf-preview-header > img#download-icon": "height: 30px; width: 30px;",
+        "span#pdf-preview-header > img#playpause": "height: 30px; width: 30px;",
         "span#pdf-preview-header > img#textlogo": "height: 30px; width: 160px;",
         "input#datetimepickerfrom, input#datetimepickerfrom:active, input#datetimepickerto, input#datetimepickerto:active":
             "font-size: 0.8em; font-family: sans-serif; color: rgba(0,0,0,0.75);border-radius: 4px; box-shadow: 0 0 1px rgba(34, 25, 25, 0.4); padding: 2px; border-style: none; pointer-events: none;",
