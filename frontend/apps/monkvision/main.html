@@ -22,14 +22,15 @@ div#container {
 }
 
 div#leftheader {
-	width: fit-content;
-	height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;	height: 100vh;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
-	user-select: none;
-	align-items: center;
-	padding: 2.5em 0.5em;
+    transition: width 0.25s ease;
+    overflow: hidden;
+    z-index: 1000;
 }
 
 div#leftheader img.dashicon {padding: 0.2em;}
@@ -75,9 +76,27 @@ span#header img#playpause:hover {
 	transition: all 1s ease;
 }
 span#header #timepicker{
-	background-color: white;
 	margin-right: 0.2em;
 }
+.dash-row {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+.dashicon { flex-shrink: 0; }
+
+.dashtitle {
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    transform: translateX(-6px);
+}
+#leftheader:hover .dashtitle {
+    opacity: 1;
+    transform: translateX(0);
+}
+
 </style>
 
 <!doctype html>
@@ -106,8 +125,11 @@ span#header #timepicker{
 <body>
 <div id="leftheader">
 	{{#dashboards}}
-	<img id="{{id}}" class="dashicon" src="{{{htmlData.dashicon}}}" alt="{{title}}" title="{{title}}" onclick="router.loadPage('./main.html?dash=./dashboards/{{file}}&title={{title}}&refresh={{refresh}}&name={{name}}&themeMode={{themeMode}}');">
-	<span id="dashtitle">{{name}}</span>
+	<div class="dash-row" onclick="router.loadPage('./main.html?dash=./dashboards/{{file}}&title={{title}}&refresh={{refresh}}&name={{name}}&themeMode={{themeMode}}');">
+	    <img id="{{id}}" class="dashicon" src="{{{htmlData.dashicon}}}" alt="{{title}}" title="{{title}}">
+	    <span class="dashtitle">{{name}}</span>
+	</div>
+
 	{{/dashboards}}
 </div>
 <div id="container">
