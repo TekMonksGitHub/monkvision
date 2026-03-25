@@ -57,7 +57,7 @@ async function _refreshData(element, force) {
         if (content.contents.attacks) {
             data.attacks = content.contents.attacks.map(attack => ({
                 ...attack,
-                name: attack.name,
+                name: APP_CONSTANTS.TITLE_MAPPING?.[attack.name] ?? attack.name,
                 isSafe: attack.status === 'SAFE'
             }));
         }
