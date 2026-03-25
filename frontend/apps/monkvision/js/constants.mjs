@@ -8,9 +8,10 @@ const APP_NAME = "monkvision";
 const APP_PATH = `${FRONTEND}/apps/${APP_NAME}`;
 const API_PATH = `${BACKEND}/apps/${APP_NAME}`;
 const CONF_PATH = `${APP_PATH}/conf`;
+const TITLE_MAPPING = await $$.requireJSON(`/apps/monkvision/conf/titleMapping.json`, true).catch(() => ({}));
 
 export const APP_CONSTANTS = {
-    FRONTEND, BACKEND, APP_PATH, APP_NAME, API_PATH,CONF_PATH,
+    FRONTEND, BACKEND, APP_PATH, APP_NAME, API_PATH,CONF_PATH, TITLE_MAPPING,
     INDEX_HTML: APP_PATH+"/index.html",
     MAIN_HTML: APP_PATH+"/main.html",
     LOGIN_HTML: APP_PATH+"/login.html",
