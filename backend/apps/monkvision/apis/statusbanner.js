@@ -19,7 +19,7 @@ exports.doService = async jsonReq => {
     // calculate issue percentage
     const round = Math.floor, truePercent = numTrue*100/(numTrue+numFalse), colorCode = `percent${round(truePercent)}Colors`, 
         iconCode = `percent${round(truePercent)}Icon`, explanationCode = `percent${round(truePercent)}Explanation`, 
-        titleCode = `percent${round(truePercent)}Title`;
+        titleCode = `percent${round(truePercent)}Title`,minValCode =  `percent${round(truePercent)}minVal`,maxValCode =  `percent${round(truePercent)}maxVal`;
 
     // set title
     let title = null;
@@ -41,7 +41,16 @@ exports.doService = async jsonReq => {
     if (jsonReq[explanationCode]) textexplanation = jsonReq[explanationCode];
     else if (jsonReq["elseExplanation"]) textexplanation = jsonReq["elseExplanation"];
 
-    const result = {result: true, type: "metrictext", contents: {textmain:`${parseFloat(truePercent).toFixed(2)} %`, fgcolor, bgcolor, textexplanation}}; 
+    // set the endpoints(highest and lowest) of an average or percentage
+    let minVal = null;
+    if (jsonReq[minValCode]) minVal = jsonReq[minValCode];
+    else if (jsonReq["elseMinVal"]) minVal = jsonReq["elseMinVal"];
+
+    let maxVal = null;
+    if (jsonReq[maxValCode]) maxVal = jsonReq[maxValCode];
+    else if (jsonReq["elseMaxVal"]) maxVal = jsonReq["elseMaxVal"];
+
+    const result = {result: true, type: "metrictext", contents: {textmain:`${parseFloat(truePercent).toFixed(2)} %`, fgcolor, bgcolor, textexplanation,minVal,maxVal}}; 
     if (title) result.contents.title = title; if (icon) result.contents.icon = icon; return result;
 }
 
