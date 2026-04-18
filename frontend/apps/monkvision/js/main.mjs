@@ -12,6 +12,7 @@ import {session} from "/framework/js/session.mjs";
 import {securityguard} from "/framework/js/securityguard.mjs";
 import {chart_box} from "../components/chart-box/chart-box.mjs";
 import {util as frameworkUtils} from "/framework/js/util.mjs";
+import {chatbot} from "../components/chatbot/chatbot.mjs";
 
 const SELECTED_DATES = "__monkvision_selecteddates", DASHBOARD_TIMER = "__monkvision_dashtimer", REFRESH_INTERVAL = "__monkvision_refresh";
 
