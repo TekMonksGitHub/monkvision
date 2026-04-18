@@ -1,0 +1,184 @@
+<!--
+ * chatbot.html - AI Assistant chat component
+ * (C) 2024 TekMonks. All rights reserved.
+-->
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+#chatbot-root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    background: #1a1d21;
+    border-left: 2px solid #41cf70;
+    box-shadow: inset 2px 0 8px rgba(65, 207, 112, 0.15);
+}
+
+#chatbot-title {
+    margin: 0;
+    padding: 12px 16px 10px;
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #41cf70;
+    border-bottom: 1px solid #2e3338;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#chatbot-clear {
+    background: none;
+    border: 1px solid #41cf70;
+    border-radius: 6px;
+    color: #41cf70;
+    font-size: 0.82em;
+    font-weight: 600;
+    padding: 6px 16px;
+    cursor: pointer;
+    text-transform: none;
+    letter-spacing: 0;
+    transition: background 0.15s, color 0.15s;
+}
+
+#chatbot-clear:hover {
+    background: #41cf70;
+    color: #0d1117;
+}
+
+#chatbot-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 0;
+}
+
+#chatbot-messages::-webkit-scrollbar { width: 6px; }
+#chatbot-messages::-webkit-scrollbar-track { background: transparent; }
+#chatbot-messages::-webkit-scrollbar-thumb { background: #3d444d; border-radius: 3px; }
+
+.chat-msg {
+    display: flex;
+    flex-direction: column;
+    max-width: 82%;
+}
+
+.chat-msg.user {
+    align-self: flex-end;
+    align-items: flex-end;
+}
+
+.chat-msg.assistant {
+    align-self: flex-start;
+    align-items: flex-start;
+}
+
+.chat-bubble {
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 0.82em;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.chat-msg.user .chat-bubble {
+    background: #1f4e8c;
+    color: #e8f0fe;
+    border-bottom-right-radius: 3px;
+}
+
+.chat-msg.assistant .chat-bubble {
+    background: #22272e;
+    color: #d8d9da;
+    border: 1px solid #2e3338;
+    border-bottom-left-radius: 3px;
+}
+
+.chat-msg.thinking .chat-bubble {
+    color: #6e7681;
+    font-style: italic;
+}
+
+.chat-label {
+    font-size: 0.68em;
+    color: #6e7681;
+    margin-bottom: 3px;
+    padding: 0 4px;
+}
+
+#chatbot-input-area {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 10px 14px 12px;
+    border-top: 1px solid #2e3338;
+    flex-shrink: 0;
+    background: #181b1f;
+    box-sizing: border-box;
+}
+
+#chatbot-input {
+    flex: 1;
+    background: #22272e;
+    border: 1px solid #3d444d;
+    border-radius: 8px;
+    color: #d8d9da;
+    font-size: 0.82em;
+    padding: 8px 12px;
+    resize: none;
+    outline: none;
+    font-family: inherit;
+    line-height: 1.4;
+    max-height: 100px;
+    overflow-y: auto;
+    transition: border-color 0.15s ease;
+    box-sizing: border-box;
+}
+
+#chatbot-input:focus { border-color: #41cf70; }
+#chatbot-input::placeholder { color: #484f58; }
+
+#chatbot-send {
+    background: #41cf70;
+    border: none;
+    border-radius: 8px;
+    color: #0d1117;
+    font-size: 0.82em;
+    font-weight: 700;
+    padding: 8px 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s ease;
+    align-self: flex-end;
+}
+
+#chatbot-send:hover { background: #2da35e; }
+
+#chatbot-send:disabled {
+    background: #2e3338;
+    color: #484f58;
+    cursor: not-allowed;
+}
+</style>
+
+<div id="chatbot-root">
+    <h3 id="chatbot-title">AI Assistant <button id="chatbot-clear">+ New Chat</button></h3>
+    <div id="chatbot-messages"></div>
+    <div id="chatbot-input-area">
+        <textarea id="chatbot-input" rows="1" placeholder="Ask about an alert or incident..."></textarea>
+        <button id="chatbot-send">Send</button>
+    </div>
+</div>
