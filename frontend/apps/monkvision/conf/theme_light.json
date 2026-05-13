@@ -122,6 +122,7 @@
         "dashicon": "./img/dashicon.svg",
         "AlertsBackground":"#ebfaf5",
         "AlertsBackgroundLight":"#c5ffc7",
+        "TextContent": "#000000",
         "BannerOKColors":"#ffffff,#45d19e",
         "BannerElseColors": "#ffffff,#ff3f3fcc",
         "BannerElseIcon": "./img/server_icon.svg",

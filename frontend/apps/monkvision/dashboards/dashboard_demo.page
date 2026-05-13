@@ -3,7 +3,7 @@ SCHEMA
 {
     "alerts": {"html":"chart-box", "id":"alerts", "title":"{{i18n.CriticalAlerts}}", "api":"alerts", 
         "type":"text",
-        "styleBody":"div#container{height: calc(100vh - 105px) !important;} div#container > p {margin-bottom: 0.8em;} div#content {height: calc(100% - 26em);} div#textcontent:nth-child(odd){background-color:{{AlertsBackground}}} div#textcontent:nth-child(even){background-color:{{AlertsBackgroundLight}}} div#content > div#textcontent > span#text > p:hover {background-color: unset}"},
+        "styleBody": "html, body { background-color: {{AlertsBackground}}; color: {{TextContent}};} div#container { height: calc(100vh - 105px); background-color: {{AlertsBackground}};} div#container > p { margin-bottom: 0.8em; color: {{TextContent}};} div#content { height: calc(100% - 26em); background-color: {{AlertsBackground}};} div#content > div#textcontent { color: {{TextContent}}; padding: 4px 0;} div#content > div#textcontent:nth-child(odd) { background-color: {{AlertsBackground}};} div#content > div#textcontent:nth-child(even) { background-color: {{AlertsBackgroundLight}};} div#content > div#textcontent > span#text > p { color: {{TextContent}}; margin: 0; padding: 10px;} div#content > div#textcontent > span#text > p:hover { background-color: transparent;}"},
 
  
     "httpBar": {"html":"chart-box", "id":"httpBar", "title":"Nginx Server", "api":"loggraph", 

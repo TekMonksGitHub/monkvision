@@ -120,6 +120,7 @@
         "exportCSVIcon": "./img/download_icon.svg",
         "AlertsBackground":"#505050",
         "AlertsBackgroundLight":"#9e9e9e",
+        "TextContent": "#ffffff",
         "BannerOKColors":"#ffffff,#45d19e",
         "BannerElseColors": "#ffffff,#ff3f3fcc",
         "BannerElseIcon": "./img/server_icon.svg",
