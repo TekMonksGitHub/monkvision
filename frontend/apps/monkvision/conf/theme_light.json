@@ -66,7 +66,7 @@
         "body": "font-family: 'Raleway';",
         "div#container": "background-color: rgb(245, 247, 250); margin-left: 58px; width: calc(100vw - 58px); padding: 1em 0.5em 1em 1em;",
         "div#maincontent": "width: 100%; height: 100%;",
-        "div#leftheader": "background-color: #202525; padding-top: 40px; width: 58px;background:linear-gradient(180deg,rgba(13,17,23,0.98),rgba(11,15,20,0.96));border-right:1px solid rgba(255,255,255,0.06);box-shadow:2px 0 16px rgba(0,0,0,0.25);backdrop-filter:blur(12px);padding-top:10px;",
+        "div#leftheader": "background-color: #202525; padding-top: 40px; width: 58px;background:linear-gradient(180deg,rgba(13,17,23,0.98),rgba(11,15,20,0.96));border-right:1px solid rgba(255,255,255,0.06);box-shadow:2px 0 16px rgba(0,0,0,0.25);backdrop-filter:blur(12px);padding-top:10px;overflow-y:auto;overflow-x:hidden;",
         "div#leftheader > .dash-row > img.dashicon:hover": "border-radius: 5px; border-width: 0.5px; border-style: outset; border-color: white;",
         "div#leftheader > .dash-row > img.dashicon.selected": "border-style: inset; border-radius: 5px; border-width: 0.5px; border-color: white;",
         "div#leftheader > .dash-row > span.dashtitle": "color: white; font-size: 14px; font-weight: 500;",

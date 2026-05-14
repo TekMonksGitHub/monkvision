@@ -66,7 +66,7 @@
         "body": "font-family: 'Raleway';",
         "div#container": "background-color:#121821;margin-left:58px;width:calc(100vw - 58px);padding:1em 0.5em 1em 1em;",
         "div#maincontent": "width:100%;height:100%;",
-        "div#leftheader": "background-color:#202525;padding-top:10px;width:58px;transition:width 0.25s ease;overflow:hidden;",
+        "div#leftheader": "background-color:#202525;padding-top:10px;width:58px;transition:width 0.25s ease;overflow-y:auto;overflow-x:hidden;",
         "div#leftheader:hover": "width:190px;",
         "div#leftheader .dash-row": "height:46px;padding:0 10px;gap:12px;margin:4px 0;border-radius:8px;transition:background 0.2s ease,box-shadow 0.2s ease;",
         "div#leftheader:not(:hover) .dash-row": "justify-content:flex-start;padding-left:15px;padding-right:0;gap:0;",

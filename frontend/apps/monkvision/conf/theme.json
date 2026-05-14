@@ -66,7 +66,7 @@
         "body": "background-color: rgb(245, 247, 250); font-family: 'Raleway';",
         "div#container": "background-color: rgb(245, 247, 250); border-top-left-radius: 20px; left: 72px; width: calc(100% - 72px); transition: left 0.25s ease, width 0.25s ease;",
         "div#maincontent": "top: 95px; width: calc(95vw - 72px); height: calc(100vh - 95px); left: 30px;",
-        "div#leftheader": "background: linear-gradient(180deg, rgba(28, 32, 36, 0.95) 0%, rgba(20, 24, 28, 0.92) 100%); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding-top: 20px; width: 72px; box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15); transition: width 0.25s ease; overflow: hidden; z-index: 100;",
+        "div#leftheader": "background: linear-gradient(180deg, rgba(28, 32, 36, 0.95) 0%, rgba(20, 24, 28, 0.92) 100%); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding-top: 20px; width: 72px; box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15); transition: width 0.25s ease; overflow-y: auto; overflow-x: hidden; z-index: 100;",
         "div#leftheader:hover": "width: 240px;",
         "div#leftheader > img.dashicon": "height: 24px; width: 24px; margin: 16px 24px; padding: 0; transition: all 0.2s ease; cursor: pointer; filter: brightness(0.85); position: relative;",
         "div#leftheader > img.dashicon:hover": "filter: brightness(1.2) drop-shadow(0 0 8px rgba(65, 207, 112, 0.4)); transform: translateX(2px);",
