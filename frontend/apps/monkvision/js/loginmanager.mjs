@@ -6,6 +6,7 @@ import {application} from "./application.mjs";
 import {session} from "/framework/js/session.mjs";
 import {securityguard} from "/framework/js/securityguard.mjs";
 import {apimanager as apiman} from "/framework/js/apimanager.mjs";
+import {i18n} from "/framework/js/i18n.mjs";
 
 let currTimeout; let logoutListeners = [];
 
@@ -66,6 +67,7 @@ async function logout() {
     _stoptAutoLogoutTimer(); session.destroy(); 
     securityguard.setCurrentRole(APP_CONSTANTS.GUEST_ROLE);
     session.set($$.MONKSHU_CONSTANTS.LANG_ID, savedLang);
+    i18n.init(APP_CONSTANTS.APP_PATH);
 	application.main();
 }
 
