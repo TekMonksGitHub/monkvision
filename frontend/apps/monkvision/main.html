@@ -34,10 +34,16 @@ div#leftheader {
     z-index: 1000;
 }
 
+div#leftheader:hover {
+	width: auto;
+    min-width: 15em;
+    max-width: 30vw;
+}
+
 div#leftheader img.dashicon {padding: 0.2em;}
 div#leftheader img.dashicon:hover {white-space: normal;} /* this is just to document this css setting here, else it'd be empty */
 div#leftheader img.dashicon.selected {white-space: normal;} /* this is just to document this css setting here, else it'd be empty */
-div#leftheader span#dashtitle {text-align: center; margin-bottom: 2em;}
+div#leftheader span#dashtitle {text-align: center; margin-bottom: 2em; text-wrap-mode: wrap;}
 
 span#header {
 	display: flex;
