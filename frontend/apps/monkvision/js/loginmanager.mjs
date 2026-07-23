@@ -48,7 +48,7 @@ async function changepassword(id, pass) {
     const pwph = `${id} ${pass}`;
         
     return new Promise(async (resolve, _reject) => {
-        await $$.require(`${APP_CONSTANTS.APP_PATH}/3p/bcrypt.js`);
+        await $$.require(`${APP_CONSTANTS.APP_PATH}/js/3p/bcrypt.js`);
         dcodeIO.bcrypt.hash(pwph, APP_CONSTANTS.BCRYPT_SALT, async (_err, hash) => {
             const req = {id}; req[APP_CONSTANTS.PWPH] = hash;
             const resp = await apiman.rest(APP_CONSTANTS.API_CHANGEPW, "POST", req, true, false);
