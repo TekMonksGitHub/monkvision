@@ -1,0 +1,6 @@
+{
+    "COMPONENTS": ["components/chart-box", "components/dialog-box", "components/glowing-arc", "components/html-fragment", 
+        "components/login-box", "components/notif-comp", "components/register-box", "components/span-with-menu", "components/threat-status-card"],
+
+    "EXTERNAL_COMPONENTS": []
+}
