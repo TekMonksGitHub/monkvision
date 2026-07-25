@@ -1,0 +1,5 @@
+{
+    "COMPONENTS": ["components/<component name>"],
+
+    "EXTERNAL_COMPONENTS": ["../<external app name>/components/<component name>"]
+}

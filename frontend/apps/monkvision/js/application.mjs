@@ -25,7 +25,7 @@ const init = async hostname => {
 }
 
 async function main() {
-	await _addPageDataInterceptors();
+	await _addPageDataInterceptors(); await _registerComponents();
 
 	const decodedURL = new URL(router.decodeURL(window.location.href));
 
@@ -41,6 +41,12 @@ async function _addPageDataInterceptors() {
 		let module = await import(`${APP_CONSTANTS.APP_PATH}/${modulePath}`); module = module[Object.keys(module)[0]];
 		(module[functionName])();
 	}
+}
+
+const _registerComponents = async _ => { 
+	const conf = await $$.requireJSON(`${APP_CONSTANTS.CONF_PATH}/components.json`);
+	for (const component of [...conf.COMPONENTS, ...conf.EXTERNAL_COMPONENTS]) 
+		await import(`${APP_CONSTANTS.APP_PATH}/${component}/${component.substring(component.lastIndexOf("/")+1)}.mjs`); 
 }
 
 const interceptPageLoadData = _ => router.addOnLoadPageData("*", async (data, _url) => {
