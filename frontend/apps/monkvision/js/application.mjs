@@ -3,12 +3,15 @@
  * License: MIT - see enclosed license.txt file.
  */
  
+import {i18n} from "/framework/js/i18n.mjs";
 import {router} from "/framework/js/router.mjs";
 import {session} from "/framework/js/session.mjs";
 import {loadbalancer} from "/framework/js/loadbalancer.mjs";
 import {securityguard} from "/framework/js/securityguard.mjs";
 import {apimanager as apiman} from "/framework/js/apimanager.mjs";
 import {APP_CONSTANTS as AUTO_APP_CONSTANTS} from "./constants.mjs";
+
+const EXTERNAL_APP_PATHS = {};
 
 const init = async hostname => {
 	window.monkshu_env.apps[AUTO_APP_CONSTANTS.APP_NAME] = {};
@@ -25,7 +28,9 @@ const init = async hostname => {
 }
 
 async function main() {
-	await _addPageDataInterceptors(); await _registerComponents();
+	await _addPageDataInterceptors(); 
+	const conf = await $$.requireJSON(`${APP_CONSTANTS.CONF_PATH}/components.json`);
+	await _registerComponents(conf.COMPONENTS); await _registerExternalComponents(conf.EXTERNAL_COMPONENTS);
 
 	const decodedURL = new URL(router.decodeURL(window.location.href));
 
@@ -43,11 +48,20 @@ async function _addPageDataInterceptors() {
 	}
 }
 
-const _registerComponents = async _ => { 
-	const conf = await $$.requireJSON(`${APP_CONSTANTS.CONF_PATH}/components.json`);
-	for (const component of [...conf.COMPONENTS, ...conf.EXTERNAL_COMPONENTS]) 
-		await import(`${APP_CONSTANTS.APP_PATH}/${component}/${component.substring(component.lastIndexOf("/")+1)}.mjs`); 
+const _registerComponents = async (components) => { for (const component of components) 
+	await import(`${APP_CONSTANTS.APP_PATH}/${component}/${component.substring(component.lastIndexOf("/")+1)}.mjs`);
 }
+
+async function _registerExternalComponents(externalComponents) {
+	await _registerComponents(externalComponents); for (const component of externalComponents) {
+		const externalAppName = _getExternalAppName(component); if (EXTERNAL_APP_PATHS[externalAppName]) continue;
+		i18n.addPath(_getExternalAppUrl(externalAppName)); EXTERNAL_APP_PATHS[externalAppName] = true;
+	}
+}
+
+const _getExternalAppName = component => component.split("/")[1];
+
+const _getExternalAppUrl = externalAppName => `${APP_CONSTANTS.FRONTEND}/apps/${externalAppName}`;
 
 const interceptPageLoadData = _ => router.addOnLoadPageData("*", async (data, _url) => {
     data.APP_CONSTANTS = APP_CONSTANTS; 
