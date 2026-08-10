@@ -85,6 +85,13 @@ async function _refreshData(element, force) {
 		const metrictext = {}; data.metrictext = metrictext;
 		metrictext.textmain = content.contents.textmain; metrictext.textexplanation = content.contents.textexplanation;
 		if (content.contents.icon) metrictext.icon = content.contents.icon;
+		// To display the endpoints of an average or percentage
+		if(content.contents.minVal){
+			metrictext.minVal = parseFloat(content.contents.minVal).toFixed(1);
+		 }
+		 if(content.contents.maxVal){
+			metrictext.maxVal = parseFloat(content.contents.maxVal).toFixed(1);
+		 }
 		metrictext.styleMetric = `<style>body{background-color: ${content.contents.bgcolor}; color: ${content.contents.fgcolor}; margin: 0px !important;} div#container{padding-top: 10px;}</style>`;
 		await bindData(data, id);
 		return;
