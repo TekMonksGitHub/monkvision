@@ -121,6 +121,8 @@ async function _refreshData(element, force) {
 		data.exportCSV = frameworkUtils.parseBoolean(element.getAttribute("exportCSV"));
 		if (data.exportCSV) data.exportCSVIcon = element.getAttribute("exportCSVIcon") || "./components/chart-box/img/download_icon.svg";
 		await bindData(data, id); if (!content || !content.contents) return;
+		 // Apply attack title mapping to x-axis labels and legend
+		["x", "legend"].forEach(k => { try { content.contents[k] = content.contents[k]?.map(l => APP_CONSTANTS.TITLE_MAPPING?.[l] ?? l); } catch {} });
 
 		const labels = _getLabels(_makeArray(element.getAttribute("ylabels")));
 		const labelColor = element.getAttribute("labelColor") || "black";
