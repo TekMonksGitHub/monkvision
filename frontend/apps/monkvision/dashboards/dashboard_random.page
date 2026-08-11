@@ -1,3 +1,10 @@
+METADATA
+========
+DISABLE_TIMERANGE = false
+DISABLE_PLAYPAUSE = false
+DISABLE_THEME_TOGGLE = false
+========
+
 SCHEMA
 ======
 {
