@@ -8,6 +8,14 @@ import {monkshu_component} from "/framework/js/monkshu_component.mjs";
 
 async function elementConnected(element) {
 	let pageFile = await fetch(element.getAttribute("file"), {mode: "no-cors"}).then(response => response.text());
+	let metadataArray = pageFile.match(/METADATA\s*\r?\n=+\r?\n(.+?)\r?\n=+[\r?\n]*/sm);
+	let metadata = (metadataArray && metadataArray.length > 1) ? metadataArray[1] : "";
+	const disableTimerange = /^\s*DISABLE_TIMERANGE\s*=\s*true\s*$/im.test(metadata);
+	const disablePlaypause = /^\s*DISABLE_PLAYPAUSE\s*=\s*true\s*$/im.test(metadata);
+	const disableThemeToggle = /^\s*DISABLE_THEME_TOGGLE\s*=\s*true\s*$/im.test(metadata);
+	document.getElementById("timerange-controls")?.toggleAttribute("hidden", disableTimerange);
+	document.getElementById("playpause")?.toggleAttribute("hidden", disablePlaypause);
+	document.getElementById("toggle-theme")?.toggleAttribute("hidden", disableThemeToggle);
 
 	let schemaArray = pageFile.match(/SCHEMA\s*\r?\n=+\r?\n(.+?)\r?\n=+[\r?\n]*/sm);
 	let schema = (schemaArray && schemaArray.length > 1) ? schemaArray[1] : "";
