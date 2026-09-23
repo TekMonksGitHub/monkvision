@@ -71,6 +71,12 @@ async function interceptPageLoadAndPageLoadData() {
         
         // add in dashboard path, and page title to the page data object
         const currentURL = new URL(router.getCurrentURL());
+        if (!data.dashboards.length) {
+            LOG.error(`No Monkvision dashboards are permitted for role ${securityguard.getCurrentRole()}.`);
+            router.loadPage(`${APP_CONSTANTS.LOGIN_HTML}`);
+            return;
+        }
+
         if (!currentURL.searchParams.get("dash")) { // load first dashboard if none was provided in the incoming URL
             data.title = data.dashboards[0].title;
             data.dash = `./dashboards/${data.dashboards[0].file}`;
@@ -109,15 +115,6 @@ async function interceptPageLoadAndPageLoadData() {
     });
 }
 
-async function changePassword(_element) {
-    monkshu_env.components['dialog-box'].showDialog(`${APP_CONSTANTS.DIALOGS_PATH}/changepass.html`, true, true, {}, "dialog", ["p1","p2"], async result=>{
-        const done = await loginmanager.changepassword(session.get(APP_CONSTANTS.USERID), result.p1);
-        if (!done) monkshu_env.components['dialog-box'].error("dialog", 
-            await i18n.get("PWCHANGEFAILED", session.get($$.MONKSHU_CONSTANTS.LANG_ID)));
-        else monkshu_env.components['dialog-box'].hideDialog("dialog");
-    });
-}
-
 const loadPDFReport = async _ => window.open(await router.encodeURL("pdf_report.html?dash=./dashboards/dashboard_pdf_report.page&name=PDF Report"), "_blank");
 
 const toggleTheme = async element => router.loadPage(frameworkUtils.replaceURLParamValue(router.getCurrentURL(), "themeMode", element.textContent.toLowerCase()));
@@ -133,4 +130,4 @@ function _startRefresh() {
     loginmanager.addLogoutListener(_=>clearInterval(session.get(DASHBOARD_TIMER)));
 }
 
-export const main = {changePassword, interceptPageLoadAndPageLoadData, timeRangeUpdated, playPauseCharts, toggleTheme, loadPDFReport};
+export const main = {interceptPageLoadAndPageLoadData, timeRangeUpdated, playPauseCharts, toggleTheme, loadPDFReport};

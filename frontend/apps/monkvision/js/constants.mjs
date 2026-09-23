@@ -14,30 +14,26 @@ export const APP_CONSTANTS = {
     INDEX_HTML: APP_PATH+"/index.html",
     MAIN_HTML: APP_PATH+"/main.html",
     LOGIN_HTML: APP_PATH+"/login.html",
-    REGISTER_HTML: APP_PATH+"/register.html",
+    LOGINRESULT_HTML: APP_PATH+"/loginresult.html",
 
     DIALOGS_PATH: APP_PATH+"/dialogs",
     COMPONENTS_PATH: APP_PATH+"/components",
 
     // Login constants
-    MIN_PASS_LENGTH: 8,
     API_LOGIN: API_PATH+"/login",
-    API_REGISTER: API_PATH+"/register",
-    API_CHANGEPW: API_PATH+"/changepassword",
-    BCRYPT_SALT: "$2a$10$VFyiln/PpFyZc.ABoi4ppf",
+    TKMLOGIN_LIB: `${APP_PATH}/3p/tkmlogin.mjs`,
+    TKMLOGINAPP_URL: "https://login.tekmonks.com",
     USERID: "userid",
-    PWPH: "pwph",
-    MIN_PW_LENGTH: 10,
     TIMEOUT: 600000,
     USERNAME: "username",
     USERORG: "userorg",
     USER_ROLE: "user",
     GUEST_ROLE: "guest",
     PERMISSIONS_MAP: {
-        user:[APP_PATH+"/main.html", APP_PATH+"/register.html", APP_PATH+"/login.html", APP_PATH+"/pdf_report.html", $$.MONKSHU_CONSTANTS.ERROR_HTML],
-        guest:[APP_PATH+"/register.html", APP_PATH+"/login.html", $$.MONKSHU_CONSTANTS.ERROR_HTML],
-        admin:[APP_PATH+"/main.html", APP_PATH+"/register.html", APP_PATH+"/login.html", APP_PATH+"/pdf_report.html", $$.MONKSHU_CONSTANTS.ERROR_HTML, "dash1", "dash2", "dash3"],
-        dba:[APP_PATH+"/main.html", APP_PATH+"/register.html", APP_PATH+"/login.html", APP_PATH+"/pdf_report.html", $$.MONKSHU_CONSTANTS.ERROR_HTML, "dash2"]
+        user:[APP_PATH+"/main.html", APP_PATH+"/login.html", APP_PATH+"/loginresult.html", APP_PATH+"/pdf_report.html", $$.MONKSHU_CONSTANTS.ERROR_HTML],
+        guest:[APP_PATH+"/login.html", APP_PATH+"/loginresult.html", $$.MONKSHU_CONSTANTS.ERROR_HTML],
+        admin:[APP_PATH+"/main.html", APP_PATH+"/login.html", APP_PATH+"/loginresult.html", APP_PATH+"/pdf_report.html", $$.MONKSHU_CONSTANTS.ERROR_HTML, "dash1", "dash2", "dash3"],
+        dba:[APP_PATH+"/main.html", APP_PATH+"/login.html", APP_PATH+"/loginresult.html", APP_PATH+"/pdf_report.html", $$.MONKSHU_CONSTANTS.ERROR_HTML, "dash2"]
     },
     API_KEYS: {"*":"fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389"},
     KEY_HEADER: "X-API-Key"

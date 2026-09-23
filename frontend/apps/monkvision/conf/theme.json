@@ -21,7 +21,9 @@
             "title": "Monkvision Dashboards",
             "logintagline": "Monkvision Dashboards",
             "loginsubtag": "World's only enterprise-wide AI based active monitorting solution.",
-            "learn": "Learn More"
+            "learn": "Learn More",
+            "loginMsg":"Sign in with Tekmonks Login",
+            "tkmLogo": "./img/tkmlogodark.svg"
         }
     },
     "login_html_data": {

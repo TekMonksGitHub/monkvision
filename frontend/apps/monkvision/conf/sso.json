@@ -1,0 +1,5 @@
+{
+    "TKMLOGINAPP_URL": "https://login.tekmonks.com",
+    "TKMLOGINAPP_DISABLE_MFA_KEY": "dma",
+    "TKMLOGINAPP_DISABLE_MFA": false
+}
