@@ -3,13 +3,13 @@
         "*": "@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');",
         "body": "font-family: 'Raleway'; background-color: rgba(17, 17, 17, 0.911);",
         "body::after": "background: url(./img/logob.png); background-size: auto 100%; width: 100%; height: 100%; background-repeat: no-repeat; opacity: 0.05;",
-        ".lgbox": "top: max(80px, calc(50% - 20%)); left: max(400px, calc(70% - 160px)); width: 320px; background-color: #ffffff; border-radius: 20px; box-shadow: -2px 6px 53px -23px rgba(0,0,0,0.75); padding: 10px 40px 10px 20px; font-size: smaller;",
-        "div.lgbox > span": "font-weight: 600; font-size: small;",
-        ".langbox": "top: max(560px, calc(100vh - 40px)); right: 40px; color: white;",
+        ".lgbox": "top: 50%; left: 60%; transform: translateY(-50%); width: 300px; background-color: #ffffff; border-radius: 20px; box-shadow: -2px 6px 53px -23px rgba(0,0,0,0.75); padding: 14px 16px; font-size: smaller;",
+        ".langbox": "bottom: 20px; left: 50%; transform: translateX(-50%); width: max-content; color: white;",
+        ".lgbox:hover": "transform: translateY(-50%) scale(1.02);",
         "a:link": "color:black;",
-        ".advtextbox": "top: calc(50% - 20%); left: 10%; width: 400px; color: #ffffff;",
-        ".advtextbox > h1": "font-weight: 250; font-family: 'Raleway';",
-        ".advtextbox > h2": "font-weight: 250; font-family: 'Raleway'; font-size: medium;",
+        ".advtextbox": "top: 50%; left: 7%; transform: translateY(-50%); width: 43%; color: #ffffff;",
+        ".advtextbox > h1": "font-weight: 250; font-family: 'Raleway'; margin-bottom: 12px;",
+        ".advtextbox > h2": "font-weight: 250; font-family: 'Raleway'; font-size: medium; margin-top: 0;",
         ".advtextbox > p": "font-weight: 400; font-family: 'Raleway'; font-size: smaller; background-color: #ffffff; color: black; border-radius: 10px; padding: 10px 5px 10px 5px; width: 120px; left: calc(50% - 60px); margin-top: 30px;",
         "img.logo": "top: 20px; left: 30px; width: 148px; height: 57px;",
         "span#signin": "top: 40px; right: 100px; position: absolute; font-size: 0.8em; font-weight: 500; color: #ffffff;",
@@ -30,38 +30,6 @@
         "logo": "./img/logo_dark.png",
         "aboutLink": "https://twitter.com/tekmonks/status/1061000581735702528"
     },
-
-
-    "register_css": {
-        "*": "@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');",
-        "body": "font-family: 'Raleway'; background-color: rgba(17, 17, 17, 0.911);",
-        "body::after": "background: url(./img/logob.png); background-size: auto 100%; width: 100%; height: 100%; background-repeat: no-repeat; opacity: 0.05;",
-        ".lgbox": "top: max(80px, 25%); left: max(400px, calc(70% - 160px)); width: 320px; background-color: #ffffff; border-radius: 20px; box-shadow: -2px 6px 53px -23px rgba(0,0,0,0.75); padding: 10px 20px 10px 20px; font-size: smaller; padding-right: 40px;",
-        "div.lgbox > span": "font-weight: 600; font-size: small;",
-        ".langbox": "top: max(560px, calc(100vh - 40px)); right: 40px; color: white;",
-        "a:link": "color:black;",
-        ".advtextbox": "top: calc(50% - 20%); left: 10%; width: 400px; color: #ffffff;",
-        ".advtextbox > h1": "font-weight: 250; font-family: 'Raleway';",
-        ".advtextbox > h2": "font-weight: 250; font-family: 'Raleway'; font-size: medium;",
-        ".advtextbox > p": "font-weight: 400; font-family: 'Raleway'; font-size: smaller; background-color: #ffffff; color: black; border-radius: 10px; padding: 10px 5px 10px 5px; width: 120px; left: calc(50% - 60px); margin-top: 30px;",
-        "img.logo": "top: 20px; left: 30px; width: 148px; height: 57px;",
-        "span#signin": "top: 40px; right: 100px; position: absolute; font-size: 0.8em; font-weight: 500; color: #ffffff;",
-        "span#signin > span:last-child": "color: #ffca36; font-weight: 700; text-transform: uppercase;",
-        "span#signin > span > a":"color: inherit;"
-    },
-    "register_i18n": {
-        "en":{
-            "title": "Monkvision Dashboards",
-            "logintagline": "Monkvision Dashboards",
-            "loginsubtag": "World's only enterprise-wide AI based active monitorting solution.",
-            "learn": "Learn More"
-        }
-    },
-    "register_html_data": {
-        "logo": "./img/logo_dark.png",
-        "aboutLink": "https://twitter.com/tekmonks/status/1061000581735702528"
-    },
-
     
     "main_css": {
         "*": "@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;display=swap');",
