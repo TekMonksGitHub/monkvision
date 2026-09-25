@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Monkvision sign in</title>
+
+    <link rel="preload" as="image" href="./img/loading.svg">
+
+    <style>
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+    }
+
+    body > img {
+        width: 30vw;
+        height: 30vw;
+    }
+
+    @media (orientation: portrait) {
+        body > img {
+            width: 50vw;
+            height: 50vw;
+        }
+    }
+    </style>
+
+    <script type="module">
+    import {tkmlogin} from "./3p/tkmlogin.mjs";
+    import {router} from "/framework/js/router.mjs";
+    import {loginmanager} from "./js/loginmanager.mjs";
+
+    try {
+        const result = await tkmlogin.verify("{{{APP_CONSTANTS.API_LOGIN}}}", router.decodeURL(window.location.href));
+        if (!await loginmanager.handleLoginResult(result)) router.loadPage(`${APP_CONSTANTS.LOGIN_HTML}?_error=true`);
+    } catch (err) {
+        console.error(`Unable to complete Monkvision Unified Login: ${err}`);
+        router.loadPage(`${APP_CONSTANTS.LOGIN_HTML}`);
+    }
+    </script>
+</head>
+
+<body>
+<img src="./img/loading.svg">
+</body>
+</html>
