@@ -3,7 +3,7 @@
  */
 const UNIFIED_LOGIN_BASE_URL = "https://login.tekmonks.com";
 
-async function login(appname, redirect, otkapi, bgcolor, unifiedloginbaseurl=UNIFIED_LOGIN_BASE_URL) {
+async function login(appname, redirect, otkapi, bgcolor, unifiedloginbaseurl=UNIFIED_LOGIN_BASE_URL, textcolor) {
     let otkResponse;
     try { otkResponse = await fetch(otkapi); }
     catch (err) { console.error(`Unable to request the Unified Login one-time key: ${err}`); return; }
@@ -12,9 +12,8 @@ async function login(appname, redirect, otkapi, bgcolor, unifiedloginbaseurl=UNI
     const onetimekey = (await otkResponse.json()).otk;
     if (!onetimekey) { console.error("Unified Login did not receive a one-time key."); return; }
 
-    const ssoconf = await $$.requireJSON(`${APP_CONSTANTS.CONF_PATH}/sso.json`);
     const search = `an=${encodeURIComponent(appname)}&rdr=${encodeURIComponent(redirect)}&otk=${encodeURIComponent(onetimekey)}` +
-        `${bgcolor ? `&bgc=${encodeURIComponent(bgcolor)}` : ""}${ssoconf.TKMLOGINAPP_DISABLE_MFA ? `&${ssoconf.TKMLOGINAPP_DISABLE_MFA_KEY}=${ssoconf.TKMLOGINAPP_DISABLE_MFA}` : ""}`;
+        `${bgcolor ? `&bgc=${encodeURIComponent(bgcolor)}` : ""}${textcolor ? `&txtc=${encodeURIComponent(textcolor)}`:""}${APP_CONSTANTS.SSO.TKMLOGINAPP_DISABLE_MFA ? `&${APP_CONSTANTS.SSO.TKMLOGINAPP_DISABLE_MFA_KEY}=${APP_CONSTANTS.SSO.TKMLOGINAPP_DISABLE_MFA}` : ""}`;
     window.location.replace(`${unifiedloginbaseurl}?${search}`);
 }
 

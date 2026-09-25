@@ -22,7 +22,6 @@ export const APP_CONSTANTS = {
     // Login constants
     API_LOGIN: API_PATH+"/login",
     TKMLOGIN_LIB: `${APP_PATH}/3p/tkmlogin.mjs`,
-    TKMLOGINAPP_URL: "https://login.tekmonks.com",
     USERID: "userid",
     TIMEOUT: 600000,
     USERNAME: "username",
@@ -34,6 +33,13 @@ export const APP_CONSTANTS = {
         guest:[APP_PATH+"/login.html", APP_PATH+"/loginresult.html", $$.MONKSHU_CONSTANTS.ERROR_HTML],
         admin:[APP_PATH+"/main.html", APP_PATH+"/login.html", APP_PATH+"/loginresult.html", APP_PATH+"/pdf_report.html", $$.MONKSHU_CONSTANTS.ERROR_HTML, "dash1", "dash2", "dash3"],
         dba:[APP_PATH+"/main.html", APP_PATH+"/login.html", APP_PATH+"/loginresult.html", APP_PATH+"/pdf_report.html", $$.MONKSHU_CONSTANTS.ERROR_HTML, "dash2"]
+    },
+    SSO: {
+        "TKMLOGINAPP_URL": "https://login.tekmonks.com",
+        "TKMLOGINAPP_DISABLE_MFA_KEY": "dma",
+        "TKMLOGINAPP_DISABLE_MFA": false,
+        "TKMLOGINAPP_BG": "rgba(240, 240, 240, 0.911)",
+        "TKMLOGINAPP_TXTC": "#0c0d0e"
     },
     API_KEYS: {"*":"fheiwu98237hjief8923ydewjidw834284hwqdnejwr79389"},
     KEY_HEADER: "X-API-Key"
