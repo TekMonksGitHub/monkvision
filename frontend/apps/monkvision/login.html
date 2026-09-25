@@ -104,7 +104,7 @@ span#signin > span > a {text-decoration: none;}
 	import {tkmlogin} from "{{{APP_CONSTANTS.TKMLOGIN_LIB}}}";
 	window.monkvisionSSOLogin = () => tkmlogin.login("{{{i18n.title}}}",
 		"{{#_org_monkshu_makeLink}}{{{APP_CONSTANTS.LOGINRESULT_HTML}}}{{/_org_monkshu_makeLink}}",
-		"{{{APP_CONSTANTS.API_LOGIN}}}?op=getotk", "rgba(27, 29, 32, 1)", "{{{APP_CONSTANTS.TKMLOGINAPP_URL}}}");
+		"{{{APP_CONSTANTS.API_LOGIN}}}?op=getotk", "{{{APP_CONSTANTS.SSO.TKMLOGINAPP_BG}}}", "{{{APP_CONSTANTS.SSO.TKMLOGINAPP_URL}}}", "{{{APP_CONSTANTS.SSO.TKMLOGINAPP_TXTC}}}");
 	</script>
 	{{{css}}}
 </head>
