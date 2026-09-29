@@ -21,6 +21,7 @@ export const APP_CONSTANTS = {
 
     // Login constants
     API_LOGIN: API_PATH+"/login",
+    EMBEDDING_PARENT_FRONTEND_ORIGIN: "<embedding_parent_frontend_url>",
     TKMLOGIN_LIB: `${APP_PATH}/3p/tkmlogin.mjs`,
     USERID: "userid",
     TIMEOUT: 600000,

@@ -10,8 +10,10 @@ import {loadbalancer} from "/framework/js/loadbalancer.mjs";
 import {securityguard} from "/framework/js/securityguard.mjs";
 import {apimanager as apiman} from "/framework/js/apimanager.mjs";
 import {APP_CONSTANTS as AUTO_APP_CONSTANTS} from "./constants.mjs";
+import {loginmanager} from "./loginmanager.mjs";
 
 const EXTERNAL_APP_PATHS = {};
+const AUTH_REQUEST = "monkvision:auth-request", AUTH_RESPONSE = "monkvision:auth-response", LOGOUT_REQUEST = "monkvision:logout";
 
 const init = async hostname => {
 	window.monkshu_env.apps[AUTO_APP_CONSTANTS.APP_NAME] = {};
@@ -27,6 +29,17 @@ const init = async hostname => {
 	securityguard.setCurrentRole(securityguard.getCurrentRole() || APP_CONSTANTS.GUEST_ROLE);
 }
 
+function setupEmbeddingParentCommunicationBridge() {
+	const parentOrigin = APP_CONSTANTS.EMBEDDING_PARENT_FRONTEND_ORIGIN;
+	if (window.parent === window) return;
+	window.addEventListener("message", async event => {
+		if (event.source !== window.parent || event.origin !== parentOrigin) return;
+		if (event.data?.type === AUTH_RESPONSE) await loginmanager.handleLoginResult(event.data.loginResponse);
+		else if (event.data?.type === LOGOUT_REQUEST) await loginmanager.logout();
+	});
+	window.parent.postMessage({type: AUTH_REQUEST}, parentOrigin);
+}
+
 async function main() {
 	await _addPageDataInterceptors(); 
 	const conf = await $$.requireJSON(`${APP_CONSTANTS.CONF_PATH}/components.json`);
@@ -37,6 +50,7 @@ async function main() {
 	const baseURL = decodedURL.search?decodedURL.href.substring(0, decodedURL.href.length-decodedURL.search.length):decodedURL.href;
 	if (securityguard.isAllowed(baseURL)) router.loadPage(decodedURL.href);
 	else router.loadPage(APP_CONSTANTS.LOGIN_HTML);
+	setupEmbeddingParentCommunicationBridge();
 }
 
 async function _addPageDataInterceptors() {
