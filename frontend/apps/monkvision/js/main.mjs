@@ -14,6 +14,7 @@ import {chart_box} from "../components/chart-box/chart-box.mjs";
 import {util as frameworkUtils} from "/framework/js/util.mjs";
 
 const SELECTED_DATES = "__monkvision_selecteddates", DASHBOARD_TIMER = "__monkvision_dashtimer", REFRESH_INTERVAL = "__monkvision_refresh";
+const PAGE_GENERATOR_METADATA_KEY = "METADATA";
 
 const dateAsHTMLDateValue = date => new Date(date.toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
 
@@ -55,6 +56,9 @@ function playPauseCharts(img, force) {
 
 async function interceptPageLoadAndPageLoadData() {
     router.addOnLoadPageData(`${APP_CONSTANTS.APP_PATH}/main.html`, async data => {
+        data.metadataKey = PAGE_GENERATOR_METADATA_KEY;
+        if (data.metadataKey) _registerPageMetadataListener();
+
         // add in css, theme and html data to the page data object
         data.themeMode = new URL(router.getCurrentURL()).searchParams.get("themeMode") || "light";
         await utils.addThemeDataAndCSS(data, "main");
@@ -112,6 +116,20 @@ async function interceptPageLoadAndPageLoadData() {
         // load initial charts and set the refresh interval
         timeRangeUpdated(false);    // load initial charts they will get the dates from HTML
         if (data.refresh) {session.set(REFRESH_INTERVAL, data.refresh); _startRefresh()};
+    });
+}
+
+function _registerPageMetadataListener() {
+    document.addEventListener("page-generator-metadata", event => {
+        if (!(event.target.matches?.("#maincontent > page-generator"))) return;  // reject if the event is not from the page-generator
+        if (!(event.detail[PAGE_GENERATOR_METADATA_KEY])) return;  // reject if the event does not contain the expected metadata key
+
+        const metadata = event.detail[PAGE_GENERATOR_METADATA_KEY];
+        const isTrue = key => metadata[key]?.toLowerCase() === "true";
+        document.getElementById("timerange-controls")?.toggleAttribute("hidden", isTrue("DISABLE_TIMERANGE"));
+        document.getElementById("playpause")?.toggleAttribute("hidden", isTrue("DISABLE_PLAYPAUSE"));
+        document.getElementById("toggle-theme")?.toggleAttribute("hidden", isTrue("DISABLE_THEME_TOGGLE"));
+        document.getElementById("gear")?.toggleAttribute("hidden", isTrue("DISABLE_SETTINGS_GEAR"));
     });
 }
 
