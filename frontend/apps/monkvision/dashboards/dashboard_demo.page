@@ -1,3 +1,14 @@
+SCRIPT
+======
+Timing = On Load
+window.main.configureHeaderControls({
+    timerange: true,
+    playpause: true,
+    themeToggle: true,
+    settingsGear: true
+});
+========
+
 SCHEMA
 ======
 {

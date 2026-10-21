@@ -140,13 +140,15 @@ span#header #timepicker{
 	<span id="header">
 		<img id="textlogo" src="{{{htmlData.textlogo}}}">
 		<span id="title">{{title}}</span>
-		<input id="datetimepickerfrom" type="datetime-local" value="{{{dateTimeWeekAgo}}}" onchange="main.timeRangeUpdated(true)">
-		<input id="datetimepickerto" type="datetime-local" value="{{{dateTimeNow}}}" onchange="main.timeRangeUpdated(true)">
-		<select id="timepicker" onchange="main.timeRangeUpdated(true, undefined, this.value)">
-			{{#htmlData.timeRangeMap}}
-				<option value="{{value}}">{{label}}</option>
-			{{/htmlData.timeRangeMap}}
-		</select>
+		<span id="timerange-controls">
+			<input id="datetimepickerfrom" type="datetime-local" value="{{{dateTimeWeekAgo}}}" onchange="main.timeRangeUpdated(true)">
+			<input id="datetimepickerto" type="datetime-local" value="{{{dateTimeNow}}}" onchange="main.timeRangeUpdated(true)">
+			<select id="timepicker" onchange="main.timeRangeUpdated(true, undefined, this.value)">
+				{{#htmlData.timeRangeMap}}
+					<option value="{{value}}">{{label}}</option>
+				{{/htmlData.timeRangeMap}}
+			</select>
+		</span>
 		<img id="playpause" src="./img/pause.svg" onclick="main.playPauseCharts(this)">
 		<span-with-menu id="toggle-theme" {{{htmlData.span-with-menu#toggle-theme}}}><img src="{{{htmlData.themeIcon}}}" {{{htmlData.span-with-menu#toggle-theme>img}}}>
 			<menu-item onclick="main.toggleTheme(this)">Dark</menu-item>
