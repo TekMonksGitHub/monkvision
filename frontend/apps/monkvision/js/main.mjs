@@ -115,11 +115,12 @@ async function interceptPageLoadAndPageLoadData() {
     });
 }
 
-function configureHeaderControls({timerange=true, playpause=true, themeToggle=true, settingsGear=true} = {}) {
+function configureHeaderControls({timerange=true, playpause=true, themeToggle=true, settingsGear=true, logout=true} = {}) {
     document.getElementById("timerange-controls")?.toggleAttribute("hidden", !timerange);
     document.getElementById("playpause")?.toggleAttribute("hidden", !playpause);
     document.getElementById("toggle-theme")?.toggleAttribute("hidden", !themeToggle);
     document.getElementById("gear")?.toggleAttribute("hidden", !settingsGear);
+    document.getElementById("signoff")?.toggleAttribute("hidden", !logout);
 }
 
 const loadPDFReport = async _ => window.open(await router.encodeURL("pdf_report.html?dash=./dashboards/dashboard_pdf_report.page&name=PDF Report"), "_blank");

@@ -5,7 +5,8 @@ window.main.configureHeaderControls({
     timerange: true,
     playpause: true,
     themeToggle: true,
-    settingsGear: true
+    settingsGear: true,
+    logout: true
 });
 ========
 
