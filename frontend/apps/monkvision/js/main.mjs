@@ -120,6 +120,7 @@ function configureHeaderControls({timerange=true, playpause=true, themeToggle=tr
     document.getElementById("playpause")?.toggleAttribute("hidden", !playpause);
     document.getElementById("toggle-theme")?.toggleAttribute("hidden", !themeToggle);
     document.getElementById("gear")?.toggleAttribute("hidden", !settingsGear);
+    document.getElementById("signoff")?.toggleAttribute("hidden", window.self !== window.top);
 }
 
 const loadPDFReport = async _ => window.open(await router.encodeURL("pdf_report.html?dash=./dashboards/dashboard_pdf_report.page&name=PDF Report"), "_blank");
