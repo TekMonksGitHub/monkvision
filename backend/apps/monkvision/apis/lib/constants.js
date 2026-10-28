@@ -11,10 +11,6 @@ exports.APP_ROOT = APP_ROOT;
 exports.CONF_DIR = `${APP_ROOT}/conf`;
 exports.LIB_DIR = __dirname;
 
-/* Constants for the Login subsystem */
-exports.SALT_PW = "$2a$10$VFyiln/PpFyZc.ABoi4ppf";
-exports.APP_DB = `${APP_ROOT}/db/users.db`;
-
 exports.isSubdirectory = (child, parent) => { // from: https://stackoverflow.com/questions/37521893/determine-if-a-path-is-subdirectory-of-another-in-node-js
 	child = path.resolve(child); parent = path.resolve(parent);
 
